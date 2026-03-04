@@ -1,0 +1,24 @@
+﻿  glad.c
+  imgui.cpp
+  imgui_demo.cpp
+  imgui_draw.cpp
+  imgui_impl_glfw.cpp
+  imgui_impl_opengl3.cpp
+  imgui_tables.cpp
+  imgui_widgets.cpp
+  main.cpp
+D:\Lost-Project\Lost-Project\Time.h(14,29): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  (compiling source file 'main.cpp')
+  
+D:\Lost-Project\Lost-Project\main.cpp(170,11): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\Lost-Project\Lost-Project\main.cpp(171,11): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\Lost-Project\Lost-Project\main.cpp(175,16): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\Lost-Project\Lost-Project\main.cpp(176,16): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\Lost-Project\Lost-Project\main.cpp(177,10): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\Lost-Project\Lost-Project\main.cpp(178,10): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\Lost-Project\Lost-Project\main.cpp(184,28): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  Model.cpp
+  Shader.h
+  Generating Code...
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  Lost-Project.vcxproj -> D:\Lost-Project\x64\Debug\Lost-Project.exe
