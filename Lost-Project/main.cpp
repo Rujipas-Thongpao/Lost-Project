@@ -15,6 +15,7 @@
 #include "Camera.h"
 #include "Time.h"
 #include "Model.h"
+#include "game.h"
 #include <iostream>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -28,6 +29,7 @@ const unsigned int SCR_HEIGHT = 800;
 
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 Time myTime;
+Game& Lost = Game::getInstance();
 
 int main()
 {
@@ -65,12 +67,12 @@ int main()
 		return -1;
 	}
 
-// 	stbi_set_flip_vertically_on_load(true);
- 	Shader ourShader("vertex.vs", "fragment.fs"); // you can name your shader files however you like
-
-
-	// Model ourModel("Model/Car/Source/FINAL_MODEL_FC.fbx");
-	Model ourModel("Model/Manta/Manta.obj");
+//// 	stbi_set_flip_vertically_on_load(true);
+// 	Shader ourShader("vertex.vs", "fragment.fs"); // you can name your shader files however you like
+//
+//
+//	// Model ourModel("Model/Car/Source/FINAL_MODEL_FC.fbx");
+//	Model ourModel("Model/Manta/Manta.obj");
 
 	// Initialize ImGUI
 	IMGUI_CHECKVERSION();
@@ -81,12 +83,14 @@ int main()
 	ImGui_ImplOpenGL3_Init("#version 330");
 	// render loop
 	// -----------
+	Lost.Init();
 	while (!glfwWindowShouldClose(window))
 	{
 		// input
 		// -----
 		myTime.DeltaTime();
-		processInput(window);
+		//processInput(window);
+		Lost.ProcessInput(myTime.deltaTime);
 
 		// render
 		// ------
@@ -95,34 +99,7 @@ int main()
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glm::mat4 view = glm::mat4(1.0f);
-		view = camera.GetViewMatrix();
-		glm::mat4 projection;
-		projection = glm::perspective(camera.Zoom, 800.0f / 800.0f, 0.1f, 100.0f);
-
-		// Draw Light Source
-		glm::vec3 lightPosition = glm::vec3(0.0f, 2.0f, 0.0f);
-		float lightColor[3] = { 1.0f,1.0f,0.0f };
-		// Draw Mesh;
-		ourShader.use();
-		ourShader.setMat4("view", view);
-		ourShader.setMat4("projection", projection);
-		ourShader.setVec3("lightPosition", lightPosition.x, lightPosition.y, lightPosition.z);
-
-		ourShader.setVec3("ViewDirWS", camera.Position[0], camera.Position[1], camera
-		.Position[2]);
-		ourShader.setVec3("lightColor", 1.0f, 1.0f,1.0f);
-
-		ourShader.setVec3("material.ambient", 1.0f, 1.0f, 1.0f);
-		ourShader.setVec3("material.diffuse", 1.0f, 1.0f, 1.00f);
-		ourShader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
-		ourShader.setFloat("material.shininess", 32.0f);
-
-		glm::mat4 model = glm::mat4(1.0f);
-		//model = glm::translate(model, cubePositions[i]);
-		ourShader.setMat4("model", model);
-
-		ourModel.Draw(ourShader);
+		Lost.Update(myTime.deltaTime);
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------

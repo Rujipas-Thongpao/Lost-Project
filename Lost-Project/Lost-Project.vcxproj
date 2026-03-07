@@ -127,6 +127,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="C:\Users\HP\Documents\OpenGL_Thing\glad\src\glad.c" />
+    <ClCompile Include="ComponentStore.cpp" />
+    <ClCompile Include="EntityManager.cpp" />
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="EntityManager.h" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_demo.cpp" />
     <ClCompile Include="imgui\imgui_draw.cpp" />
@@ -136,12 +141,19 @@
     <ClCompile Include="imgui\imgui_widgets.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Model.cpp" />
+    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Shader.h" />
+    <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="TransformSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\Users\HP\Documents\OpenGL_Thing\glad\include\glad\glad.h" />
     <ClInclude Include="C:\Users\HP\Documents\OpenGL_Thing\glad\include\KHR\khrplatform.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="ComponenetStore.h" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="imgui\imconfig.h" />
     <ClInclude Include="imgui\imgui.h" />
     <ClInclude Include="imgui\imgui_impl_glfw.h" />
@@ -153,8 +165,12 @@
     <ClInclude Include="imgui\imstb_truetype.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
+    <ClInclude Include="Renderer.h" />
     <ClInclude Include="stb_image.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="Time.h" />
+    <ClInclude Include="TransformComponent.h" />
+    <ClInclude Include="TransformSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="fragment.fs" />
