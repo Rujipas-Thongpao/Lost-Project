@@ -132,6 +132,7 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityManager.h" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GLMUtils.h" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_demo.cpp" />
     <ClCompile Include="imgui\imgui_draw.cpp" />
@@ -139,9 +140,14 @@
     <ClCompile Include="imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="imgui\imgui_tables.cpp" />
     <ClCompile Include="imgui\imgui_widgets.cpp" />
+    <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Model.cpp" />
+    <ClCompile Include="ModeLoader.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="RendererSystem.cpp" />
+    <ClCompile Include="RendererSystem.h" />
+    <ClCompile Include="ResourceManagement.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Shader.h" />
     <ClCompile Include="Texture.cpp" />
@@ -150,7 +156,7 @@
   <ItemGroup>
     <ClInclude Include="C:\Users\HP\Documents\OpenGL_Thing\glad\include\glad\glad.h" />
     <ClInclude Include="C:\Users\HP\Documents\OpenGL_Thing\glad\include\KHR\khrplatform.h" />
-    <ClInclude Include="Camera.h" />
+    <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="ComponenetStore.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Game.h" />
@@ -163,9 +169,14 @@
     <ClInclude Include="imgui\imstb_rectpack.h" />
     <ClInclude Include="imgui\imstb_textedit.h" />
     <ClInclude Include="imgui\imstb_truetype.h" />
+    <ClInclude Include="InputSystem.h" />
+    <ClInclude Include="MaterialComponent.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="MeshComponent.h" />
     <ClInclude Include="Model.h" />
+    <ClInclude Include="ModelLoader.h" />
     <ClInclude Include="Renderer.h" />
+    <ClInclude Include="ResourceManagement.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Time.h" />

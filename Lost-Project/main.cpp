@@ -12,10 +12,10 @@
 
 #include "stb_image.h"
 #include "Shader.h"
-#include "Camera.h"
 #include "Time.h"
 #include "Model.h"
 #include "game.h"
+#include "inputSystem.h"
 #include <iostream>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -27,7 +27,6 @@ void processInput(GLFWwindow* window);
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 800;
 
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 Time myTime;
 Game& Lost = Game::getInstance();
 
@@ -89,15 +88,15 @@ int main()
 		// input
 		// -----
 		myTime.DeltaTime();
-		//processInput(window);
-		Lost.ProcessInput(myTime.deltaTime);
+		processInput(window);
+		//Lost.ProcessInput(myTime.deltaTime);
 
-		// render
-		// ------
-		glEnable(GL_DEPTH_TEST);
+		//// render
+		//// ------
+		//glEnable(GL_DEPTH_TEST);
 
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		//glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		Lost.Update(myTime.deltaTime);
 
@@ -117,17 +116,21 @@ int main()
 // ---------------------------------------------------------------------------------------------------------
 void processInput(GLFWwindow* window)
 {
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		camera.ProcessKeyboard(FORWARD, myTime.deltaTime);
-	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		camera.ProcessKeyboard(LEFT, myTime.deltaTime);
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		camera.ProcessKeyboard(BACKWARD, myTime.deltaTime);
-	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		camera.ProcessKeyboard(RIGHT, myTime.deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
 
+	InputSystem inputSystem = Lost.inputSystem;
+
+	inputSystem.Keys[GLFW_KEY_W] = glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS;
+	inputSystem.Keys[GLFW_KEY_S] = glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS;
+	inputSystem.Keys[GLFW_KEY_A] = glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS;
+	inputSystem.Keys[GLFW_KEY_D] = glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS;
+	inputSystem.Keys[GLFW_KEY_UP] = glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS;
+	inputSystem.Keys[GLFW_KEY_DOWN] = glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS;
+	inputSystem.Keys[GLFW_KEY_LEFT] = glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS;
+	inputSystem.Keys[GLFW_KEY_RIGHT] = glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS;
+
+	inputSystem.Update(myTime.DeltaTime());
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
@@ -142,6 +145,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 float lastX = SCR_WIDTH / 2.0f, lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
 void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
+	
 	if (firstMouse)
 	{
 		lastX = xpos;
@@ -153,10 +157,15 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
 	float yoffset = lastY - ypos; // reversed since y-coordinates range from bottom to top
 	lastX = xpos;
 	lastY = ypos;
-	camera.ProcessMouseMovement(xoffset, yoffset);
+
+	Lost.inputSystem.xpos = xpos;
+	Lost.inputSystem.ypos = ypos;
+	//Lost.inputSystem.lastXpos = lastX;
+
+	//Lost.inputSystem.lastYpos = lastY;
 }
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
-	camera.ProcessMouseScroll(yoffset);
+	//camera.ProcessMouseScroll(yoffset);
 }

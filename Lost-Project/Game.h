@@ -11,6 +11,12 @@
 #include "ComponenetStore.h"
 #include "TransformComponent.h"
 #include "TransformSystem.h"
+#include "MeshComponent.h"
+#include "MaterialComponent.h"
+#include "ModelLoader.h"
+#include "RendererSystem.h"
+#include "CameraComponent.h"
+#include "InputSystem.h"
 
 // Represents the current state of the game
 enum GameState {
@@ -23,13 +29,18 @@ class Game
 public:
     // game state
     GameState    State;
-    bool         Keys[1024];
     unsigned int Width, Height;
 
 	EntityManager entityManager;
 	ComponentStore<TransformComponent> transformStore;
     TransformSystem transformSystem = TransformSystem();
-
+	ComponentStore<MeshComponent> meshStore;
+	ComponentStore<MaterialComponent> materialStore;
+    ComponentStore<CameraComponent> cameraStore;
+    ModelLoader modelLoader;
+	RendererSystem rendererSystem;
+    InputSystem inputSystem;
+    
     static Game& getInstance(); 
     // constructor/destructor
     Game();

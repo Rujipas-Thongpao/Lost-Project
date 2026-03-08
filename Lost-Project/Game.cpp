@@ -6,7 +6,7 @@ Game& Game::getInstance() {
 }
 
 Game::Game()
-    : State(GAME_ACTIVE), Keys()
+    : State(GAME_ACTIVE)
 {
 
 }
@@ -20,13 +20,24 @@ void Game::Init()
 {
 	transformSystem = TransformSystem();
 	entityManager.Init();
-	Entity entity = entityManager.CreateEntity();
-	transformStore.add(entity.id);
+	rendererSystem.Init();
+	inputSystem.Init();
+
+	Entity player = entityManager.CreateEntity();
+	transformStore.add(player.id);
+	//modelLoader.load(player, "Model/Maxwell/Untitled.obj", false);
+	modelLoader.load(player, "Model/Manta/Manta.obj", false);
+
+	Entity camera = entityManager.CreateEntity();
+	cameraStore.add(camera.id);
+	transformStore.add(camera.id);
 }
 
 void Game::Update(float dt)
 {
 	transformSystem.Update();	
+	inputSystem.Update(dt);
+	rendererSystem.Render();
 }
 
 void Game::ProcessInput(float dt)

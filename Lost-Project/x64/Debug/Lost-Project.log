@@ -1,15 +1,5 @@
-﻿  Game.cpp
-  TransformSystem.cpp
-  main.cpp
-D:\lost-project\Lost-Project\Time.h(14,29): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  (compiling source file 'main.cpp')
+﻿  RendererSystem.cpp
+D:\Lost-Project\Lost-Project\ModelLoader.h(10,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  (compiling source file 'RendererSystem.cpp')
   
-D:\lost-project\Lost-Project\main.cpp(147,11): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-D:\lost-project\Lost-Project\main.cpp(148,11): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-D:\lost-project\Lost-Project\main.cpp(152,16): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-D:\lost-project\Lost-Project\main.cpp(153,16): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-D:\lost-project\Lost-Project\main.cpp(154,10): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-D:\lost-project\Lost-Project\main.cpp(155,10): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-D:\lost-project\Lost-Project\main.cpp(161,28): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  Generating Code...
-  Lost-Project.vcxproj -> D:\lost-project\x64\Debug\Lost-Project.exe
+  Lost-Project.vcxproj -> D:\Lost-Project\x64\Debug\Lost-Project.exe

@@ -11,6 +11,8 @@
 #define TEXTURE_H
 
 #include <glad/glad.h>
+#include <stdio.h>
+#include <string>
 
 // Texture2D is able to store and configure a texture in OpenGL.
 // It also hosts utility functions for easy management.
@@ -19,6 +21,9 @@ class Texture2D
 public:
     // holds the ID of the texture object, used for all texture operations to reference to this particular texture
     unsigned int ID;
+    std::string type;
+    std::string path;
+
     // texture image dimensions
     unsigned int Width, Height; // width and height of loaded image in pixels
     // texture Format

@@ -14,6 +14,7 @@ public:
 	void add(uint8_t id) { data[id] = T(); }
     bool has(uint8_t id) { return data.count(id) > 0; }
     T& get(uint8_t id) { return data[id]; }
+    std::pair<uint8_t, T&> getFirst() { return { data.begin()->first, data.begin()->second }; }
 };
 
 #endif
