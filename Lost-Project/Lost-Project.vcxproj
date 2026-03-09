@@ -128,6 +128,7 @@
   <ItemGroup>
     <ClCompile Include="C:\Users\HP\Documents\OpenGL_Thing\glad\src\glad.c" />
     <ClCompile Include="CameraComponent.cpp" />
+    <ClCompile Include="CameraSystem.cpp" />
     <ClCompile Include="ComponentStore.cpp" />
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="Entity.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="C:\Users\HP\Documents\OpenGL_Thing\glad\include\glad\glad.h" />
     <ClInclude Include="C:\Users\HP\Documents\OpenGL_Thing\glad\include\KHR\khrplatform.h" />
     <ClInclude Include="CameraComponent.h" />
+    <ClInclude Include="CameraSystem.h" />
     <ClInclude Include="ComponenetStore.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Game.h" />

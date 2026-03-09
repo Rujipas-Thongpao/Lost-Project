@@ -57,11 +57,14 @@ void Game::Init()
 		modelLoader.load(block, "Model/Block/block.obj", false);
 		MaterialComponent& block_mat = materialStore.get(block.id);
 	}
+
+	cameraSystem.Init();
 }
 
 void Game::Update(float dt)
 {
 	transformSystem.Update();	
+	cameraSystem.Update(dt);
 	inputSystem.Update(dt);
 	rendererSystem.Render();
 }
