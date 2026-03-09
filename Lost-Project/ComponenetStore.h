@@ -11,7 +11,7 @@ class ComponentStore {
     std::unordered_map<uint8_t, T> data;
 
 public:
-	void add(uint8_t id) { data[id] = T(); }
+    T& add(uint8_t id) { data[id] = T(); return data[id]; }
     bool has(uint8_t id) { return data.count(id) > 0; }
     T& get(uint8_t id) { return data[id]; }
     std::pair<uint8_t, T&> getFirst() { return { data.begin()->first, data.begin()->second }; }

@@ -6,13 +6,13 @@
 class Time {
 public:
     Time() {}
-    double lastFrame = 0.0f;
+    double lastTime = 0.0f;
     float deltaTime = 0.0f;
 
     float DeltaTime() {
 		double GetTime = glfwGetTime();
-        deltaTime = GetTime - lastFrame;
-        lastFrame = GetTime;
+        deltaTime = GetTime - lastTime;
+        lastTime = GetTime;
         return deltaTime;
     }
 };

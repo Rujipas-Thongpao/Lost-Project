@@ -14,7 +14,7 @@ public:
 	std::vector<Entity> entities;
 	uint8_t id = 0;
 	void Init();
-	Entity CreateEntity();
+	Entity& CreateEntity();
 	void Cleanup();
 };
 #endif // !ENTITY_MANAGER_H

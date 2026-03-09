@@ -7,7 +7,6 @@
 ** option) any later version.
 ******************************************************************/
 #include "shader.h"
-
 #include <iostream>
 
 Shader::Shader() {

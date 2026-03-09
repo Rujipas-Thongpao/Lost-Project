@@ -30,6 +30,9 @@ const unsigned int SCR_HEIGHT = 800;
 Time myTime;
 Game& Lost = Game::getInstance();
 
+const double TARGET_FPS = 120.0;
+const double TARGET_DT = 1.0 / TARGET_FPS;
+
 int main()
 {
 	// glfw: initialize and configure
@@ -57,6 +60,9 @@ int main()
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glfwSetCursorPosCallback(window, mouse_callback);
 	glfwSetScrollCallback(window, scroll_callback);
+	glfwSwapInterval(1);
+
+
 
 	// glad: load all OpenGL function pointers
 	// ---------------------------------------
@@ -87,7 +93,9 @@ int main()
 	{
 		// input
 		// -----
-		myTime.DeltaTime();
+		float dt = myTime.DeltaTime();
+		while (glfwGetTime() - myTime.lastTime < TARGET_DT) { /* busy wait */ }
+		//std::cout << "dt: " << dt << " fps: " << 1.0f / dt << std::endl;
 		processInput(window);
 		//Lost.ProcessInput(myTime.deltaTime);
 
@@ -98,7 +106,7 @@ int main()
 		//glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		Lost.Update(myTime.deltaTime);
+		Lost.Update(dt);
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------

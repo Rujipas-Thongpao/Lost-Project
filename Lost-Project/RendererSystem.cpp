@@ -9,16 +9,13 @@
 #include "TransformComponent.h"
 #include "MeshComponent.h"
 #include "Mesh.h"
-#include "Shader.h"
 #include "CameraComponent.h"
 #include "GLMUtils.h"
-
+#include "LightComponent.h"
 
 #include <glad/glad.h>
 #include <glm/glm.hpp>
-
-#include <stdio.h>
-#include <iostream>
+#include <GLFW/glfw3.h>
 
 
 void RendererSystem::Init() {
@@ -36,18 +33,19 @@ void RendererSystem::Render()
 
 	Game& game = Game::getInstance();
 	std::pair<uint8_t, CameraComponent&> cam_e_c = game.cameraStore.getFirst();
-	CameraComponent cam_cam = cam_e_c.second;
+	CameraComponent& cam_cam = cam_e_c.second;
 	uint8_t cam_id = cam_e_c.first;
-	TransformComponent cam_tf = game.transformStore.get(cam_id);
-	GLMUtils::printVec3(cam_tf.position, "Camera position : ");
+	TransformComponent& cam_tf = game.transformStore.get(cam_id);
+	//GLMUtils::printVec3(cam_tf.position, "Camera position : ");
 	
 	for (Entity e : game.entityManager.entities) {
 		if (!game.meshStore.has(e.id))      continue;
 		if (!game.transformStore.has(e.id)) continue;
 
-		// std::cout << "Render : " << (unsigned)e.id << std::endl;
-		TransformComponent transform = game.transformStore.get(e.id);
-		MeshComponent mesh = game.meshStore.get(e.id);
+		 //std::cout << "Render : " << (unsigned)e.id << std::endl;
+		TransformComponent& transform = game.transformStore.get(e.id);
+		MeshComponent& mesh = game.meshStore.get(e.id);
+		MaterialComponent& mat = game.materialStore.get(e.id);
 
 		this->shader.Use();
 		glm::mat4 model = glm::mat4(1.0f);
@@ -57,13 +55,23 @@ void RendererSystem::Render()
 		glm::mat4 view = cam_cam.GetViewMatrix(cam_tf);
 		glm::mat4 proj = cam_cam.GetProjectionMatrix();
 
-		//GLMUtils::printMat4(model, "model : ");
-		//GLMUtils::printMat4(view, "view : ");
-		//GLMUtils::printMat4(proj, "projection : ");
-
 		this->shader.SetMatrix4("model", model);
 		this->shader.SetMatrix4("view", cam_cam.GetViewMatrix(cam_tf));
 		this->shader.SetMatrix4("projection", cam_cam.GetProjectionMatrix());
+
+		this->shader.SetVector3f("material.ambient", mat.ambient);
+		this->shader.SetVector3f("material.diffuse", mat.diffuse);
+		this->shader.SetVector3f("material.specular", mat.specular);
+		this->shader.SetFloat("material.shininess", mat.shininess);
+
+		// light
+		std::pair<uint8_t, LightComponent> light_id_l = game.lightStore.getFirst();
+		uint8_t light_id = light_id_l.first;
+		LightComponent light_l = light_id_l.second;
+		TransformComponent light_tf = game.transformStore.get(light_id);
+
+		this->shader.SetVector3f("lightPosition", light_tf.position);
+		this->shader.SetVector3f("lightColor", light_l.Color);
 
 		for (unsigned int i = 0; i < mesh.meshes.size(); i++) {
 			//std::cout << mesh.meshes[i].vertices.size() << std::endl;

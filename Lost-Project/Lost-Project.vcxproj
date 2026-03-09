@@ -127,6 +127,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="C:\Users\HP\Documents\OpenGL_Thing\glad\src\glad.c" />
+    <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="ComponentStore.cpp" />
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="Entity.cpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="imgui\imstb_textedit.h" />
     <ClInclude Include="imgui\imstb_truetype.h" />
     <ClInclude Include="InputSystem.h" />
+    <ClInclude Include="LightComponent.h" />
     <ClInclude Include="MaterialComponent.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshComponent.h" />
@@ -178,6 +180,8 @@
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="ResourceManagement.h" />
     <ClInclude Include="stb_image.h" />
+    <ClInclude Include="Tags.h" />
+    <ClInclude Include="TagStore.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="TransformComponent.h" />

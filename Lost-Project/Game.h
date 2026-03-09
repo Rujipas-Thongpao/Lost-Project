@@ -17,6 +17,8 @@
 #include "RendererSystem.h"
 #include "CameraComponent.h"
 #include "InputSystem.h"
+#include "LightComponent.h"
+#include "TagStore.h"
 
 // Represents the current state of the game
 enum GameState {
@@ -37,9 +39,11 @@ public:
 	ComponentStore<MeshComponent> meshStore;
 	ComponentStore<MaterialComponent> materialStore;
     ComponentStore<CameraComponent> cameraStore;
+    ComponentStore<LightComponent> lightStore;
     ModelLoader modelLoader;
 	RendererSystem rendererSystem;
     InputSystem inputSystem;
+    TagStore tagStore;
     
     static Game& getInstance(); 
     // constructor/destructor

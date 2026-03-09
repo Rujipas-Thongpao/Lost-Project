@@ -6,7 +6,6 @@ uint8_t ModelLoader::load(Entity e, const char* path, bool gammaCorrection) {
 
     game.meshStore.add(e.id);
     game.materialStore.add(e.id);
-    game.transformStore.add(e.id);
 
     MeshComponent& mc = game.meshStore.get(e.id);
     MaterialComponent& mat = game.materialStore.get(e.id);
