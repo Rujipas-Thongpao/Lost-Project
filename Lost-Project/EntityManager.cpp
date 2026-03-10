@@ -7,7 +7,7 @@ Entity& EntityManager::CreateEntity()
 {
 	Entity entity(id, "");
 	entities.push_back(entity);
-	std::cout << "Create entity : " << entity.id << ", " << entity.name << std::endl;
+	std::cout << "Create entity : " << (unsigned)entity.id << ", " << entity.name << std::endl;
 	id++;
 	return entity;
 }

@@ -25,6 +25,9 @@
     <Filter Include="Source Files\System">
       <UniqueIdentifier>{9a12fc94-599f-4c71-9652-100cf00f7452}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Component">
+      <UniqueIdentifier>{77f7cdc8-926e-485e-886e-794b184b2d88}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -105,10 +108,19 @@
     <ClCompile Include="GLMUtils.h">
       <Filter>Header Files</Filter>
     </ClCompile>
-    <ClCompile Include="CameraComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CameraSystem.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="ColliderComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraComponent.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="ColliderComponent.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="ColliderSystem.cpp">
       <Filter>Source Files\System</Filter>
     </ClCompile>
   </ItemGroup>
@@ -173,12 +185,6 @@
     <ClInclude Include="ComponenetStore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TransformComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TransformSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MaterialComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
@@ -207,6 +213,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CameraSystem.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="ColliderSystem.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformSystem.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
   </ItemGroup>

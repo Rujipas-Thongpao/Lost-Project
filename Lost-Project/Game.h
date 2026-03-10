@@ -20,6 +20,8 @@
 #include "LightComponent.h"
 #include "TagStore.h"
 #include "CameraSystem.h"
+#include "ColliderComponent.h"
+#include "ColliderSystem.h"
 
 // Represents the current state of the game
 enum GameState {
@@ -41,12 +43,15 @@ public:
 	ComponentStore<MaterialComponent> materialStore;
     ComponentStore<CameraComponent> cameraStore;
     ComponentStore<LightComponent> lightStore;
+    ComponentStore<ColliderComponent> colliderStore;
+
     ModelLoader modelLoader;
+
 	RendererSystem rendererSystem;
     InputSystem inputSystem;
     TagStore tagStore;
     CameraSystem cameraSystem;
-    
+    ColliderSystem colliderSystem;
     
     static Game& getInstance(); 
     // constructor/destructor

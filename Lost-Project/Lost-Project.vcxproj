@@ -129,6 +129,9 @@
     <ClCompile Include="C:\Users\HP\Documents\OpenGL_Thing\glad\src\glad.c" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="CameraSystem.cpp" />
+    <ClCompile Include="ColliderComponent.cpp" />
+    <ClCompile Include="ColliderComponent.h" />
+    <ClCompile Include="ColliderSystem.cpp" />
     <ClCompile Include="ComponentStore.cpp" />
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="Entity.cpp" />
@@ -160,6 +163,7 @@
     <ClInclude Include="C:\Users\HP\Documents\OpenGL_Thing\glad\include\KHR\khrplatform.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="CameraSystem.h" />
+    <ClInclude Include="ColliderSystem.h" />
     <ClInclude Include="ComponenetStore.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Game.h" />
