@@ -123,6 +123,9 @@
     <ClCompile Include="ColliderSystem.cpp">
       <Filter>Source Files\System</Filter>
     </ClCompile>
+    <ClCompile Include="GunSystem.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\Users\HP\Documents\OpenGL_Thing\glad\include\glad\glad.h">
@@ -222,6 +225,9 @@
       <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="TransformSystem.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="GunSystem.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
   </ItemGroup>

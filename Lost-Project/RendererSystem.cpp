@@ -38,7 +38,9 @@ void RendererSystem::Render()
 	TransformComponent& cam_tf = game.transformStore.get(cam_id);
 	//GLMUtils::printVec3(cam_tf.position, "Camera position : ");
 	
-	for (Entity e : game.entityManager.entities) {
+	for (Entity& e : game.entityManager.entities) {
+		//std::cout << (unsigned)e.id <<  " " << e.isDestroy << std::endl;
+		if (e.isDestroy) continue;
 		if (!game.meshStore.has(e.id))      continue;
 		if (!game.transformStore.has(e.id)) continue;
 
@@ -49,7 +51,13 @@ void RendererSystem::Render()
 
 		this->shader.Use();
 		glm::mat4 model = glm::mat4(1.0f);
+
 		model = glm::translate(model, transform.position);
+
+		model = glm::rotate(model, glm::radians(-transform.rotation.y), glm::vec3(0, 1, 0));
+		model = glm::rotate(model, glm::radians(transform.rotation.x), glm::vec3(1, 0, 0));
+		model = glm::rotate(model, glm::radians(transform.rotation.z), glm::vec3(0, 0, 1));
+
 		model = glm::scale(model, transform.scale);
 
 		glm::mat4 view = cam_cam.GetViewMatrix(cam_tf);

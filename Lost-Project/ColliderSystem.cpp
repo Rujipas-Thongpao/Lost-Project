@@ -1,7 +1,9 @@
 #include "ColliderSystem.h"
+#include "game.h"
+
 #include "ColliderComponent.h"
 #include "TransformComponent.h"
-#include "game.h"
+
 #include <stdio.h>
 #include <iostream>
 #include "GLMUtils.h"
@@ -21,6 +23,7 @@ void ColliderSystem::Update() {
 
 	for (Entity a : game.entityManager.entities) {
 		uint8_t a_id = a.id;
+		if(a.isDestroy) continue;
 		if (game.colliderStore.has(a_id) && game.transformStore.has(a_id)) {
 
 			ColliderComponent& a_col = game.colliderStore.get(a_id);
@@ -28,8 +31,9 @@ void ColliderSystem::Update() {
 
 			AABB a_aabb = a_col.GetAABB(a_tf);
 
-			for (Entity b : game.entityManager.entities) {
+			for (Entity& b : game.entityManager.entities) {
 				uint8_t b_id = b.id;
+				if(b.isDestroy) continue;
 
 				if (a_id == b_id) continue;
 
@@ -40,6 +44,10 @@ void ColliderSystem::Update() {
 
 					AABB b_aabb = b_col.GetAABB(b_tf);
 					bool isCol = aabbCheck(a_aabb, b_aabb);
+					if (isCol) {
+						b.isDestroy = true;
+						//std::cout << (unsigned)b_id<< " " <<b.isDestroy << endl;
+					}
 				}
 			}
 		}

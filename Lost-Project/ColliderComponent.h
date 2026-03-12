@@ -18,5 +18,6 @@ class ColliderComponent {
 public:
 	glm::vec3 size;
 	glm::vec3 offset;
+	bool isStatic;
 	AABB GetAABB(TransformComponent& tf);
 };

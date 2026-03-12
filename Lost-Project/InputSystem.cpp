@@ -26,18 +26,25 @@ void InputSystem::Update(float dt) {
     uint8_t cam = game.tagStore.getEntity(Tag::Camera);
 
 	float velocity = 10.0f * dt;
+    float angular = 1000.0f * dt;
 	if (this->Keys[GLFW_KEY_W]) {
-		player_tf.position.z -= velocity;
+		player_tf.position -= velocity * player_tf.getFront();
 	}
 	if (this->Keys[GLFW_KEY_S]) {
-		player_tf.position.z += velocity;
+		player_tf.position += velocity * player_tf.getFront();
 	}
 	if (this->Keys[GLFW_KEY_A]) {
-		player_tf.position.x -= velocity;
+        player_tf.rotation.y -= angular;
 	}
 	if (this->Keys[GLFW_KEY_D]) {
-		player_tf.position.x += velocity;
+        player_tf.rotation.y += angular;
 	}
+
+    if (this->Keys[GLFW_KEY_SPACE]) {
+
+    }
+
+    //GLMUtils::printVec3(player_tf.rotation);
 
     //for (Entity e : game.entityManager.entities) {
     //    uint8_t id = e.id;

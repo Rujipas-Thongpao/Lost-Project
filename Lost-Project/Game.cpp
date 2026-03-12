@@ -34,6 +34,7 @@ void Game::Init()
 	modelLoader.load(player, "Model/Maxwell/Maxwell.obj", false);
 	MaterialComponent& player_mat = materialStore.get(player.id);
 	player_col.size = glm::vec3(1.f, 1.5f, 1.f);
+	player_col.isStatic = false;
 
 	player_mat.ambient = glm::vec3(1.0f, 0.5f, 0.31f);
 	player_mat.specular = glm::vec3(0.5f, 0.5f, 0.5f);
@@ -49,13 +50,15 @@ void Game::Init()
 	Entity directLight = entityManager.CreateEntity();
 	TransformComponent& directLight_tf = transformStore.add(directLight.id);
 	LightComponent& directLight_light = lightStore.add(directLight.id);
+	directLight_tf.position = glm::vec3(0.f, 10.f, 0.f);
 	directLight_light.Color = glm::vec3(1.0f, 1.0f, 1.0f);
 	directLight_light.Intensity = 1.0f;
 
-	for (int i = 0; i < 1; i++) {
+	for (int i = 0; i < 10; i++) {
 		Entity& block = entityManager.CreateEntity();
 		ColliderComponent& block_col = colliderStore.add(block.id);
 		block_col.size = glm::vec3(1, 1, 1);
+		block_col.isStatic = true;
 
 		TransformComponent& block_tf = transformStore.add(block.id);
 		block_tf.position = glm::vec3(5.0f, 0.0f, 3.0f*i);

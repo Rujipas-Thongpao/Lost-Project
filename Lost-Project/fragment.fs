@@ -24,24 +24,24 @@ uniform Material material;
 void main()
 {    
     // ambient
-    // vec3 ambient = lightColor * material.ambient;
+    vec3 ambient = lightColor * material.ambient;
   	
     // diffuse 
     // vec3 norm = normalize(texture(texture_normal1, TexCoord)).rgb;
-    // vec3 lightDir = normalize(lightPosition - PositionWS);
-    // float diff = max(dot(norm, lightDir), 0.0);
-    // vec3 diffuse = lightColor * (diff * material.diffuse);
+    vec3 lightDir = normalize(lightPosition - PositionWS);
+    float ndotl= max(dot(Normal, lightDir), 0.0);
+    vec3 diffuse = lightColor * ndotl;
     
     // specular
-    // vec3 viewDir = normalize(ViewDirWS - PositionWS);
-    // vec3 reflectDir = reflect(-lightDir, norm);  
-    // float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
+    vec3 viewDir = normalize(ViewDirWS - PositionWS);
+    vec3 reflectDir = reflect(-lightDir, Normal);  
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
     // vec3 specularMap = texture(texture_specular1, TexCoord).rgb;
-    // vec3 specular = lightColor * specularMap * (spec * material.specular);  
+    vec3 specular = lightColor * (spec * material.specular);  
         
-    // vec3 result = ambient + diffuse + specular;
+    vec3 result = diffuse;
     vec3 baseTex = texture(texture_diffuse1, TexCoord).rgb;
-    //result *= baseTex;
+    result *= baseTex;
 
-    FragColor = vec4(baseTex, 1.0);
+    FragColor = vec4(result, 1.0);
 }
