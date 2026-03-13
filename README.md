@@ -2,7 +2,7 @@
 
 This is for assignment-3 for openGL course!
 
-
+https://youtu.be/fumqjUb3_DQ
 
 Create a simple 3D gamethat has the following features:
 - Models loading from file: player’s model, scenes, items, enemies,….
