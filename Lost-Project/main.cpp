@@ -137,6 +137,7 @@ void processInput(GLFWwindow* window)
 	inputSystem.Keys[GLFW_KEY_DOWN] = glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS;
 	inputSystem.Keys[GLFW_KEY_LEFT] = glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS;
 	inputSystem.Keys[GLFW_KEY_RIGHT] = glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS;
+	inputSystem.Keys[GLFW_KEY_SPACE] = glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS;
 
 	inputSystem.Update(myTime.DeltaTime());
 }

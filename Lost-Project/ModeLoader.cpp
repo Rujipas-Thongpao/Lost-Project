@@ -1,18 +1,18 @@
 #include "ModelLoader.h"
 #include "Game.h"
 
-uint8_t ModelLoader::load(Entity e, const char* path, bool gammaCorrection) {
+uint8_t ModelLoader::load(uint8_t e_id, const char* path, bool gammaCorrection) {
     Game& game = Game::getInstance();
 
-    game.meshStore.add(e.id);
-    game.materialStore.add(e.id);
+    game.meshStore.add(e_id);
+    game.materialStore.add(e_id);
 
-    MeshComponent& mc = game.meshStore.get(e.id);
-    MaterialComponent& mat = game.materialStore.get(e.id);
+    MeshComponent& mc = game.meshStore.get(e_id);
+    MaterialComponent& mat = game.materialStore.get(e_id);
     mat.gammaCorrection = gammaCorrection;
 
     loadFromFile(path, mc, mat, gammaCorrection);
-    return e.id;
+    return e_id;
 }
 
 void ModelLoader::loadFromFile(const char* path, MeshComponent& mc, MaterialComponent& mat, bool gammaCorrection) {

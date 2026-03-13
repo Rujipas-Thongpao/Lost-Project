@@ -11,7 +11,7 @@
 
 class ModelLoader {
 public:
-    static uint8_t load(Entity e, const char* path, bool gammaCorrection = false);
+    static uint8_t load(uint8_t e_id, const char* path, bool gammaCorrection = false);
 
 private:
     static void loadFromFile(const char* path, MeshComponent& mc, MaterialComponent& mat, bool gammaCorrection);

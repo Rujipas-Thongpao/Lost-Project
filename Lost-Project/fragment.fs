@@ -28,7 +28,7 @@ void main()
   	
     // diffuse 
     // vec3 norm = normalize(texture(texture_normal1, TexCoord)).rgb;
-    vec3 lightDir = normalize(lightPosition - PositionWS);
+    vec3 lightDir = normalize(lightPosition);
     float ndotl= max(dot(Normal, lightDir), 0.0);
     vec3 diffuse = lightColor * ndotl;
     

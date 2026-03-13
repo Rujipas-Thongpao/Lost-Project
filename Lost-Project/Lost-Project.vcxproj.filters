@@ -126,6 +126,9 @@
     <ClCompile Include="GunSystem.cpp">
       <Filter>Source Files\System</Filter>
     </ClCompile>
+    <ClCompile Include="BulletComponent.cpp">
+      <Filter>Source Files\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\Users\HP\Documents\OpenGL_Thing\glad\include\glad\glad.h">
@@ -230,6 +233,12 @@
     <ClInclude Include="GunSystem.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
+    <ClInclude Include="BulletComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="fragment.fs">
@@ -244,6 +253,10 @@
     <None Include="lightVertex.vs">
       <Filter>Source Files\Shader</Filter>
     </None>
+    <None Include="skyboxVertex.vs">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="skyboxFragment.fs" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Texture\wall.jpg">

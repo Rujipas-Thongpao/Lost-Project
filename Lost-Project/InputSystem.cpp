@@ -26,7 +26,7 @@ void InputSystem::Update(float dt) {
     uint8_t cam = game.tagStore.getEntity(Tag::Camera);
 
 	float velocity = 10.0f * dt;
-    float angular = 1000.0f * dt;
+    float angular = 500.0f * dt;
 	if (this->Keys[GLFW_KEY_W]) {
 		player_tf.position -= velocity * player_tf.getFront();
 	}
@@ -41,7 +41,7 @@ void InputSystem::Update(float dt) {
 	}
 
     if (this->Keys[GLFW_KEY_SPACE]) {
-
+        game.gunSystem.Shoot();
     }
 
     //GLMUtils::printVec3(player_tf.rotation);

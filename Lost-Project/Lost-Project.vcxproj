@@ -126,6 +126,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BulletComponent.cpp" />
     <ClCompile Include="C:\Users\HP\Documents\OpenGL_Thing\glad\src\glad.c" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="CameraSystem.cpp" />
@@ -160,12 +161,14 @@
     <ClCompile Include="TransformSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BulletComponent.h" />
     <ClInclude Include="C:\Users\HP\Documents\OpenGL_Thing\glad\include\glad\glad.h" />
     <ClInclude Include="C:\Users\HP\Documents\OpenGL_Thing\glad\include\KHR\khrplatform.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="CameraSystem.h" />
     <ClInclude Include="ColliderSystem.h" />
     <ClInclude Include="ComponenetStore.h" />
+    <ClInclude Include="CubeMap.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GunSystem.h" />
@@ -199,6 +202,8 @@
     <None Include="fragment.fs" />
     <None Include="lightFragment.fs" />
     <None Include="lightVertex.vs" />
+    <None Include="skyboxFragment.fs" />
+    <None Include="skyboxVertex.vs" />
     <None Include="vertex.vs" />
   </ItemGroup>
   <ItemGroup>

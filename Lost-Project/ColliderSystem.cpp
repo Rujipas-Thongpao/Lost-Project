@@ -21,36 +21,60 @@ bool aabbCheck(AABB a, AABB b) {
 void ColliderSystem::Update() {
 	Game& game = Game::getInstance();
 
-	for (Entity a : game.entityManager.entities) {
-		uint8_t a_id = a.id;
-		if(a.isDestroy) continue;
-		if (game.colliderStore.has(a_id) && game.transformStore.has(a_id)) {
+	for (uint8_t bullet : game.tagStore.getEntities(Tag::Bullet)) {
+		Entity& bullet_e = game.entityManager.entities[bullet];
+		if(bullet_e.isDestroy) continue;
+		ColliderComponent& bullet_col = game.colliderStore.get(bullet);
+		TransformComponent& bullet_tf= game.transformStore.get(bullet);
 
-			ColliderComponent& a_col = game.colliderStore.get(a_id);
-			TransformComponent& a_tf= game.transformStore.get(a_id);
+		AABB bullet_aabb = bullet_col.GetAABB(bullet_tf);
 
-			AABB a_aabb = a_col.GetAABB(a_tf);
+		for (uint8_t block : game.tagStore.getEntities(Tag::Enemy)) {
+			Entity& block_e = game.entityManager.entities[block];
+			if(block_e.isDestroy) continue;
+			ColliderComponent& block_col = game.colliderStore.get(block);
+			TransformComponent& block_tf= game.transformStore.get(block);
 
-			for (Entity& b : game.entityManager.entities) {
-				uint8_t b_id = b.id;
-				if(b.isDestroy) continue;
-
-				if (a_id == b_id) continue;
-
-				if (game.colliderStore.has(b_id) && game.transformStore.has(b_id)) {
-
-					ColliderComponent& b_col = game.colliderStore.get(b_id);
-					TransformComponent& b_tf= game.transformStore.get(b_id);
-
-					AABB b_aabb = b_col.GetAABB(b_tf);
-					bool isCol = aabbCheck(a_aabb, b_aabb);
-					if (isCol) {
-						b.isDestroy = true;
-						//std::cout << (unsigned)b_id<< " " <<b.isDestroy << endl;
-					}
-				}
+			AABB block_aabb = block_col.GetAABB(block_tf);
+			bool isCol = aabbCheck(bullet_aabb, block_aabb);
+			if (isCol) {
+				//bullet_e.isDestroy = true;
+				block_e.isDestroy = true;
+				//std::cout << (unsigned)b_id<< " " <<b.isDestroy << endl;
 			}
 		}
 	}
+
+	//for (Entity a : game.entityManager.entities) {
+	//	uint8_t a_id = a.id;
+	//	if(a.isDestroy) continue;
+	//	if (game.colliderStore.has(a_id) && game.transformStore.has(a_id)) {
+
+	//		ColliderComponent& a_col = game.colliderStore.get(a_id);
+	//		TransformComponent& a_tf= game.transformStore.get(a_id);
+
+	//		AABB a_aabb = a_col.GetAABB(a_tf);
+
+	//		for (Entity& b : game.entityManager.entities) {
+	//			uint8_t b_id = b.id;
+	//			if(b.isDestroy) continue;
+
+	//			if (a_id == b_id) continue;
+
+	//			if (game.colliderStore.has(b_id) && game.transformStore.has(b_id)) {
+
+	//				ColliderComponent& b_col = game.colliderStore.get(b_id);
+	//				TransformComponent& b_tf= game.transformStore.get(b_id);
+
+	//				AABB b_aabb = b_col.GetAABB(b_tf);
+	//				bool isCol = aabbCheck(a_aabb, b_aabb);
+	//				if (isCol) {
+	//					b.isDestroy = true;
+	//					//std::cout << (unsigned)b_id<< " " <<b.isDestroy << endl;
+	//				}
+	//			}
+	//		}
+	//	}
+	//}
 }
 
