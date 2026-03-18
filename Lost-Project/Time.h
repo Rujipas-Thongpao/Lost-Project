@@ -1,21 +1,33 @@
-#ifndef TIME_H
-#define TIME_H
-
+// Time.h
+#pragma once
 #include <GLFW/glfw3.h>
 
 class Time {
 public:
-    Time() {}
-    double lastTime = 0.0f;
-    float deltaTime = 0.0f;
-
-    float DeltaTime() {
-		double GetTime = glfwGetTime();
-        deltaTime = GetTime - lastTime;
-        lastTime = GetTime;
-        return deltaTime;
+    static Time& getInstance() {
+        static Time instance;
+        return instance;
     }
+    Time(const Time&) = delete;
+    Time& operator=(const Time&) = delete;
+
+    void tick() {
+        float current = (float)glfwGetTime();
+        deltaTime = current - lastFrame;
+        lastFrame = current;
+        elapsed = current;
+        frameCount++;
+    }
+
+    float getDeltaTime()  const { return deltaTime; }
+    float getElapsed()    const { return elapsed; }
+    float getFPS()        const { return deltaTime > 0 ? 1.0f / deltaTime : 0; }
+    int   getFrameCount() const { return frameCount; }
+
+private:
+    Time() {}
+    float deltaTime = 0.0f;
+    float lastFrame = 0.0f;
+    float elapsed = 0.0f;
+    int   frameCount = 0;
 };
-#endif
-
-

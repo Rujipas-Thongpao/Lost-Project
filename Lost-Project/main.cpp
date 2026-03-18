@@ -27,7 +27,7 @@ void processInput(GLFWwindow* window);
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 800;
 
-Time myTime;
+Time& myTime = Time::getInstance();
 Game& Lost = Game::getInstance();
 
 const double TARGET_FPS = 120.0;
@@ -93,8 +93,8 @@ int main()
 	{
 		// input
 		// -----
-		float dt = myTime.DeltaTime();
-		while (glfwGetTime() - myTime.lastTime < TARGET_DT) { /* busy wait */ }
+		myTime.tick();
+		while (glfwGetTime() - myTime.getDeltaTime() < TARGET_DT) { /* busy wait */ }
 		//std::cout << "dt: " << dt << " fps: " << 1.0f / dt << std::endl;
 		processInput(window);
 		//Lost.ProcessInput(myTime.deltaTime);
@@ -106,7 +106,7 @@ int main()
 		//glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		Lost.Update(dt);
+		Lost.Update(myTime.getDeltaTime());
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
@@ -139,7 +139,7 @@ void processInput(GLFWwindow* window)
 	inputSystem.Keys[GLFW_KEY_RIGHT] = glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS;
 	inputSystem.Keys[GLFW_KEY_SPACE] = glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS;
 
-	inputSystem.Update(myTime.DeltaTime());
+	inputSystem.Update(myTime.getDeltaTime());
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
