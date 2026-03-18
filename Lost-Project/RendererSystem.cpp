@@ -35,7 +35,7 @@ void RendererSystem::Render()
 	Game& game = Game::getInstance();
 	std::pair<uint8_t, CameraComponent&> cam_e_c = game.cameraStore.getFirst();
 	CameraComponent& cam_cam = cam_e_c.second;
-	uint8_t cam_id = cam_e_c.first;
+	uint16_t cam_id = cam_e_c.first;
 	TransformComponent& cam_tf = game.transformStore.get(cam_id);
 	//GLMUtils::printVec3(cam_tf.position, "Camera position : ");
 	
@@ -74,8 +74,8 @@ void RendererSystem::Render()
 		this->shader.SetFloat("material.shininess", mat.shininess);
 
 		// light
-		std::pair<uint8_t, LightComponent> light_id_l = game.lightStore.getFirst();
-		uint8_t light_id = light_id_l.first;
+		std::pair<uint16_t, LightComponent> light_id_l = game.lightStore.getFirst();
+		uint16_t light_id = light_id_l.first;
 		LightComponent light_l = light_id_l.second;
 		TransformComponent light_tf = game.transformStore.get(light_id);
 

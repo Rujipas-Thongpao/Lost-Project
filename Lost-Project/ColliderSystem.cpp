@@ -21,7 +21,7 @@ bool aabbCheck(AABB a, AABB b) {
 void ColliderSystem::Update() {
 	Game& game = Game::getInstance();
 
-	for (uint8_t bullet : game.tagStore.getEntities(Tag::Bullet)) {
+	for (uint16_t bullet : game.tagStore.getEntities(Tag::Bullet)) {
 		Entity& bullet_e = game.entityManager.entities[bullet];
 		if(bullet_e.isDestroy) continue;
 		ColliderComponent& bullet_col = game.colliderStore.get(bullet);
@@ -29,7 +29,7 @@ void ColliderSystem::Update() {
 
 		AABB bullet_aabb = bullet_col.GetAABB(bullet_tf);
 
-		for (uint8_t block : game.tagStore.getEntities(Tag::Enemy)) {
+		for (uint16_t block : game.tagStore.getEntities(Tag::Enemy)) {
 			Entity& block_e = game.entityManager.entities[block];
 			if(block_e.isDestroy) continue;
 			ColliderComponent& block_col = game.colliderStore.get(block);
@@ -46,7 +46,7 @@ void ColliderSystem::Update() {
 	}
 
 	//for (Entity a : game.entityManager.entities) {
-	//	uint8_t a_id = a.id;
+	//	uint16_t a_id = a.id;
 	//	if(a.isDestroy) continue;
 	//	if (game.colliderStore.has(a_id) && game.transformStore.has(a_id)) {
 
@@ -56,7 +56,7 @@ void ColliderSystem::Update() {
 	//		AABB a_aabb = a_col.GetAABB(a_tf);
 
 	//		for (Entity& b : game.entityManager.entities) {
-	//			uint8_t b_id = b.id;
+	//			uint16_t b_id = b.id;
 	//			if(b.isDestroy) continue;
 
 	//			if (a_id == b_id) continue;

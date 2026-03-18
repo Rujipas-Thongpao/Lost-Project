@@ -4,8 +4,8 @@
 
 void CameraSystem::Init() {
 	Game& game = Game::getInstance();
-	uint8_t player = game.tagStore.getEntity(Tag::Player);
-	uint8_t camera = game.tagStore.getEntity(Tag::Camera);
+	uint16_t player = game.tagStore.getEntity(Tag::Player);
+	uint16_t camera = game.tagStore.getEntity(Tag::Camera);
 
 	TransformComponent& player_tf = game.transformStore.get(player);
 	TransformComponent& camera_tf = game.transformStore.get(camera);
@@ -15,8 +15,8 @@ void CameraSystem::Init() {
 
 void CameraSystem::Update(float dt) {
 	Game& game = Game::getInstance();
-	uint8_t player = game.tagStore.getEntity(Tag::Player);
-	uint8_t camera = game.tagStore.getEntity(Tag::Camera);
+	uint16_t player = game.tagStore.getEntity(Tag::Player);
+	uint16_t camera = game.tagStore.getEntity(Tag::Camera);
 
 	TransformComponent& player_tf = game.transformStore.get(player);
 	TransformComponent& camera_tf = game.transformStore.get(camera);

@@ -118,9 +118,9 @@ void Game::Init()
 
 int GetEnemyLeft() {
 	Game& game = Game::getInstance();
-	std::vector<uint8_t> enemies = game.tagStore.getEntities(Tag::Enemy);
+	std::vector<uint16_t> enemies = game.tagStore.getEntities(Tag::Enemy);
 	int left = 0;
-	for (uint8_t e : enemies) {
+	for (uint16_t e : enemies) {
 		if (!game.entityManager.entities[e].isDestroy) left++;
 	}
 	return left;

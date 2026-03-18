@@ -13,7 +13,7 @@
 
 
 void GunSystem::Init() {
-	maxCooldown = .1f;
+	maxCooldown = .001f;
 	currentCooldown = 0.f;
 }
 
@@ -24,7 +24,7 @@ void GunSystem::Shoot() {
 	Game& game = Game::getInstance();
 	Assets& assetManager = Assets::getInstance();
 
-	uint8_t player = game.tagStore.getEntity(Tag::Player);
+	uint16_t player = game.tagStore.getEntity(Tag::Player);
 	TransformComponent& player_tf = game.transformStore.get(player);
 	glm::vec3 player_tf_front = player_tf.getFront();
 
@@ -32,7 +32,7 @@ void GunSystem::Shoot() {
 	glm::vec3 spawnFront = player_tf.getFront();
 
 	Entity bullet = game.entityManager.CreateEntity();
-	uint8_t bullet_id = bullet.id;
+	uint16_t bullet_id = bullet.id;
 	game.tagStore.add(bullet_id, Tag::Bullet);
 
 	TransformComponent& bullet_tf = game.transformStore.add(bullet_id);
