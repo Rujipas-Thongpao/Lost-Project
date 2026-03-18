@@ -129,6 +129,9 @@
     <ClCompile Include="BulletComponent.cpp">
       <Filter>Source Files\Component</Filter>
     </ClCompile>
+    <ClCompile Include="MaterialData.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\Users\HP\Documents\OpenGL_Thing\glad\include\glad\glad.h">
@@ -237,6 +240,9 @@
       <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="CubeMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,21 +1,25 @@
 #include "ModelLoader.h"
 #include "Game.h"
 
-uint8_t ModelLoader::load(uint8_t e_id, const char* path, bool gammaCorrection) {
-    Game& game = Game::getInstance();
+uint8_t ModelLoader::load(const char* path, bool gammaCorrection) {
+    //Game& game = Game::getInstance();
 
-    game.meshStore.add(e_id);
-    game.materialStore.add(e_id);
+    //game.meshStore.add(e_id);
+    //game.materialStore.add(e_id);
 
-    MeshComponent& mc = game.meshStore.get(e_id);
-    MaterialComponent& mat = game.materialStore.get(e_id);
+    MeshData mc;
+    MaterialData mat;
     mat.gammaCorrection = gammaCorrection;
 
     loadFromFile(path, mc, mat, gammaCorrection);
-    return e_id;
+
+    meshDatas.push_back(mc);
+    materialDatas.push_back(mat);
+
+    return id++;
 }
 
-void ModelLoader::loadFromFile(const char* path, MeshComponent& mc, MaterialComponent& mat, bool gammaCorrection) {
+void ModelLoader::loadFromFile(const char* path, MeshData& mc, MaterialData& mat, bool gammaCorrection) {
     Assimp::Importer import;
     const aiScene* scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
 
@@ -28,7 +32,7 @@ void ModelLoader::loadFromFile(const char* path, MeshComponent& mc, MaterialComp
     processNode(scene->mRootNode, scene, mc, mat);
 }
 
-void ModelLoader::processNode(aiNode* node, const aiScene* scene, MeshComponent& mc, MaterialComponent& mat) {
+void ModelLoader::processNode(aiNode* node, const aiScene* scene, MeshData& mc, MaterialData& mat) {
     for (unsigned int i = 0; i < node->mNumMeshes; i++) {
         aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
         mc.meshes.push_back(processMesh(mesh, scene, mat));
@@ -38,7 +42,7 @@ void ModelLoader::processNode(aiNode* node, const aiScene* scene, MeshComponent&
     }
 }
 
-Mesh ModelLoader::processMesh(aiMesh* mesh, const aiScene* scene, MaterialComponent& mat) {
+Mesh ModelLoader::processMesh(aiMesh* mesh, const aiScene* scene, MaterialData& mat) {
     vector<Vertex>       vertices;
     vector<unsigned int> indices;
     vector<Texture2D>      textures;
@@ -92,7 +96,7 @@ Mesh ModelLoader::processMesh(aiMesh* mesh, const aiScene* scene, MaterialCompon
     return Mesh(vertices, indices, textures);
 }
 
-vector<Texture2D> ModelLoader::loadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName, MaterialComponent& matComp) {
+vector<Texture2D> ModelLoader::loadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName, MaterialData& matComp) {
     vector<Texture2D> textures;
 
     for (unsigned int i = 0; i < mat->GetTextureCount(type); i++) {

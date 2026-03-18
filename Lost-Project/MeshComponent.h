@@ -9,6 +9,6 @@
 class MeshComponent
 {
 public:
-	vector<Mesh> meshes;
+	uint8_t mesh_id;
 };
 #endif

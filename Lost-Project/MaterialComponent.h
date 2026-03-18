@@ -11,9 +11,7 @@
 class MaterialComponent
 {
 public:
-    std::vector<Texture2D> textures_loaded;
-    std::string          directory;
-    bool            gammaCorrection = false;
+    uint8_t materialId;
     glm::vec3 ambient;
     glm::vec3 diffuse;
     glm::vec3 specular;

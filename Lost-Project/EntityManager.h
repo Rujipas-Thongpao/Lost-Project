@@ -1,7 +1,4 @@
 #pragma once
-#ifndef ENTITY_MANAGER_H
-#define ENTITY_MANAGER_H
-
 #include <stdio.h>
 #include <vector>
 
@@ -17,4 +14,3 @@ public:
 	Entity& CreateEntity();
 	void Cleanup();
 };
-#endif // !ENTITY_MANAGER_H

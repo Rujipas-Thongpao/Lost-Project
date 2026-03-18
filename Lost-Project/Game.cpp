@@ -2,10 +2,12 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
+
 #include "game.h"
 #include "MaterialComponent.h"
 #include "RendererSystem.h"
 #include <cstdlib>
+#include "Asset.h"
 
 
 Game& Game::getInstance() {
@@ -32,16 +34,33 @@ void Game::Init()
 	inputSystem.Init();
 	colliderSystem.Init();
 
+
+	// load mesh
+
+	Assets& assetManager = Assets::getInstance();
+
+	assetManager.registerMesh("player_mesh", modelLoader.load("Model/Maxwell/Maxwell.obj"));
+	assetManager.registerMesh("cat_mesh", modelLoader.load("Model/NoodleCat/Cat.obj"));
+	assetManager.registerMesh("floor_mesh", modelLoader.load("Model/Floor/floor.obj"));
+	assetManager.registerMesh("bullet_mesh", modelLoader.load("Model/Bullet/Bullet.obj"));
+
 	Entity& player = entityManager.CreateEntity();
 	tagStore.add(player.id, Tag::Player);
 
-	ColliderComponent& player_col = colliderStore.add(player.id);
 	TransformComponent& player_tf = transformStore.add(player.id);
-	modelLoader.load(player.id, "Model/Maxwell/Maxwell.obj", false);
-	MaterialComponent& player_mat = materialStore.get(player.id);
+
+	ColliderComponent& player_col = colliderStore.add(player.id);
 	player_col.size = glm::vec3(1.f, 1.5f, 1.f);
 	player_col.isStatic = false;
 
+	uint8_t player_modelId = assetManager.getMesh("player_mesh");
+
+	MeshComponent player_mesh = meshStore.add(player.id);
+	player_mesh.mesh_id = player_modelId;
+
+	MaterialComponent& player_mat = materialStore.get(player.id);
+
+	player_mat.materialId = player_modelId;
 	player_mat.ambient = glm::vec3(1.0f, 1.0f, 1.0f);
 	player_mat.specular = glm::vec3(0.5f, 0.5f, 0.5f);
 	player_mat.shininess = 32.0f;
@@ -61,22 +80,23 @@ void Game::Init()
 	directLight_light.Color = glm::vec3(1.0f, 1.0f, 1.0f);
 	directLight_light.Intensity = 1.0f;
 
+	uint8_t block_meshId = assetManager.getMesh("cat_mesh");
+
 	for (int i = 0; i < 10; i++) {
 		Entity& block = entityManager.CreateEntity();
-
 		tagStore.add(block.id, Tag::Enemy);
 
+		MeshComponent& block_mesh = meshStore.add(block.id);
+		block_mesh.mesh_id = block_meshId;
 
 		TransformComponent& block_tf = transformStore.add(block.id);
 		block_tf.position = glm::vec3(5.0f, 0.0f, 3.0f*i);
 
-		modelLoader.load(block.id, "Model/NoodleCat/Cat.obj", false);
-
 		ColliderComponent& block_col = colliderStore.add(block.id);
 		block_col.size = glm::vec3(1, 1, 1);
-		//block_col.isStatic = true;
+		block_col.isStatic = true;
 
-		//MaterialComponent& block_mat = materialStore.get(block.id);
+		MaterialComponent& block_mat = materialStore.get(block.id);
 		float rx = (float)rand() / RAND_MAX;
 		float rz = (float)rand() / RAND_MAX;
 		float ra = (float)rand() / RAND_MAX;
@@ -84,10 +104,13 @@ void Game::Init()
 		block_tf.rotation = glm::vec3(0, 360.f * ra, 0);
 	}
 
-	Entity& floor = entityManager.CreateEntity();
-	TransformComponent& floor_tf = transformStore.add(floor.id);
+	uint8_t floor_meshId = assetManager.getMesh("floor_mesh");
 
-	modelLoader.load(floor.id, "Model/Floor/floor.obj", false);
+	Entity& floor = entityManager.CreateEntity();
+	MeshComponent& floor_mesh = meshStore.add(floor.id);
+	floor_mesh.mesh_id = floor_meshId;
+
+	TransformComponent& floor_tf = transformStore.add(floor.id);
 
 	cameraSystem.Init();
 }

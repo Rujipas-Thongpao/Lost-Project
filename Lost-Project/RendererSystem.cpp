@@ -12,6 +12,7 @@
 #include "CameraComponent.h"
 #include "GLMUtils.h"
 #include "LightComponent.h"
+#include "ModelLoader.h";
 
 #include <glad/glad.h>
 #include <glm/glm.hpp>
@@ -81,9 +82,10 @@ void RendererSystem::Render()
 		this->shader.SetVector3f("lightPosition", light_tf.position);
 		this->shader.SetVector3f("lightColor", light_l.Color);
 
-		for (unsigned int i = 0; i < mesh.meshes.size(); i++) {
+		MeshData& meshData = game.modelLoader.meshDatas[mesh.mesh_id];
+		for (unsigned int i = 0; i < meshData.meshes.size(); i++) {
 			//std::cout << mesh.meshes[i].vertices.size() << std::endl;
-			mesh.meshes[i].Draw(this->shader);
+			meshData.meshes[i].Draw(this->shader);
 		}
 	}
 }
