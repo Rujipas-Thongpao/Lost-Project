@@ -12,7 +12,15 @@
 #include <iostream>
 
 
+void GunSystem::Init() {
+	maxCooldown = .1f;
+	currentCooldown = 0.f;
+}
+
 void GunSystem::Shoot() {
+	if (currentCooldown < maxCooldown) return;
+	currentCooldown = 0.0f;
+
 	Game& game = Game::getInstance();
 	Assets& assetManager = Assets::getInstance();
 
@@ -42,6 +50,7 @@ void GunSystem::Shoot() {
 }
 
 void GunSystem::Update(float dt) {
+	currentCooldown += dt;
 	Game& game = Game::getInstance();
 	for (Entity& e : game.entityManager.entities) {
 		bool hasBullet = game.bulletStore.has(e.id);

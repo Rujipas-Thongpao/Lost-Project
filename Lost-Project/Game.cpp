@@ -33,6 +33,7 @@ void Game::Init()
 	rendererSystem.Init();
 	inputSystem.Init();
 	colliderSystem.Init();
+	gunSystem.Init();
 
 
 	// load mesh
@@ -55,17 +56,17 @@ void Game::Init()
 
 	uint8_t player_modelId = assetManager.getMesh("player_mesh");
 
-	MeshComponent player_mesh = meshStore.add(player.id);
+	MeshComponent& player_mesh = meshStore.add(player.id);
 	player_mesh.mesh_id = player_modelId;
 
-	MaterialComponent& player_mat = materialStore.get(player.id);
+	MaterialComponent& player_mat = materialStore.add(player.id);
 
 	player_mat.materialId = player_modelId;
 	player_mat.ambient = glm::vec3(1.0f, 1.0f, 1.0f);
 	player_mat.specular = glm::vec3(0.5f, 0.5f, 0.5f);
 	player_mat.shininess = 32.0f;
 
-	Entity camera = entityManager.CreateEntity();
+	Entity& camera = entityManager.CreateEntity();
 	cameraStore.add(camera.id);
 	tagStore.add(camera.id, Tag::Camera);
 	TransformComponent& cam_tf = transformStore.add(camera.id);
@@ -96,7 +97,7 @@ void Game::Init()
 		block_col.size = glm::vec3(1, 1, 1);
 		block_col.isStatic = true;
 
-		MaterialComponent& block_mat = materialStore.get(block.id);
+		MaterialComponent& block_mat = materialStore.add(block.id);
 		float rx = (float)rand() / RAND_MAX;
 		float rz = (float)rand() / RAND_MAX;
 		float ra = (float)rand() / RAND_MAX;
@@ -130,17 +131,14 @@ void Game::Update(float dt)
 {
 	transformSystem.Update();	
 	cameraSystem.Update(dt);
-	inputSystem.Update(dt);
-	gunSystem.Update(dt);
 	colliderSystem.Update();
+	gunSystem.Update(dt);
 	rendererSystem.Render();
 
-	// 2. then ImGui on top
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
 
-	// your UI here
 	ImGui::Begin("HUD");
 	int enemyLeft = GetEnemyLeft();
 	if (enemyLeft > 0) {
