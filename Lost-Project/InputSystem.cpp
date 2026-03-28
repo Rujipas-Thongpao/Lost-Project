@@ -28,10 +28,10 @@ void InputSystem::Update(float dt) {
 	float velocity = 10.0f * dt;
     float angular = 500.0f * dt;
 	if (this->Keys[GLFW_KEY_W]) {
-		player_tf.position -= velocity * player_tf.getFront();
+		player_tf.position += velocity * player_tf.getFront();
 	}
 	if (this->Keys[GLFW_KEY_S]) {
-		player_tf.position += velocity * player_tf.getFront();
+		player_tf.position -= velocity * player_tf.getFront();
 	}
 	if (this->Keys[GLFW_KEY_A]) {
         player_tf.rotation.y -= angular;

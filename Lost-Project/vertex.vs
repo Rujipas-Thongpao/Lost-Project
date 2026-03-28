@@ -13,6 +13,8 @@ uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
 
+uniform bool isAnimated;
+
 const int MAX_BONES = 100;
 const int MAX_BONE_INFLUENCE = 4;
 uniform mat4 finalBonesMatrices[MAX_BONES];
@@ -20,25 +22,33 @@ uniform mat4 finalBonesMatrices[MAX_BONES];
 
 void main()
 {
-
     vec4 totalPosition = vec4(0.0f);
-	vec3 localNormal = vec3(0.0f);
-    for(int i = 0 ; i < MAX_BONE_INFLUENCE ; i++)
-    {
-        if(boneIds[i] == -1) 
-            continue;
-        if(boneIds[i] >=MAX_BONES) 
-        {
-            totalPosition = vec4(aPos,1.0f);
-            break;
-        }
-        vec4 localPosition = finalBonesMatrices[boneIds[i]] * vec4(aPos,1.0f);
-        totalPosition += localPosition * weights[i];
-        vec3 localNormal = mat3(finalBonesMatrices[boneIds[i]]) * aNormal;
+	vec3 totalNormal = vec3(0.0f);
+    if(isAnimated){
+		for(int i = 0 ; i < MAX_BONE_INFLUENCE ; i++)
+		{
+			if(boneIds[i] == -1) 
+				continue;
+			if(boneIds[i] >=MAX_BONES) 
+			{
+				totalPosition = vec4(aPos,1.0f);
+				break;
+			}
+			vec4 localPosition = finalBonesMatrices[boneIds[i]] * vec4(aPos,1.0f);
+			totalPosition += localPosition * weights[i];
+			totalNormal += mat3(transpose(inverse(finalBonesMatrices[boneIds[i]]))) * aNormal * weights[i];
+		}
     }
+	else{
+		totalPosition = vec4(aPos,1.0f);
+		totalNormal = aNormal;
+	}
+
+	// TODO : Have to fix normal
+	totalNormal = aNormal;
 	
-    TexCoord = texCoord; // pass through the texture coordinate
-    Normal = mat3(transpose(inverse(model))) * localNormal;  
+    TexCoord = texCoord;
+    Normal = mat3(transpose(inverse(model))) * totalNormal;  
     gl_Position = projection * view * model * totalPosition;
-    PositionWS = vec3(model * totalPosition); // calculate the world space position of the vertex
+    PositionWS = vec3(model * totalPosition);
 }

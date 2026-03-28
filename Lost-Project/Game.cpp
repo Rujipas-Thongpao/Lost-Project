@@ -36,19 +36,16 @@ void Game::Init()
 	colliderSystem.Init();
 	gunSystem.Init();
 
-
 	// load mesh
-
 	Assets& assetManager = Assets::getInstance();
 
-	assetManager.registerMesh("player_mesh", modelLoader.load("Model/Maxwell/Maxwell.obj"));
+	assetManager.registerMesh("player_mesh", modelLoader.load("Model/Maxwell.fbx"));
 	assetManager.registerMesh("cat_mesh", modelLoader.load("Model/NoodleCat/Cat.obj"));
 	assetManager.registerMesh("floor_mesh", modelLoader.load("Model/Floor/floor.obj"));
 	assetManager.registerMesh("bullet_mesh", modelLoader.load("Model/Bullet/Bullet.obj"));
 
-
 	assetManager.registerAnimation("player_idle",
-		new Animation("Model/Maxwell/Maxwell.obj",
+		new Animation("Model/Maxwell.fbx",
 			modelLoader.modelDatas[assetManager.GetModelData("player_mesh")])
 	);
 
@@ -74,6 +71,7 @@ void Game::Init()
 	player_mat.shininess = 32.0f;
 
 	AnimationComponent& player_anim = animationStore.add(player.id);
+	animationSystem.PlayAnimation(player.id, assetManager.getAnimation("player_idle"));
 
 	Entity& camera = entityManager.CreateEntity();
 	CameraComponent& camera_cam = cameraStore.add(camera.id);
