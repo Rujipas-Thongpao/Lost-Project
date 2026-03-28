@@ -46,7 +46,7 @@ void GunSystem::Shoot() {
 	bullet_col.size = glm::vec3(2.f, 2.f, 2.f);
 
 	MeshComponent& bullet_mesh = game.meshStore.add(bullet_id);
-	bullet_mesh.mesh_id = assetManager.getMesh("bullet_mesh");
+	bullet_mesh.mesh_id = assetManager.GetModelData("bullet_mesh");
 }
 
 void GunSystem::Update(float dt) {

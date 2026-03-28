@@ -1,7 +1,9 @@
-#version 330 core
+#version 430 core
 layout (location = 0) in vec3 aPos; // the position variable has attribute position 0
 layout (location = 1) in vec3 aNormal; // the normal variable has attribute position 1
 layout (location = 2) in vec2 texCoord; // the position variable has attribute position 0
+layout(location = 5) in ivec4 boneIds; 
+layout(location = 6) in vec4 weights;
 
 out vec2 TexCoord; // output texture coordinate to the fragment shader
 out vec3 Normal; // output normal to the fragment shader
@@ -11,11 +13,32 @@ uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
 
+const int MAX_BONES = 100;
+const int MAX_BONE_INFLUENCE = 4;
+uniform mat4 finalBonesMatrices[MAX_BONES];
+
 
 void main()
 {
+
+    vec4 totalPosition = vec4(0.0f);
+	vec3 localNormal = vec3(0.0f);
+    for(int i = 0 ; i < MAX_BONE_INFLUENCE ; i++)
+    {
+        if(boneIds[i] == -1) 
+            continue;
+        if(boneIds[i] >=MAX_BONES) 
+        {
+            totalPosition = vec4(aPos,1.0f);
+            break;
+        }
+        vec4 localPosition = finalBonesMatrices[boneIds[i]] * vec4(aPos,1.0f);
+        totalPosition += localPosition * weights[i];
+        vec3 localNormal = mat3(finalBonesMatrices[boneIds[i]]) * aNormal;
+    }
+	
     TexCoord = texCoord; // pass through the texture coordinate
-    Normal = mat3(transpose(inverse(model))) * aNormal;  
-    gl_Position = projection * view * model * vec4(aPos, 1.0); // see how we directly give a vec3 to vec4's constructor
-    PositionWS = vec3(model * vec4(aPos, 1.0)); // calculate the world space position of the vertex
+    Normal = mat3(transpose(inverse(model))) * localNormal;  
+    gl_Position = projection * view * model * totalPosition;
+    PositionWS = vec3(model * totalPosition); // calculate the world space position of the vertex
 }

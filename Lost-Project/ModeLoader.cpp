@@ -1,25 +1,18 @@
 #include "ModelLoader.h"
 #include "Game.h"
+#include "assimp_glm_helpers.h"
 
 uint8_t ModelLoader::load(const char* path, bool gammaCorrection) {
-    //Game& game = Game::getInstance();
+    ModelData model;
+    model.mat.gammaCorrection = gammaCorrection;
 
-    //game.meshStore.add(e_id);
-    //game.materialStore.add(e_id);
+    loadFromFile(path, model, gammaCorrection);
 
-    MeshData mc;
-    MaterialData mat;
-    mat.gammaCorrection = gammaCorrection;
-
-    loadFromFile(path, mc, mat, gammaCorrection);
-
-    meshDatas.push_back(mc);
-    materialDatas.push_back(mat);
-
+    modelDatas.push_back(model);
     return id++;
 }
 
-void ModelLoader::loadFromFile(const char* path, MeshData& mc, MaterialData& mat, bool gammaCorrection) {
+void ModelLoader::loadFromFile(const char* path, ModelData& model, bool gammaCorrection) {
     Assimp::Importer import;
     const aiScene* scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
 
@@ -28,21 +21,21 @@ void ModelLoader::loadFromFile(const char* path, MeshData& mc, MaterialData& mat
         return;
     }
 
-    mat.directory = string(path).substr(0, string(path).find_last_of('/'));
-    processNode(scene->mRootNode, scene, mc, mat);
+    model.mat.directory = string(path).substr(0, string(path).find_last_of('/'));
+    processNode(scene->mRootNode, scene, model);
 }
 
-void ModelLoader::processNode(aiNode* node, const aiScene* scene, MeshData& mc, MaterialData& mat) {
+void ModelLoader::processNode(aiNode* node, const aiScene* scene, ModelData& model) {
     for (unsigned int i = 0; i < node->mNumMeshes; i++) {
         aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-        mc.meshes.push_back(processMesh(mesh, scene, mat));
+        model.mc.meshes.push_back(processMesh(mesh, scene, model));
     }
     for (unsigned int i = 0; i < node->mNumChildren; i++) {
-        processNode(node->mChildren[i], scene, mc, mat);
+        processNode(node->mChildren[i], scene, model);
     }
 }
 
-Mesh ModelLoader::processMesh(aiMesh* mesh, const aiScene* scene, MaterialData& mat) {
+Mesh ModelLoader::processMesh(aiMesh* mesh, const aiScene* scene, ModelData& model) {
     vector<Vertex>       vertices;
     vector<unsigned int> indices;
     vector<Texture2D>      textures;
@@ -83,15 +76,18 @@ Mesh ModelLoader::processMesh(aiMesh* mesh, const aiScene* scene, MaterialData& 
 
     // textures
     aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-    auto diffuse = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse", mat);
-    auto specular = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular", mat);
-    auto normal = loadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal", mat);
-    auto height = loadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height", mat);
+    auto diffuse = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse", model.mat);
+    auto specular = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular", model.mat);
+    auto normal = loadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal", model.mat);
+    auto height = loadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height", model.mat);
 
     textures.insert(textures.end(), diffuse.begin(), diffuse.end());
     textures.insert(textures.end(), specular.begin(), specular.end());
     textures.insert(textures.end(), normal.begin(), normal.end());
     textures.insert(textures.end(), height.begin(), height.end());
+
+
+    ExtractBoneWeightForVertices(vertices, mesh, scene, model);
 
     return Mesh(vertices, indices, textures);
 }
@@ -156,4 +152,61 @@ unsigned int ModelLoader::TextureFromFile(const char* path, const string& direct
 
     stbi_image_free(data);
     return textureID;
+}
+
+void ModelLoader::SetVertexBoneDataToDefault(Vertex& vertex)
+{
+	for (int i = 0; i < MAX_BONE_INFLUENCE; i++)
+	{
+		vertex.m_BoneIDs[i] = -1;
+		vertex.m_Weights[i] = 0.0f;
+	}
+}
+
+void ModelLoader::SetVertexBoneData(Vertex& vertex, int boneID, float weight)
+{
+    for (int i = 0; i < MAX_BONE_INFLUENCE; ++i)
+    {
+        if (vertex.m_BoneIDs[i] < 0)
+        {
+            vertex.m_Weights[i] = weight;
+            vertex.m_BoneIDs[i] = boneID;
+            break;
+        }
+    }
+}
+
+void ModelLoader::ExtractBoneWeightForVertices(std::vector<Vertex>& vertices, aiMesh* mesh, const aiScene* scene, ModelData& model)
+{
+    BoneData& bone = model.b;
+    for (int boneIndex = 0; boneIndex < mesh->mNumBones; ++boneIndex)
+    {
+        int boneID = -1;
+        std::string boneName = mesh->mBones[boneIndex]->mName.C_Str();
+        if (bone.m_BoneInfoMap.find(boneName) == bone.m_BoneInfoMap.end())
+        {
+            BoneInfo newBoneInfo;
+            newBoneInfo.id = bone.m_BoneCounter;
+            newBoneInfo.offset = AssimpGLMHelpers::ConvertMatrixToGLMFormat(
+                mesh->mBones[boneIndex]->mOffsetMatrix);
+            bone.m_BoneInfoMap[boneName] = newBoneInfo;
+            boneID = bone.m_BoneCounter;
+            bone.m_BoneCounter++;
+        }
+        else
+        {
+            boneID = bone.m_BoneInfoMap[boneName].id;
+        }
+        assert(boneID != -1);
+        auto weights = mesh->mBones[boneIndex]->mWeights;
+        int numWeights = mesh->mBones[boneIndex]->mNumWeights;
+
+        for (int weightIndex = 0; weightIndex < numWeights; ++weightIndex)
+        {
+            int vertexId = weights[weightIndex].mVertexId;
+            float weight = weights[weightIndex].mWeight;
+            assert(vertexId <= vertices.size());
+            SetVertexBoneData(vertices[vertexId], boneID, weight);
+        }
+    }
 }

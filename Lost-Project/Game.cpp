@@ -8,6 +8,7 @@
 #include "RendererSystem.h"
 #include <cstdlib>
 #include "Asset.h"
+#include "animation.h"
 
 
 Game& Game::getInstance() {
@@ -45,6 +46,12 @@ void Game::Init()
 	assetManager.registerMesh("floor_mesh", modelLoader.load("Model/Floor/floor.obj"));
 	assetManager.registerMesh("bullet_mesh", modelLoader.load("Model/Bullet/Bullet.obj"));
 
+
+	assetManager.registerAnimation("player_idle",
+		new Animation("Model/Maxwell/Maxwell.obj",
+			modelLoader.modelDatas[assetManager.GetModelData("player_mesh")])
+	);
+
 	Entity& player = entityManager.CreateEntity();
 	tagStore.add(player.id, Tag::Player);
 
@@ -54,7 +61,7 @@ void Game::Init()
 	player_col.size = glm::vec3(1.f, 1.5f, 1.f);
 	player_col.isStatic = false;
 
-	uint8_t player_modelId = assetManager.getMesh("player_mesh");
+	uint8_t player_modelId = assetManager.GetModelData("player_mesh");
 
 	MeshComponent& player_mesh = meshStore.add(player.id);
 	player_mesh.mesh_id = player_modelId;
@@ -65,6 +72,8 @@ void Game::Init()
 	player_mat.ambient = glm::vec3(1.0f, 1.0f, 1.0f);
 	player_mat.specular = glm::vec3(0.5f, 0.5f, 0.5f);
 	player_mat.shininess = 32.0f;
+
+	AnimationComponent& player_anim = animationStore.add(player.id);
 
 	Entity& camera = entityManager.CreateEntity();
 	CameraComponent& camera_cam = cameraStore.add(camera.id);
@@ -81,7 +90,7 @@ void Game::Init()
 	directLight_light.Color = glm::vec3(1.0f, 1.0f, 1.0f);
 	directLight_light.Intensity = 1.0f;
 
-	uint8_t block_meshId = assetManager.getMesh("cat_mesh");
+	uint8_t block_meshId = assetManager.GetModelData("cat_mesh");
 
 	for (int i = 0; i < 10; i++) {
 		Entity& block = entityManager.CreateEntity();
@@ -105,7 +114,7 @@ void Game::Init()
 		block_tf.rotation = glm::vec3(0, 360.f * ra, 0);
 	}
 
-	uint8_t floor_meshId = assetManager.getMesh("floor_mesh");
+	uint8_t floor_meshId = assetManager.GetModelData("floor_mesh");
 
 	Entity& floor = entityManager.CreateEntity();
 	MeshComponent& floor_mesh = meshStore.add(floor.id);
@@ -133,6 +142,7 @@ void Game::Update(float dt)
 	cameraSystem.Update(dt);
 	colliderSystem.Update();
 	gunSystem.Update(dt);
+	animationSystem.Update(dt);
 	rendererSystem.Render();
 
 	ImGui_ImplOpenGL3_NewFrame();

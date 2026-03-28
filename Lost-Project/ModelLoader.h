@@ -14,21 +14,31 @@
 #include "Texture.h"
 #include "Entity.h"
 
-#include "MaterialData.h"
-#include "MeshData.h"
+#include "ModelData.h"
 
+
+/// <summary>
+/// This class load and store MeshData(Model) and Material
+/// </summary>
 class ModelLoader {
 public:
     uint8_t id;
-    std::vector<MeshData>  meshDatas;
-    std::vector<MaterialData> materialDatas;
+    //std::vector<MeshData>  meshDatas;
+    //std::vector<MaterialData> materialDatas;
+    //std::vector<BoneData> boneDatas;
+
+    std::vector<ModelData> modelDatas;
 
     uint8_t load(const char* path, bool gammaCorrection = false);
 
 private:
-    void loadFromFile(const char* path, MeshData& mc, MaterialData& mat, bool gammaCorrection);
-    void processNode(aiNode* node, const aiScene* scene, MeshData& mc, MaterialData& mat);
-    Mesh processMesh(aiMesh* mesh, const aiScene* scene, MaterialData& mat);
+    void loadFromFile(const char* path, ModelData& model, bool gammaCorrection);
+    void processNode(aiNode* node, const aiScene* scene, ModelData& model);
+    Mesh processMesh(aiMesh* mesh, const aiScene* scene, ModelData& model);
     vector<Texture2D> loadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName, MaterialData& matComp);
     unsigned int TextureFromFile(const char* path, const string& directory, bool gamma);
+
+    void SetVertexBoneDataToDefault(Vertex& vertex);
+    void SetVertexBoneData(Vertex& vertex, int boneID, float weight);
+    void ExtractBoneWeightForVertices(std::vector<Vertex>& vertices, aiMesh* mesh, const aiScene* scene, ModelData& model);
 };

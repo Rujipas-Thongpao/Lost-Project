@@ -82,7 +82,23 @@ void RendererSystem::Render()
 		this->shader.SetVector3f("lightPosition", light_tf.position);
 		this->shader.SetVector3f("lightColor", light_l.Color);
 
-		MeshData& meshData = game.modelLoader.meshDatas[mesh.mesh_id];
+
+		// TODO : Set animation here.
+		// get animator here
+
+				// check if animated
+		if (game.animationStore.has(e.id)) {
+			AnimationComponent& anim = game.animationStore.get(e.id);
+
+			// upload all 100 bone matrices to shader
+			for (int i = 0; i < 100; i++) {
+				//std::string uniform = "finalBonesMatrices[" + std::to_string(i) + "]";
+				shader.SetMatrix4("finalBonesMatrices[" + std::to_string(i) + "]", anim.finalBoneMatrices[i]);
+			}
+		}
+
+
+		MeshData& meshData = game.modelLoader.modelDatas[mesh.mesh_id].mc;
 		for (unsigned int i = 0; i < meshData.meshes.size(); i++) {
 			//std::cout << mesh.meshes[i].vertices.size() << std::endl;
 			meshData.meshes[i].Draw(this->shader);

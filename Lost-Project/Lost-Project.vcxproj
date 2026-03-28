@@ -133,6 +133,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\OpenGL_thing\glad\src\glad.c" />
+    <ClCompile Include="AnimationSystem.cpp" />
     <ClCompile Include="BulletComponent.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="CameraSystem.cpp" />
@@ -156,7 +157,6 @@
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MaterialData.h" />
-    <ClCompile Include="Model.cpp" />
     <ClCompile Include="ModeLoader.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="RendererSystem.cpp" />
@@ -168,7 +168,14 @@
     <ClCompile Include="TransformSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="animation.h" />
+    <ClInclude Include="AnimationComponent.h" />
+    <ClInclude Include="AnimationSystem.h" />
+    <ClInclude Include="animData.h" />
     <ClInclude Include="Asset.h" />
+    <ClInclude Include="assimp_glm_helpers.h" />
+    <ClInclude Include="Bone.h" />
+    <ClInclude Include="BoneData.h" />
     <ClInclude Include="BulletComponent.h" />
     <ClInclude Include="C:\Users\HP\Documents\OpenGL_Thing\glad\include\glad\glad.h" />
     <ClInclude Include="C:\Users\HP\Documents\OpenGL_Thing\glad\include\KHR\khrplatform.h" />
@@ -195,7 +202,7 @@
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshComponent.h" />
     <ClInclude Include="MeshData.h" />
-    <ClInclude Include="Model.h" />
+    <ClInclude Include="ModelData.h" />
     <ClInclude Include="ModelLoader.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="ResourceManagement.h" />
