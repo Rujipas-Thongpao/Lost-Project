@@ -67,11 +67,11 @@ void Game::Init()
 	player_mat.shininess = 32.0f;
 
 	Entity& camera = entityManager.CreateEntity();
-	cameraStore.add(camera.id);
+	CameraComponent& camera_cam = cameraStore.add(camera.id);
 	tagStore.add(camera.id, Tag::Camera);
 	TransformComponent& cam_tf = transformStore.add(camera.id);
-	cam_tf.position = glm::vec3(0.0f, 3.0f, 10.0f);
-	cam_tf.rotation = glm::vec3(-10.0f, 270.0f, 0.0f);
+	cam_tf.position = glm::vec3(0.0f, 7.0f, 10.0f);
+	cam_tf.rotation = glm::vec3(-35.0f, 270.0f, 0.0f);
 
 	Entity directLight = entityManager.CreateEntity();
 	TransformComponent& directLight_tf = transformStore.add(directLight.id);

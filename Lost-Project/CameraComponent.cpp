@@ -17,7 +17,12 @@ glm::mat4 CameraComponent::GetViewMatrix(const TransformComponent& tf) {
 }
 
 glm::mat4 CameraComponent::GetProjectionMatrix(float aspectRatio) {
-    return glm::perspective(glm::radians(zoom), aspectRatio, 0.1f, 100.0f);
+    //return glm::ortho()
+    return glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, -100.0f, 100.0f);
+    return    glm::ortho(0.0f, 800.0f, 0.0f, 800.0f, 0.1f, 100.0f);
+    //return glm::perspective(glm::radians(zoom), aspectRatio, 0.1f, 100.0f);0
+    return    glm::ortho(0.0f, 800.0f, 0.0f, 800.0f, 0.1f, 100.0f);
+    //return glm::perspective(glm::radians(zoom), aspectRatio, 0.1f, 100.0f);
 }
 
 void CameraComponent::UpdateVector() {
