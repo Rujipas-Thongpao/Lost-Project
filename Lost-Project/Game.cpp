@@ -76,7 +76,14 @@ void Game::Init()
 	player_mat.shininess = 32.0f;
 
 	AnimationComponent& player_anim = animationStore.add(player.id);
-	animationSystem.PlayAnimation(player.id, assetManager.getAnimation("player_idle"));
+	player_anim.Add("player_idle", assetManager.getAnimation("player_idle"));
+	player_anim.Add("player_walk", assetManager.getAnimation("player_walk"));
+	player_anim.AddBool("isWalking");
+	player_anim.SetTrigger("player_idle", "player_walk", "isWalking", true);
+	player_anim.SetTrigger("player_walk", "player_idle", "isWalking", false);
+	//player_anim.SetTrigger("player_idle", "player_walk", )
+
+	//animationSystem.PlayAnimation(player.id, assetManager.getAnimation("player_idle"));
 
 	Entity& camera = entityManager.CreateEntity();
 	CameraComponent& camera_cam = cameraStore.add(camera.id);

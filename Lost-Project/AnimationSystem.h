@@ -6,7 +6,7 @@
 class AnimationSystem {
 public:
     void Update(float dt);
-    void PlayAnimation(uint16_t entityId, Animation* animation);
+    void PlayAnimation(uint16_t entityId, const std::string animationName);
 
 private:
     void CalculateBoneTransform(

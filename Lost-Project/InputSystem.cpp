@@ -50,13 +50,18 @@ void InputSystem::Update(float dt) {
         game.gunSystem.Shoot();
     }
 
-    if (!isWalking && game.animationStore.get(player).currentAnimation != game.assetManager.getAnimation("player_idle")){
-        game.animationSystem.PlayAnimation(player, game.assetManager.getAnimation("player_idle"));
-    }
+    AnimationComponent& player_anim = game.animationStore.get(player);
+    player_anim.SetBool("isWalking", isWalking);
 
-    if (isWalking && game.animationStore.get(player).currentAnimation != game.assetManager.getAnimation("player_walk")) {
-        game.animationSystem.PlayAnimation(player, game.assetManager.getAnimation("player_walk"));
-    }
+
+
+    //if (!isWalking && game.animationStore.get(player).currentNode != "player_idle"){
+    //    game.animationSystem.PlayAnimation(player, game.assetManager.getAnimation("player_idle"));
+    //}
+
+    //if (isWalking && game.animationStore.get(player).currentAnimation != game.assetManager.getAnimation("player_walk")) {
+    //    game.animationSystem.PlayAnimation(player, game.assetManager.getAnimation("player_walk"));
+    //}
     //GLMUtils::printVec3(player_tf.rotation);
 
     //for (Entity e : game.entityManager.entities) {

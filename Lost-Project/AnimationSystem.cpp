@@ -10,25 +10,28 @@ void AnimationSystem::Update(float dt) {
 		if (!game.meshStore.has(e.id)) continue;
 
 		AnimationComponent& anim = game.animationStore.get(e.id);
-		if (!anim.currentAnimation) continue;
+		if (anim.currentNode.empty()) continue;
+
+		// check trigger
+		anim.checkTransitions();
 
 		// advance time
-		anim.currentTime += anim.currentAnimation->GetTicksPerSecond() * dt;
-		anim.currentTime = fmod(anim.currentTime, anim.currentAnimation->GetDuration());
+		anim.currentTime += anim.getCurrentAnimation()->GetTicksPerSecond() * dt;
+		anim.currentTime = fmod(anim.currentTime, anim.getCurrentAnimation()->GetDuration());
 
 		// recalculate bone matrices
 		CalculateBoneTransform(
 			anim,
-			&anim.currentAnimation->GetRootNode(),
+			&anim.getCurrentAnimation()->GetRootNode(),
 			glm::mat4(1.0f)
 		);
 	}
 }
 
-void AnimationSystem::PlayAnimation(uint16_t entityId, Animation* animation) {
+void AnimationSystem::PlayAnimation(uint16_t entityId, const std::string animationName) {
 	Game& game = Game::getInstance();
 	AnimationComponent& anim = game.animationStore.get(entityId);
-	anim.currentAnimation = animation;
+	anim.currentNode = animationName;
 	anim.currentTime = 0.0f;
 }
 
@@ -40,7 +43,7 @@ void AnimationSystem::CalculateBoneTransform(
 	std::string nodeName = node->name;
 	glm::mat4 nodeTransform = node->transformation;
 
-	Bone* bone = anim.currentAnimation->FindBone(nodeName);
+	Bone* bone = anim.getCurrentAnimation()->FindBone(nodeName);
 	if (bone) {
 		bone->Update(anim.currentTime);
 		nodeTransform = bone->GetLocalTransform();
@@ -48,7 +51,7 @@ void AnimationSystem::CalculateBoneTransform(
 
 	glm::mat4 globalTransform = parentTransform * nodeTransform;
 
-	auto& boneInfoMap = anim.currentAnimation->GetBoneIDMap();
+	auto& boneInfoMap = anim.getCurrentAnimation()->GetBoneIDMap();
 	if (boneInfoMap.find(nodeName) != boneInfoMap.end()) {
 		int       index = boneInfoMap.at(nodeName).id;
 		glm::mat4 offset = boneInfoMap.at(nodeName).offset;
