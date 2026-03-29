@@ -22,7 +22,7 @@ void GunSystem::Shoot() {
 	currentCooldown = 0.0f;
 
 	Game& game = Game::getInstance();
-	Assets& assetManager = Assets::getInstance();
+	Assets& assetManager = game.assetManager;
 
 	uint16_t player = game.tagStore.getEntity(Tag::Player);
 	TransformComponent& player_tf = game.transformStore.get(player);

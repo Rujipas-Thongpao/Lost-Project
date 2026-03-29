@@ -37,14 +37,19 @@ void Game::Init()
 	gunSystem.Init();
 
 	// load mesh
-	Assets& assetManager = Assets::getInstance();
+	//assetManager = Assets::getInstance();
 
-	assetManager.registerMesh("player_mesh", modelLoader.load("Model/Maxwell.fbx"));
+	assetManager.registerMesh("player_mesh", modelLoader.load("Model/Maxwell_mesh.fbx"));
 	assetManager.registerMesh("cat_mesh", modelLoader.load("Model/NoodleCat/Cat.obj"));
 	assetManager.registerMesh("floor_mesh", modelLoader.load("Model/Floor/floor.obj"));
 	assetManager.registerMesh("bullet_mesh", modelLoader.load("Model/Bullet/Bullet.obj"));
 
 	assetManager.registerAnimation("player_idle",
+		new Animation("Model/Maxwell_Idle.fbx",
+			modelLoader.modelDatas[assetManager.GetModelData("player_mesh")])
+	);
+
+	assetManager.registerAnimation("player_walk",
 		new Animation("Model/Maxwell.fbx",
 			modelLoader.modelDatas[assetManager.GetModelData("player_mesh")])
 	);

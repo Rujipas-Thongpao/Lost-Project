@@ -8,12 +8,12 @@
 
 class Assets {
 public:
-    static Assets& getInstance() {
-        static Assets instance;
-        return instance;
-    }
-    Assets(const Assets&) = delete;
-    Assets& operator=(const Assets&) = delete;
+    //static Assets& getInstance() {
+    //    static Assets instance;
+    //    return instance;
+    //}
+    //Assets(const Assets&) = delete;
+    //Assets& operator=(const Assets&) = delete;
 
     void registerMesh(const std::string& name, uint8_t id) {
         modelDatas[name] = id;
@@ -41,7 +41,7 @@ public:
     }
 
 private:
-    Assets() {}
+    //Assets() {}
     std::unordered_map<std::string, uint8_t> modelDatas;
     std::unordered_map<std::string, Animation*> animations;
 };

@@ -26,6 +26,7 @@
 #include "GunSystem.h"
 #include "AnimationComponent.h"
 #include "AnimationSystem.h"
+#include "Asset.h"
 
 // Represents the current state of the game
 enum GameState {
@@ -41,6 +42,7 @@ public:
     unsigned int Width, Height;
 
 	EntityManager entityManager;
+    Assets assetManager;
 	ComponentStore<TransformComponent> transformStore;
     TransformSystem transformSystem = TransformSystem();
 	ComponentStore<MeshComponent> meshStore;

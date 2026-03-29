@@ -27,23 +27,36 @@ void InputSystem::Update(float dt) {
 
 	float velocity = 10.0f * dt;
     float angular = 500.0f * dt;
+
+	bool isWalking = false;
 	if (this->Keys[GLFW_KEY_W]) {
 		player_tf.position += velocity * player_tf.getFront();
+        isWalking = true;
 	}
 	if (this->Keys[GLFW_KEY_S]) {
 		player_tf.position -= velocity * player_tf.getFront();
+        isWalking = true;
 	}
 	if (this->Keys[GLFW_KEY_A]) {
         player_tf.rotation.y -= angular;
+        isWalking = true;
 	}
 	if (this->Keys[GLFW_KEY_D]) {
         player_tf.rotation.y += angular;
+        isWalking = true;
 	}
 
     if (this->Keys[GLFW_KEY_SPACE]) {
         game.gunSystem.Shoot();
     }
 
+    if (!isWalking && game.animationStore.get(player).currentAnimation != game.assetManager.getAnimation("player_idle")){
+        game.animationSystem.PlayAnimation(player, game.assetManager.getAnimation("player_idle"));
+    }
+
+    if (isWalking && game.animationStore.get(player).currentAnimation != game.assetManager.getAnimation("player_walk")) {
+        game.animationSystem.PlayAnimation(player, game.assetManager.getAnimation("player_walk"));
+    }
     //GLMUtils::printVec3(player_tf.rotation);
 
     //for (Entity e : game.entityManager.entities) {

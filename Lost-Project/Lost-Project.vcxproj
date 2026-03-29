@@ -219,6 +219,9 @@
     <None Include="lightFragment.fs" />
     <None Include="lightVertex.vs" />
     <None Include="Model\Maxwell.fbx" />
+    <None Include="Model\Maxwell_Idle.fbx" />
+    <None Include="Model\Maxwell_mesh.fbx" />
+    <None Include="Model\Maxwell_walking.fbx" />
     <None Include="Model\Vanguard.fbx" />
     <None Include="skyboxFragment.fs" />
     <None Include="skyboxVertex.vs" />
