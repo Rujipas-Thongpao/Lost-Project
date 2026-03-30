@@ -271,7 +271,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="fragment.fs">
+    <None Include="fragment.vs">
       <Filter>Source Files\Shader</Filter>
     </None>
     <None Include="vertex.vs">
@@ -292,6 +292,12 @@
     <None Include="Model\Maxwell_Idle.fbx" />
     <None Include="Model\Maxwell_mesh.fbx" />
     <None Include="Model\Maxwell_walking.fbx" />
+    <None Include="fragment_post.vs">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="vertex_post.vs">
+      <Filter>Source Files\Shader</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Texture\wall.jpg">

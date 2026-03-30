@@ -30,7 +30,9 @@ void main()
     // vec3 norm = normalize(texture(texture_normal1, TexCoord)).rgb;
     vec3 lightDir = normalize(lightPosition);
     float ndotl= max(dot(Normal, lightDir), 0.0);
-    vec3 diffuse = lightColor * ndotl;
+    float step = 3.0;
+    float ndotl_toon = round(ndotl * step)/step;
+    vec3 diffuse = lightColor * ndotl_toon;
     
     // specular
     vec3 viewDir = normalize(ViewDirWS - PositionWS);

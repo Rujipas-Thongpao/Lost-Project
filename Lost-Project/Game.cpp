@@ -81,7 +81,6 @@ void Game::Init()
 	player_anim.AddBool("isWalking");
 	player_anim.SetTrigger("player_idle", "player_walk", "isWalking", true);
 	player_anim.SetTrigger("player_walk", "player_idle", "isWalking", false);
-	//player_anim.SetTrigger("player_idle", "player_walk", )
 
 	//animationSystem.PlayAnimation(player.id, assetManager.getAnimation("player_idle"));
 

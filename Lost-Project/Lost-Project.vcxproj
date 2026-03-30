@@ -215,7 +215,8 @@
     <ClInclude Include="TransformSystem.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="fragment.fs" />
+    <None Include="fragment.vs" />
+    <None Include="fragment_post.vs" />
     <None Include="lightFragment.fs" />
     <None Include="lightVertex.vs" />
     <None Include="Model\Maxwell.fbx" />
@@ -226,6 +227,7 @@
     <None Include="skyboxFragment.fs" />
     <None Include="skyboxVertex.vs" />
     <None Include="vertex.vs" />
+    <None Include="vertex_post.vs" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\BlenderFile\Manta\Body Base Color.png" />
