@@ -97,19 +97,31 @@ Shader ResourceManager::loadShaderFromFile(const char* vShaderFile, const char* 
 
 Texture2D ResourceManager::loadTextureFromFile(const char* file, bool alpha)
 {
-    // create texture object
     Texture2D texture;
-    if (alpha)
-    {
+    int width, height, nrChannels;
+    unsigned char* data = stbi_load(file, &width, &height, &nrChannels, 0);
+
+    if (!data) {
+        std::cout << "Failed to load texture: " << file << std::endl;
+        std::cout << "STB Error: " << stbi_failure_reason() << std::endl;
+        return texture;
+    }
+
+    // detect format from actual channels
+    if (nrChannels == 4) {
         texture.Internal_Format = GL_RGBA;
         texture.Image_Format = GL_RGBA;
     }
-    // load image
-    int width, height, nrChannels;
-    unsigned char* data = stbi_load(file, &width, &height, &nrChannels, 0);
-    // now generate texture
+    else if (nrChannels == 3) {
+        texture.Internal_Format = GL_RGB;
+        texture.Image_Format = GL_RGB;
+    }
+    else if (nrChannels == 1) {
+        texture.Internal_Format = GL_RED;
+        texture.Image_Format = GL_RED;
+    }
+
     texture.Generate(width, height, data);
-    // and finally free image data
     stbi_image_free(data);
     return texture;
 }

@@ -7,6 +7,7 @@
 class RendererSystem {
 	Shader shader;
     Shader postShader;
+    Shader spriteShader;
 	unsigned int framebuffer;
     unsigned int quadVAO, quadVBO;
     unsigned int textureColorBuffer;

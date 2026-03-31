@@ -22,6 +22,7 @@
 void RendererSystem::Init() {
 	shader = ResourceManager::LoadShader("vertex.vs", "fragment.vs", nullptr, "Default");
 	postShader = ResourceManager::LoadShader("vertex_post.vs", "fragment_post.vs", nullptr, "Default");
+	spriteShader = ResourceManager::LoadShader("vertex_sprite.vs", "fragment_sprite.vs", nullptr, "Default");
 
 	// screen quad VAO
 	glGenVertexArrays(1, &quadVAO);
@@ -83,15 +84,24 @@ void RendererSystem::Render()
 	for (Entity& e : game.entityManager.entities) {
 		//std::cout << (unsigned)e.id <<  " " << e.isDestroy << std::endl;
 		if (e.isDestroy) continue;
-		if (!game.meshStore.has(e.id))      continue;
+		if (!game.meshStore.has(e.id) && !game.spriteStore.has(e.id))      continue;
 		if (!game.transformStore.has(e.id)) continue;
 
 		 //std::cout << "Render : " << (unsigned)e.id << std::endl;
 		TransformComponent& transform = game.transformStore.get(e.id);
-		MeshComponent& mesh = game.meshStore.get(e.id);
 		MaterialComponent& mat = game.materialStore.get(e.id);
 
-		this->shader.Use();
+
+		// Select Shader to use whether it's mesh or sprite
+		Shader renderShader;
+		if (game.meshStore.has(e.id)) {
+			renderShader = shader;
+		}
+		else if (game.spriteStore.has(e.id)) {
+			renderShader = spriteShader;
+		}
+
+		renderShader.Use();
 		glm::mat4 model = glm::mat4(1.0f);
 
 		model = glm::translate(model, transform.position);
@@ -105,14 +115,14 @@ void RendererSystem::Render()
 		glm::mat4 view = cam_cam.GetViewMatrix(cam_tf);
 		glm::mat4 proj = cam_cam.GetProjectionMatrix();
 
-		this->shader.SetMatrix4("model", model);
-		this->shader.SetMatrix4("view", cam_cam.GetViewMatrix(cam_tf));
-		this->shader.SetMatrix4("projection", cam_cam.GetProjectionMatrix());
+		renderShader.SetMatrix4("model", model);
+		renderShader.SetMatrix4("view", cam_cam.GetViewMatrix(cam_tf));
+		renderShader.SetMatrix4("projection", cam_cam.GetProjectionMatrix());
 
-		this->shader.SetVector3f("material.ambient", mat.ambient);
-		this->shader.SetVector3f("material.diffuse", mat.diffuse);
-		this->shader.SetVector3f("material.specular", mat.specular);
-		this->shader.SetFloat("material.shininess", mat.shininess);
+		renderShader.SetVector3f("material.ambient", mat.ambient);
+		renderShader.SetVector3f("material.diffuse", mat.diffuse);
+		renderShader.SetVector3f("material.specular", mat.specular);
+		renderShader.SetFloat("material.shininess", mat.shininess);
 
 		// light
 		std::pair<uint16_t, LightComponent> light_id_l = game.lightStore.getFirst();
@@ -120,30 +130,40 @@ void RendererSystem::Render()
 		LightComponent light_l = light_id_l.second;
 		TransformComponent light_tf = game.transformStore.get(light_id);
 
-		this->shader.SetVector3f("lightPosition", light_tf.position);
-		this->shader.SetVector3f("lightColor", light_l.Color);
+		renderShader.SetVector3f("lightPosition", light_tf.position);
+		renderShader.SetVector3f("lightColor", light_l.Color);
 
 		if (game.animationStore.has(e.id)) {
-			this->shader.SetInteger("isAnimated", 1);
+			renderShader.SetInteger("isAnimated", 1);
 			AnimationComponent& anim = game.animationStore.get(e.id);
 			for (int i = 0; i < 100; i++)
-				shader.SetMatrix4("finalBonesMatrices[" + std::to_string(i) + "]",
+				renderShader.SetMatrix4("finalBonesMatrices[" + std::to_string(i) + "]",
 					anim.finalBoneMatrices[i]);
 		}
 		else {
-			this->shader.SetInteger("isAnimated", 0);
+			renderShader.SetInteger("isAnimated", 0);
 			for (int i = 0; i < 100; i++)
-				shader.SetMatrix4("finalBonesMatrices[" + std::to_string(i) + "]",
+				renderShader.SetMatrix4("finalBonesMatrices[" + std::to_string(i) + "]",
 					glm::mat4(1.0f));
 		}
 
-		MeshData& meshData = game.modelLoader.modelDatas[mesh.mesh_id].mc;
-		for (unsigned int i = 0; i < meshData.meshes.size(); i++) {
-			//std::cout << mesh.meshes[i].vertices.size() << std::endl;
-			meshData.meshes[i].Draw(this->shader);
+		if (game.meshStore.has(e.id)) {
+			MeshComponent& mesh = game.meshStore.get(e.id);
+			MeshData& meshData = game.modelLoader.modelDatas[mesh.mesh_id].mc;
+			for (unsigned int i = 0; i < meshData.meshes.size(); i++) {
+				//std::cout << mesh.meshes[i].vertices.size() << std::endl;
+				meshData.meshes[i].Draw(this->shader);
+			}
 		}
 
-
+		if (game.spriteStore.has(e.id)) {
+			SpriteComponent& sprite = game.spriteStore.get(e.id);
+			MeshData& meshData = game.modelLoader.modelDatas[game.assetManager.GetModelData("Quad")].mc;
+			for (unsigned int i = 0; i < meshData.meshes.size(); i++) {
+				//std::cout << mesh.meshes[i].vertices.size() << std::endl;
+				meshData.meshes[i].DrawSprite(this->spriteShader, ResourceManager::GetTexture(sprite.textureName));
+			}
+		}
 	}
 
 	// now bind back to default framebuffer and draw a quad plane with the attached framebuffer color texture

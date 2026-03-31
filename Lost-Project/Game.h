@@ -27,6 +27,7 @@
 #include "AnimationComponent.h"
 #include "AnimationSystem.h"
 #include "Asset.h"
+#include "SpriteComponent.h"
 
 // Represents the current state of the game
 enum GameState {
@@ -52,6 +53,7 @@ public:
     ComponentStore<ColliderComponent> colliderStore;
     ComponentStore<BulletComponent> bulletStore;
     ComponentStore<AnimationComponent> animationStore;
+    ComponentStore<SpriteComponent> spriteStore;
 
     ModelLoader modelLoader;
 

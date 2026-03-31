@@ -9,6 +9,8 @@
 #include <cstdlib>
 #include "Asset.h"
 #include "animation.h"
+#include "ResourceManager.h"
+#include "SpriteComponent.h"
 
 
 Game& Game::getInstance() {
@@ -38,11 +40,14 @@ void Game::Init()
 
 	// load mesh
 	//assetManager = Assets::getInstance();
+	ResourceManager::LoadTexture("Texture/Ruri.jpg",1.0, "Ruri");
 
 	assetManager.registerMesh("player_mesh", modelLoader.load("Model/Maxwell_mesh.fbx"));
 	assetManager.registerMesh("cat_mesh", modelLoader.load("Model/NoodleCat/Cat.obj"));
 	assetManager.registerMesh("floor_mesh", modelLoader.load("Model/Floor/floor.obj"));
 	assetManager.registerMesh("bullet_mesh", modelLoader.load("Model/Bullet/Bullet.obj"));
+	assetManager.registerMesh("Quad", modelLoader.load("Model/Quad.fbx"));
+
 
 	assetManager.registerAnimation("player_idle",
 		new Animation("Model/Maxwell_Idle.fbx",
@@ -101,7 +106,7 @@ void Game::Init()
 
 	uint8_t block_meshId = assetManager.GetModelData("cat_mesh");
 
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < 1; i++) {
 		Entity& block = entityManager.CreateEntity();
 		tagStore.add(block.id, Tag::Enemy);
 
@@ -131,6 +136,21 @@ void Game::Init()
 
 	TransformComponent& floor_tf = transformStore.add(floor.id);
 
+
+	// Spite Test
+	for (int i = 0; i < 10; i++) {
+		Entity& s = entityManager.CreateEntity();
+		SpriteComponent& s_sprite = spriteStore.add(s.id);
+		s_sprite.textureName = "Ruri";
+		TransformComponent& s_tf = transformStore.add(s.id);
+		//s_tf.position = glm::vec3(0.0f, 1.0f, 0.0f);
+		float rx = (float)rand() / RAND_MAX;
+		float rz = (float)rand() / RAND_MAX;
+		float ra = (float)rand() / RAND_MAX;
+		s_tf.scale = glm::vec3(2.0f, 2.0f, 2.0f);
+		s_tf.position = glm::vec3(20.0f * rx, 1.0f, 20.0f * rz);
+		s_tf.rotation = glm::vec3(0, 360.f * ra, 0);
+	}
 	cameraSystem.Init();
 }
 

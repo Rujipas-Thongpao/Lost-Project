@@ -269,6 +269,12 @@
     <ClInclude Include="AnimationSystem.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="fragment.vs">
@@ -298,6 +304,13 @@
     <None Include="vertex_post.vs">
       <Filter>Source Files\Shader</Filter>
     </None>
+    <None Include="fragment_sprite.vs">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="vertex_sprite.vs">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="Model\Quad.fbx" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Texture\wall.jpg">
@@ -334,6 +347,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="..\..\BlenderFile\Manta\Body Base Color.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Texture\Ball.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

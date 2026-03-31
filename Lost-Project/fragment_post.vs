@@ -30,7 +30,7 @@ void main() {
     // Composite: original color + black outline
     vec3 sceneColor = texture(screenTex, TexCoords).rgb;
     float outline = smoothstep(0.4, 0.9, edge); // tweak thresholds
-    vec3 outlineColor = vec3(0.0);               // black outline
+    vec3 outlineColor = vec3(19.0/255.0,20.0/255.0,29.0/255.0);               
 
     FragColor = vec4(mix(sceneColor, outlineColor, outline), 1.0);
 }

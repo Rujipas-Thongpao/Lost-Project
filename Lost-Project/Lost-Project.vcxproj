@@ -206,6 +206,8 @@
     <ClInclude Include="ModelLoader.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="ResourceManagement.h" />
+    <ClInclude Include="Sprite.h" />
+    <ClInclude Include="SpriteComponent.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="Tags.h" />
     <ClInclude Include="TagStore.h" />
@@ -217,17 +219,20 @@
   <ItemGroup>
     <None Include="fragment.vs" />
     <None Include="fragment_post.vs" />
+    <None Include="fragment_sprite.vs" />
     <None Include="lightFragment.fs" />
     <None Include="lightVertex.vs" />
     <None Include="Model\Maxwell.fbx" />
     <None Include="Model\Maxwell_Idle.fbx" />
     <None Include="Model\Maxwell_mesh.fbx" />
     <None Include="Model\Maxwell_walking.fbx" />
+    <None Include="Model\Quad.fbx" />
     <None Include="Model\Vanguard.fbx" />
     <None Include="skyboxFragment.fs" />
     <None Include="skyboxVertex.vs" />
     <None Include="vertex.vs" />
     <None Include="vertex_post.vs" />
+    <None Include="vertex_sprite.vs" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\BlenderFile\Manta\Body Base Color.png" />
@@ -240,6 +245,7 @@
     <Image Include="..\..\BlenderFile\Manta\SkirtBaseColor.png" />
     <Image Include="..\..\BlenderFile\Manta\WristBaseColor.png" />
     <Image Include="C:\Users\HP\Pictures\36a2cb474408a1bb54a22571760c4ed6.jpg" />
+    <Image Include="Texture\Ball.png" />
     <Image Include="Texture\Ruri.jpg" />
     <Image Include="Texture\wall.jpg" />
   </ItemGroup>
