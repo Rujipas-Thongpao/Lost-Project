@@ -98,6 +98,7 @@ public:
 
 	void DrawSprite(Shader& shader, Texture2D texture) {
 
+        glDisable(GL_CULL_FACE);
         shader.SetInteger("texture", 0);
 		glBindTexture(GL_TEXTURE_2D, texture.ID);
 
@@ -109,6 +110,7 @@ public:
         // always good practice to set everything back to defaults once configured.
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, 0); 
+		glEnable(GL_CULL_FACE);
 	}
 private:
     // render data 

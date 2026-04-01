@@ -246,6 +246,7 @@
     <Image Include="..\..\BlenderFile\Manta\WristBaseColor.png" />
     <Image Include="C:\Users\HP\Pictures\36a2cb474408a1bb54a22571760c4ed6.jpg" />
     <Image Include="Texture\Ball.png" />
+    <Image Include="Texture\Circle.png" />
     <Image Include="Texture\Ruri.jpg" />
     <Image Include="Texture\wall.jpg" />
   </ItemGroup>

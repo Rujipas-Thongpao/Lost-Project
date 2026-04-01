@@ -40,7 +40,7 @@ void Game::Init()
 
 	// load mesh
 	//assetManager = Assets::getInstance();
-	ResourceManager::LoadTexture("Texture/Ruri.jpg",1.0, "Ruri");
+	ResourceManager::LoadTexture("Texture/Circle.png",1.0, "Ruri");
 
 	assetManager.registerMesh("player_mesh", modelLoader.load("Model/Maxwell_mesh.fbx"));
 	assetManager.registerMesh("cat_mesh", modelLoader.load("Model/NoodleCat/Cat.obj"));

@@ -11,16 +11,20 @@ uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
 
-void main()
-{
-    vec4 totalPosition = vec4(0.0f);
-	vec3 totalNormal = vec3(0.0f);
+void main() {
+    // extract camera axes from view matrix
+    vec3 cameraRight = vec3(view[0][0], view[1][0], view[2][0]);
+    vec3 cameraUp    = vec3(view[0][1], view[1][1], view[2][1]);
 
-	totalPosition = vec4(aPos,1.0f);
-	totalNormal = aNormal;
-	
-    TexCoord = texCoord;
-    Normal = mat3(transpose(inverse(model))) * totalNormal;  
-    gl_Position = projection * view * model * totalPosition;
-    PositionWS = vec3(model * totalPosition);
+    // particle center in world space
+    vec3 worldPos = vec3(model[3]);
+
+    // offset vertex along camera axes — quad always faces camera
+    vec3 vertexPos = worldPos
+        + cameraRight * aPos.x
+        + cameraUp    * aPos.y;
+
+    PositionWS  = vertexPos;
+    TexCoord    = texCoord;
+    gl_Position = projection * view * vec4(vertexPos, 1.0);
 }
