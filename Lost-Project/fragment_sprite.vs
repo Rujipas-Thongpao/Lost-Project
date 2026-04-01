@@ -9,6 +9,7 @@ uniform vec3 lightPosition;
 uniform vec3 lightColor;
 uniform vec3 ViewDirWS;
 uniform sampler2D mainTex;
+uniform vec4 color;
 
 struct Material {
     vec3 ambient;
@@ -47,5 +48,8 @@ void main()
     if(baseTex.a < 0.1) 
 		discard;
 
-    FragColor = vec4(baseTex.rgb, 1.0);
+    vec3 col = baseTex.rgb;
+    col *= color;
+
+    FragColor = vec4(col, 1.0);
 }

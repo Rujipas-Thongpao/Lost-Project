@@ -47,6 +47,20 @@ void GunSystem::Shoot() {
 
 	MeshComponent& bullet_mesh = game.meshStore.add(bullet_id);
 	bullet_mesh.mesh_id = assetManager.GetModelData("bullet_mesh");
+
+	Entity& particle = game.entityManager.CreateEntity();
+	ParticleComponent& muzzle = game.particleStore.add(particle.id);
+	muzzle.type = EmitType::Burst;
+	muzzle.rate = 3.0f;
+	muzzle.lifeTime = 1.0f;
+	muzzle.gravity = 0.0f;
+	muzzle.initialSize = 0.1f;
+	muzzle.sizeMultiply = 0.5f;
+	muzzle.isPlaying = true;
+	muzzle.velocity = (player_tf_front * 5.f + glm::vec3(0, 1.f, 0)) * 1.0f;
+	game.particleSystem.PlayBurst(muzzle, player_tf.position + player_tf.getFront() * 0.5f + glm::vec3(0, 0.5f, 0));
+	//ParticleComponent& muzzle = game.particleStore.get(player);
+	//game.particleSystem.PlayBurst(muzzle, spawnPos + spawnFront * 0.5f + glm::vec3(0, 0.5f, 0));
 }
 
 void GunSystem::Update(float dt) {

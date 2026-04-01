@@ -28,6 +28,8 @@
 #include "AnimationSystem.h"
 #include "Asset.h"
 #include "SpriteComponent.h"
+#include "ParticleComponent.h"
+#include "ParticleSystem.h"
 
 // Represents the current state of the game
 enum GameState {
@@ -54,6 +56,7 @@ public:
     ComponentStore<BulletComponent> bulletStore;
     ComponentStore<AnimationComponent> animationStore;
     ComponentStore<SpriteComponent> spriteStore;
+	ComponentStore<ParticleComponent> particleStore;
 
     ModelLoader modelLoader;
 
@@ -64,6 +67,7 @@ public:
     ColliderSystem colliderSystem;
     GunSystem gunSystem;
     AnimationSystem animationSystem;
+	ParticleSystem particleSystem;
     
     static Game& getInstance(); 
     // constructor/destructor

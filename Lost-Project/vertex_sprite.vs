@@ -10,6 +10,7 @@ out vec3 PositionWS;
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
+uniform float size;
 
 void main() {
     // extract camera axes from view matrix
@@ -21,8 +22,8 @@ void main() {
 
     // offset vertex along camera axes — quad always faces camera
     vec3 vertexPos = worldPos
-        + cameraRight * aPos.x
-        + cameraUp    * aPos.y;
+		+ cameraRight * aPos.x * size
+		+ cameraUp    * aPos.y * size;
 
     PositionWS  = vertexPos;
     TexCoord    = texCoord;

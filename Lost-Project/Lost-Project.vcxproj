@@ -165,6 +165,7 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Shader.h" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="TransformSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -204,6 +205,7 @@
     <ClInclude Include="MeshData.h" />
     <ClInclude Include="ModelData.h" />
     <ClInclude Include="ModelLoader.h" />
+    <ClInclude Include="Random.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="ResourceManagement.h" />
     <ClInclude Include="Sprite.h" />
@@ -212,6 +214,8 @@
     <ClInclude Include="Tags.h" />
     <ClInclude Include="TagStore.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="ParticleComponent.h" />
+    <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="TransformSystem.h" />

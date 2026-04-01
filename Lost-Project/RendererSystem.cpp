@@ -178,3 +178,59 @@ void RendererSystem::Render()
 	glBindTexture(GL_TEXTURE_2D, textureColorBuffer);	// use the color attachment texture as the texture of the quad plane
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
+
+void RendererSystem::RenderParticles() {
+	glDisable(GL_CULL_FACE);
+	glDepthMask(GL_FALSE);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+
+	Game& game = Game::getInstance();
+	// get quad mesh — same quad you use for sprites
+	MeshData& quadMesh = game.modelLoader.modelDatas[
+		game.assetManager.GetModelData("Quad")
+	].mc;
+
+	// loop entities that have ParticleComponent
+	for (Entity& e : game.entityManager.entities) {
+		if (e.isDestroy) continue;
+		if (!game.particleStore.has(e.id)) continue;
+
+		ParticleComponent& pc = game.particleStore.get(e.id);
+
+		uint16_t cam = game.tagStore.getEntity(Tag::Camera);
+		CameraComponent& cam_cam = game.cameraStore.get(cam);
+		TransformComponent& cam_tf = game.transformStore.get(cam);
+
+		glm::mat4 view = cam_cam.GetViewMatrix(cam_tf);
+		glm::mat4 proj = cam_cam.GetProjectionMatrix();
+
+		// loop each active particle inside the component
+		for (auto& p : pc.particles) {
+			if (!p.active) continue;
+
+			// build model matrix for this particle
+			glm::mat4 model = glm::mat4(1.0f);
+			model = glm::translate(model, p.position);
+			model = glm::scale(model, glm::vec3(p.size, p.size, 1.0f));
+
+			// set uniforms
+			spriteShader.Use();
+			spriteShader.SetMatrix4("model", model);
+			spriteShader.SetMatrix4("view", view);
+			spriteShader.SetMatrix4("projection", proj);
+			spriteShader.SetVector4f("color", p.color);
+			spriteShader.SetFloat("size", p.size);
+
+			// reuse same quad mesh
+			for (auto& mesh : quadMesh.meshes)
+				mesh.DrawSprite(spriteShader,
+					ResourceManager::GetTexture(pc.sprite));
+		}
+	}
+
+	// restore state
+	glDepthMask(GL_TRUE);
+	glEnable(GL_CULL_FACE);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}

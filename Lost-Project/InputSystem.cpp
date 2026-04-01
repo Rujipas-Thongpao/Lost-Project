@@ -52,7 +52,8 @@ void InputSystem::Update(float dt) {
 
     AnimationComponent& player_anim = game.animationStore.get(player);
     player_anim.SetBool("isWalking", isWalking);
-
+	ParticleComponent& trail = game.particleStore.get(player);
+	trail.allowSpawn = isWalking;
 
 
     //if (!isWalking && game.animationStore.get(player).currentNode != "player_idle"){

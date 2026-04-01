@@ -24,6 +24,7 @@ class RendererSystem {
 public:
 	void Init();
 	void Render();
+	void RenderParticles();
 
 };
 
