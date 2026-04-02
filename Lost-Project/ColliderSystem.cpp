@@ -39,7 +39,10 @@ void ColliderSystem::Update() {
 			bool isCol = aabbCheck(bullet_aabb, block_aabb);
 			if (isCol) {
 				//bullet_e.isDestroy = true;
-				block_e.isDestroy = true;
+				if (game.healthStore.has(block)) {
+					//HealthComponent& health = game.healthStore.get(block);
+					game.healthSystem.Hit(block);
+				}
 				//std::cout << (unsigned)b_id<< " " <<b.isDestroy << endl;
 			}
 		}

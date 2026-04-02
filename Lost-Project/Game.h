@@ -30,6 +30,10 @@
 #include "SpriteComponent.h"
 #include "ParticleComponent.h"
 #include "ParticleSystem.h"
+#include "HealthComponent.h"
+#include "HealthSystem.h"
+#include "EnemySystem.h"
+#include "EnemyComponent.h"
 
 // Represents the current state of the game
 enum GameState {
@@ -57,6 +61,9 @@ public:
     ComponentStore<AnimationComponent> animationStore;
     ComponentStore<SpriteComponent> spriteStore;
 	ComponentStore<ParticleComponent> particleStore;
+	ComponentStore<HealthComponent> healthStore;
+	ComponentStore<EnemyComponent> enemyStore;
+    
 
     ModelLoader modelLoader;
 
@@ -68,6 +75,8 @@ public:
     GunSystem gunSystem;
     AnimationSystem animationSystem;
 	ParticleSystem particleSystem;
+	HealthSystem healthSystem;
+	EnemySystem enemySystem;
     
     static Game& getInstance(); 
     // constructor/destructor

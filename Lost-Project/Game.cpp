@@ -37,6 +37,8 @@ void Game::Init()
 	inputSystem.Init();
 	colliderSystem.Init();
 	gunSystem.Init();
+	healthSystem.Init();
+	enemySystem.Init();
 
 	// load mesh
 	//assetManager = Assets::getInstance();
@@ -61,6 +63,8 @@ void Game::Init()
 
 	uint16_t player = entityManager.CreateEntity().id;
 	tagStore.add(player, Tag::Player);
+
+	HealthComponent& player_health = healthStore.add(player);
 
 	TransformComponent& player_tf = transformStore.add(player);
 
@@ -87,6 +91,7 @@ void Game::Init()
 	player_anim.SetTrigger("player_idle", "player_walk", "isWalking", true);
 	player_anim.SetTrigger("player_walk", "player_idle", "isWalking", false);
 
+
 	//animationSystem.PlayAnimation(player, assetManager.getAnimation("player_idle"));
 
 	Entity& camera = entityManager.CreateEntity();
@@ -106,21 +111,24 @@ void Game::Init()
 
 	uint8_t block_meshId = assetManager.GetModelData("cat_mesh");
 
-	for (int i = 0; i < 1; i++) {
-		Entity& block = entityManager.CreateEntity();
-		tagStore.add(block.id, Tag::Enemy);
+	for (int i = 0; i < 10; i++) {
+		uint16_t block = entityManager.CreateEntity().id;
+		tagStore.add(block, Tag::Enemy);
 
-		MeshComponent& block_mesh = meshStore.add(block.id);
+		enemyStore.add(block);
+		healthStore.add(block);
+
+		MeshComponent& block_mesh = meshStore.add(block);
 		block_mesh.mesh_id = block_meshId;
 
-		TransformComponent& block_tf = transformStore.add(block.id);
+		TransformComponent& block_tf = transformStore.add(block);
 		block_tf.position = glm::vec3(5.0f, 0.0f, 3.0f*i);
 
-		ColliderComponent& block_col = colliderStore.add(block.id);
+		ColliderComponent& block_col = colliderStore.add(block);
 		block_col.size = glm::vec3(1, 1, 1);
 		block_col.isStatic = true;
 
-		MaterialComponent& block_mat = materialStore.add(block.id);
+		MaterialComponent& block_mat = materialStore.add(block);
 		float rx = (float)rand() / RAND_MAX;
 		float rz = (float)rand() / RAND_MAX;
 		float ra = (float)rand() / RAND_MAX;
@@ -182,6 +190,8 @@ void Game::Update(float dt)
 	cameraSystem.Update(dt);
 	colliderSystem.Update();
 	gunSystem.Update(dt);
+	enemySystem.Update(dt);
+	healthSystem.Update(dt);
 	animationSystem.Update(dt);
 	particleSystem.Update(dt);
 	rendererSystem.Render();
