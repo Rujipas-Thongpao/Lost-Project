@@ -147,6 +147,7 @@
     <ClCompile Include="EntityManager.h" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GLMUtils.h" />
+    <ClCompile Include="GUI.cpp" />
     <ClCompile Include="GunSystem.cpp" />
     <ClCompile Include="HealthSystem.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
@@ -166,9 +167,11 @@
     <ClCompile Include="ResourceManagement.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Shader.h" />
+    <ClCompile Include="StatSystem.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="TransformSystem.cpp" />
+    <ClCompile Include="WaveSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="animation.h" />
@@ -191,6 +194,7 @@
     <ClInclude Include="EnemySystem.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GUI.h" />
     <ClInclude Include="GunSystem.h" />
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="HealthSystem.h" />
@@ -216,6 +220,9 @@
     <ClInclude Include="ResourceManagement.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteComponent.h" />
+    <ClInclude Include="StatComponent.h" />
+    <ClInclude Include="StatHelper.h" />
+    <ClInclude Include="StatSystem.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="Tags.h" />
     <ClInclude Include="TagStore.h" />
@@ -225,6 +232,7 @@
     <ClInclude Include="Time.h" />
     <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="TransformSystem.h" />
+    <ClInclude Include="WaveSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="fragment.vs" />

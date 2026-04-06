@@ -6,4 +6,5 @@
 class BulletComponent {
 public:
 	glm::vec3 direction;
+	uint16_t ownerId;
 };

@@ -26,6 +26,7 @@ void ColliderSystem::Update() {
 		if(bullet_e.isDestroy) continue;
 		ColliderComponent& bullet_col = game.colliderStore.get(bullet);
 		TransformComponent& bullet_tf= game.transformStore.get(bullet);
+		BulletComponent& bullet_bullet = game.bulletStore.get(bullet);
 
 		AABB bullet_aabb = bullet_col.GetAABB(bullet_tf);
 
@@ -38,10 +39,13 @@ void ColliderSystem::Update() {
 			AABB block_aabb = block_col.GetAABB(block_tf);
 			bool isCol = aabbCheck(bullet_aabb, block_aabb);
 			if (isCol) {
-				//bullet_e.isDestroy = true;
+				bullet_e.isDestroy = true;
 				if (game.healthStore.has(block)) {
 					//HealthComponent& health = game.healthStore.get(block);
-					game.healthSystem.Hit(block);
+					// have to get owner of the bullet
+					StatComponent& owener_stat = game.statStore.get(bullet_bullet.ownerId);
+					float dmg = owener_stat.finalDamage;
+					game.healthSystem.Hit(block, dmg);
 				}
 				//std::cout << (unsigned)b_id<< " " <<b.isDestroy << endl;
 			}

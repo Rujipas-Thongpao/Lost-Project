@@ -13,6 +13,7 @@
 #include "SpriteComponent.h"
 
 
+
 Game& Game::getInstance() {
 		static Game instance;
 		return instance;
@@ -37,7 +38,6 @@ void Game::Init()
 	inputSystem.Init();
 	colliderSystem.Init();
 	gunSystem.Init();
-	healthSystem.Init();
 	enemySystem.Init();
 
 	// load mesh
@@ -45,7 +45,7 @@ void Game::Init()
 	ResourceManager::LoadTexture("Texture/Circle.png",1.0, "Circle");
 
 	assetManager.registerMesh("player_mesh", modelLoader.load("Model/Maxwell_mesh.fbx"));
-	assetManager.registerMesh("cat_mesh", modelLoader.load("Model/NoodleCat/Cat.obj"));
+	assetManager.registerMesh("cat_mesh", modelLoader.load("Model/cat-box.fbx"));
 	assetManager.registerMesh("floor_mesh", modelLoader.load("Model/Floor/floor.obj"));
 	assetManager.registerMesh("bullet_mesh", modelLoader.load("Model/Bullet/Bullet.obj"));
 	assetManager.registerMesh("Quad", modelLoader.load("Model/Quad.fbx"));
@@ -65,6 +65,9 @@ void Game::Init()
 	tagStore.add(player, Tag::Player);
 
 	HealthComponent& player_health = healthStore.add(player);
+
+	StatComponent& player_stat = statStore.add(player);
+	StatModifierComponent& player_statMod = statModifierStore.add(player);
 
 	TransformComponent& player_tf = transformStore.add(player);
 
@@ -111,30 +114,31 @@ void Game::Init()
 
 	uint8_t block_meshId = assetManager.GetModelData("cat_mesh");
 
-	for (int i = 0; i < 10; i++) {
-		uint16_t block = entityManager.CreateEntity().id;
-		tagStore.add(block, Tag::Enemy);
+	//for (int i = 0; i < 10; i++) {
+	//	uint16_t block = entityManager.CreateEntity().id;
+	//	tagStore.add(block, Tag::Enemy);
 
-		enemyStore.add(block);
-		healthStore.add(block);
+	//	enemyStore.add(block);
+	//	healthStore.add(block);
+	//	statStore.add(block);
 
-		MeshComponent& block_mesh = meshStore.add(block);
-		block_mesh.mesh_id = block_meshId;
+	//	MeshComponent& block_mesh = meshStore.add(block);
+	//	block_mesh.mesh_id = block_meshId;
 
-		TransformComponent& block_tf = transformStore.add(block);
-		block_tf.position = glm::vec3(5.0f, 0.0f, 3.0f*i);
+	//	TransformComponent& block_tf = transformStore.add(block);
+	//	block_tf.position = glm::vec3(5.0f, 0.0f, 3.0f*i);
 
-		ColliderComponent& block_col = colliderStore.add(block);
-		block_col.size = glm::vec3(1, 1, 1);
-		block_col.isStatic = true;
+	//	ColliderComponent& block_col = colliderStore.add(block);
+	//	block_col.size = glm::vec3(1, 1, 1);
+	//	block_col.isStatic = true;
 
-		MaterialComponent& block_mat = materialStore.add(block);
-		float rx = (float)rand() / RAND_MAX;
-		float rz = (float)rand() / RAND_MAX;
-		float ra = (float)rand() / RAND_MAX;
-		block_tf.position = glm::vec3(20.0f * rx, 0.0f, 20.0f * rz);
-		block_tf.rotation = glm::vec3(0, 360.f * ra, 0);
-	}
+	//	MaterialComponent& block_mat = materialStore.add(block);
+	//	float rx = (float)rand() / RAND_MAX;
+	//	float rz = (float)rand() / RAND_MAX;
+	//	float ra = (float)rand() / RAND_MAX;
+	//	block_tf.position = glm::vec3(20.0f * rx, 0.0f, 20.0f * rz);
+	//	block_tf.rotation = glm::vec3(0, 360.f * ra, 0);
+	//}
 
 	uint8_t floor_meshId = assetManager.GetModelData("floor_mesh");
 
@@ -170,49 +174,30 @@ void Game::Init()
 	trail_par.sizeMultiply = 0.5f;
 	trail_par.isPlaying = true;
 
+	waveSystem.Init();
+
+	healthSystem.Init();
 	cameraSystem.Init();
-}
 
-int GetEnemyLeft() {
-	Game& game = Game::getInstance();
-	std::vector<uint16_t> enemies = game.tagStore.getEntities(Tag::Enemy);
-	int left = 0;
-	for (uint16_t e : enemies) {
-		if (!game.entityManager.entities[e].isDestroy) left++;
-	}
-	return left;
+	gui.Init();
 }
-
 
 void Game::Update(float dt)
 {
 	transformSystem.Update();	
 	cameraSystem.Update(dt);
 	colliderSystem.Update();
+	statSystem.Update(dt);
 	gunSystem.Update(dt);
 	enemySystem.Update(dt);
+	waveSystem.Update(dt);
 	healthSystem.Update(dt);
 	animationSystem.Update(dt);
 	particleSystem.Update(dt);
 	rendererSystem.Render();
 	rendererSystem.RenderParticles();
 
-	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplGlfw_NewFrame();
-	ImGui::NewFrame();
-
-	ImGui::Begin("HUD");
-	int enemyLeft = GetEnemyLeft();
-	if (enemyLeft > 0) {
-		ImGui::Text("Enemies Left: %d", enemyLeft);
-	}
-	else {
-		ImGui::Text("Yippe :3");
-	}
-	ImGui::End();
-
-	ImGui::Render();
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	gui.Update(dt);
 }
 
 void Game::ProcessInput(float dt)

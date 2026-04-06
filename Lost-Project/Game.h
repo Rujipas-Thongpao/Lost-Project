@@ -34,6 +34,11 @@
 #include "HealthSystem.h"
 #include "EnemySystem.h"
 #include "EnemyComponent.h"
+#include "statComponent.h"
+#include "StatSystem.h"
+#include "GUI.h"
+#include "WaveSystem.h"
+
 
 // Represents the current state of the game
 enum GameState {
@@ -63,7 +68,8 @@ public:
 	ComponentStore<ParticleComponent> particleStore;
 	ComponentStore<HealthComponent> healthStore;
 	ComponentStore<EnemyComponent> enemyStore;
-    
+	ComponentStore<StatComponent> statStore;
+	ComponentStore<StatModifierComponent> statModifierStore;
 
     ModelLoader modelLoader;
 
@@ -77,6 +83,10 @@ public:
 	ParticleSystem particleSystem;
 	HealthSystem healthSystem;
 	EnemySystem enemySystem;
+	StatSystem statSystem;
+    WaveSystem waveSystem;
+    GUI gui;
+
     
     static Game& getInstance(); 
     // constructor/destructor

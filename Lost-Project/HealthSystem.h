@@ -6,5 +6,5 @@ class HealthSystem {
 public:
 	void Init();
 	void Update(float dt);
-	void Hit(uint16_t receiver);
+	void Hit(uint16_t receiver, int dmg);
 };

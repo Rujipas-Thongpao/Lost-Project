@@ -13,7 +13,7 @@
 
 
 void GunSystem::Init() {
-	maxCooldown = .001f;
+	maxCooldown = .1f;
 	currentCooldown = 0.f;
 }
 
@@ -41,6 +41,7 @@ void GunSystem::Shoot() {
 
 	BulletComponent& b = game.bulletStore.add(bullet_id);
 	b.direction = spawnFront;
+	b.ownerId = player;
 
 	ColliderComponent& bullet_col = game.colliderStore.add(bullet_id);
 	bullet_col.size = glm::vec3(2.f, 2.f, 2.f);
