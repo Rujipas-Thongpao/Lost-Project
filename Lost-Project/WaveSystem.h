@@ -8,11 +8,11 @@ struct Wave {
 class WaveSystem {
 public:
 	std::vector<Wave> waves = {
-		{ 5},   
-		{ 8},   
-		{ 10},   
-		{ 15},  
-		{ 20}, 
+		{ 1},   
+		//{ 8},   
+		//{ 10},   
+		//{ 15},  
+		//{ 20}, 
 	};
 	int currentWave;
 	int maxEnemyCountInThisWave;
@@ -20,4 +20,5 @@ public:
 	void Update(float dt);
 	int GetEnemyLeftInThisWaveCount();
 	void SpawnEnemies(int wave);
+	void NextWave();
 };

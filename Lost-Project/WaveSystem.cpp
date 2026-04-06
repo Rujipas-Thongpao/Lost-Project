@@ -21,14 +21,20 @@ void WaveSystem::Update(float dt) {
 	Game& game = Game::getInstance();
 	uint16_t player = game.tagStore.getEntity(Tag::Player);
 	if (GetEnemyLeftInThisWaveCount() == 0) {
-		currentWave++;
-		SpawnEnemies(currentWave);
+		game.statSystem.GiveRandomBuff(player);
+		//currentWave++;
+		//SpawnEnemies(currentWave);
         // equip sword — adds flat +2 damage
-		StatModifierComponent& mods = game.statModifierStore.get(player);
-        StatHelper::AddModifier(mods, {
-            StatType::Damage, ModifyType::Add, 2.0f, "sword"
-            });
+		//StatModifierComponent& mods = game.statModifierStore.get(player);
+  //      StatHelper::AddModifier(mods, {
+  //          StatType::Damage, ModifyType::Add, 2.0f, "sword"
+  //          });
 	}
+}
+
+void WaveSystem::NextWave() {
+	currentWave++;
+	SpawnEnemies(currentWave);
 }
 
 void WaveSystem::SpawnEnemies(int wave) {

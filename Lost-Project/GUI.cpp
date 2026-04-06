@@ -36,9 +36,10 @@ void RenderUI(float dt) {
 	uint16_t player = game.tagStore.getEntity(Tag::Player);
     StatComponent& stat = game.statStore.get(player);
     StatModifierComponent& mods = game.statModifierStore.get(player);
+	HealthComponent& health = game.healthStore.get(player);
 
     // health bar — green, thick
-    float healthPct = stat.finalHealth / stat.baseHealth;
+    float healthPct =  health.currentHealth / stat.finalHealth;
     ImGui::TextColored(ImVec4(0.4f, 1.0f, 0.4f, 1.0f), "HP");
     ImGui::SameLine();
     ImGui::PushStyleColor(ImGuiCol_PlotHistogram, ImVec4(0.2f, 0.8f, 0.2f, 1.0f));
@@ -154,12 +155,77 @@ void RenderUI(float dt) {
     ImGui::End();
 }
 
+// ImGui buff picker — call in RenderUI()
+void RenderBuffUI() {
+    Game& game = Game::getInstance();
+	uint16_t player = game.tagStore.getEntity(Tag::Player);
+
+    if (!game.statSystem.showBuffUI) return;
+
+    ImGuiIO& io = ImGui::GetIO();
+
+    // dim background
+    ImGui::SetNextWindowPos(ImVec2(0, 0));
+    ImGui::SetNextWindowSize(io.DisplaySize);
+    ImGui::SetNextWindowBgAlpha(0.6f);
+    ImGui::Begin("##overlay", nullptr,
+        ImGuiWindowFlags_NoDecoration |
+        ImGuiWindowFlags_NoInputs |
+        ImGuiWindowFlags_NoNav
+    );
+    ImGui::End();
+
+    // buff picker window — centered
+    ImVec2 size = ImVec2(500, 200);
+    ImGui::SetNextWindowPos(
+        ImVec2((io.DisplaySize.x - size.x) * 0.5f,
+            (io.DisplaySize.y - size.y) * 0.5f),
+        ImGuiCond_Always
+    );
+    ImGui::SetNextWindowSize(size, ImGuiCond_Always);
+    ImGui::SetNextWindowBgAlpha(0.95f);
+    ImGui::Begin("Choose a Buff", nullptr,
+        ImGuiWindowFlags_NoResize |
+        ImGuiWindowFlags_NoMove |
+        ImGuiWindowFlags_NoCollapse
+    );
+
+    ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.0f, 1.0f),
+        "Wave %d Clear! Pick a buff:", game.waveSystem.currentWave + 1);
+    ImGui::Spacing();
+    ImGui::Separator();
+    ImGui::Spacing();
+
+    // 3 buff buttons side by side
+    float btnWidth = (size.x - 40) / 3.0f;
+    for (int i = 0; i < game.statSystem.pendingBuffChoices.size(); i++) {
+        auto& buff = game.statSystem.pendingBuffChoices[i];
+
+        if (i > 0) ImGui::SameLine();
+
+        // highlight on hover
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.2f, 0.2f, 0.3f, 1.0f));
+        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.3f, 0.5f, 0.8f, 1.0f));
+        ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.2f, 0.4f, 0.7f, 1.0f));
+
+        if (ImGui::Button(buff.description.c_str(), ImVec2(btnWidth, 80))) {
+            game.statSystem.ApplyBuff(player, i);
+            game.waveSystem.NextWave();
+        }
+
+        ImGui::PopStyleColor(3);
+    }
+
+    ImGui::End();
+}
+
 void GUI::Update(float dt) {
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
 	RenderUI(dt);
+    RenderBuffUI();
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

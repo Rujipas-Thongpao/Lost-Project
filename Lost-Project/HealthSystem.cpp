@@ -41,6 +41,7 @@ void HealthSystem::Update(float dt) {
 			hc.hasInit = true;
 			continue;
 		}
+
 		if (hc.currentCooldownHit > 0) {
 			hc.currentCooldownHit -= dt;
 		}
@@ -50,8 +51,9 @@ void HealthSystem::Update(float dt) {
 			continue;
 		}
 
-		// regenerate health based on stat component
+		hc.maxHealth = sc.finalHealth;
 
+		// regenerate health based on stat component
 		hc.currentHealth += sc.regenHealthRate * dt; 
 		hc.currentHealth = std::min(hc.currentHealth, hc.maxHealth);
 	}

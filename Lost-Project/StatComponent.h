@@ -23,6 +23,7 @@ struct Modifier {
 };
 
 struct StatComponent {
+    bool isInit = false;
     float baseHealth = 10.0f;
     float damageReduction = 0.0f;
     float regenHealthRate = 0.0f;
@@ -30,16 +31,15 @@ struct StatComponent {
     float attackSpeed = 1.0f;
     float speed = 10.0f;
     float stamina = 10.0f;
+	float currentStamina = 10.0f;
     float runSpeed = 15.0f;
 
-	float currentStamina = 10.0f;
-
 	// resolved stats after applying modifiers
-    float finalHealth = 10.0f;
-    float finalDamage = 3.0f;
-    float finalSpeed = 10.0f;
-	float finalRunSpeed = 15.0f;
-	float finalAttackSpeed = 1.0f; // round/seconds
+    float finalHealth;
+    float finalDamage;
+    float finalSpeed;
+	float finalRunSpeed;
+	float finalAttackSpeed; // round/seconds
 };
 
 // This component holds all the modifiers that can affect the stats of an entity.

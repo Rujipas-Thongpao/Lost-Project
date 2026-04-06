@@ -17,11 +17,11 @@ public:
         for (auto& m : mods.modifiers) {
             if (m.modifyType != ModifyType::Add) continue;
             switch (m.statType) {
-            case StatType::Health:      health += m.value; break;
-            case StatType::Damage:      damage += m.value; break;
-            case StatType::Speed:       speed += m.value; break;
-            case StatType::RunSpeed:    runSpeed += m.value; break;
-            case StatType::AttackSpeed: attackSpeed += m.value; break;
+            case StatType::Health:      stat.finalHealth = health + m.value; break;
+            case StatType::Damage:      stat.finalDamage = damage + m.value; break;
+            case StatType::Speed:       stat.finalSpeed = speed + m.value; break;
+            case StatType::RunSpeed:    stat.finalRunSpeed = runSpeed + m.value; break;
+            case StatType::AttackSpeed: stat.attackSpeed = attackSpeed + m.value; break;
             }
         }
 
@@ -29,18 +29,20 @@ public:
         for (auto& m : mods.modifiers) {
             if (m.modifyType != ModifyType::Multiply) continue;
             switch (m.statType) {
-            case StatType::Health:  health *= m.value; break;
-            case StatType::Damage:  damage *= m.value; break;
-            case StatType::Speed:   speed *= m.value; break;
+            case StatType::Health:      stat.finalHealth = health * m.value; break;
+            case StatType::Damage:      stat.finalDamage = damage * m.value; break;
+            case StatType::Speed:       stat.finalSpeed = speed * m.value; break;
+            case StatType::RunSpeed:    stat.finalRunSpeed = runSpeed * m.value; break;
+            case StatType::AttackSpeed: stat.attackSpeed = attackSpeed * m.value; break;
             }
         }
 
-        // write to final stats
-        stat.finalHealth = health;
-        stat.finalDamage = damage;
-        stat.finalSpeed = speed;
-        stat.finalRunSpeed = runSpeed;
-        stat.finalAttackSpeed = attackSpeed;
+        //// write to final stats
+        //stat.finalHealth = health;
+        //stat.finalDamage = damage;
+        //stat.finalSpeed = speed;
+        //stat.finalRunSpeed = runSpeed;
+        //stat.finalAttackSpeed = attackSpeed;
 
         mods.isDirty = false;  // resolved, no need to recalculate next frame
     }

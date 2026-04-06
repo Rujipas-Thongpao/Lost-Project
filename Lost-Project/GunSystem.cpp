@@ -18,13 +18,18 @@ void GunSystem::Init() {
 }
 
 void GunSystem::Shoot() {
-	if (currentCooldown < maxCooldown) return;
-	currentCooldown = 0.0f;
+
 
 	Game& game = Game::getInstance();
 	Assets& assetManager = game.assetManager;
 
 	uint16_t player = game.tagStore.getEntity(Tag::Player);
+
+	maxCooldown = 1.0f / game.statStore.get(player).finalAttackSpeed;
+
+	if (currentCooldown < maxCooldown) return;
+	currentCooldown = 0.0f;
+
 	TransformComponent& player_tf = game.transformStore.get(player);
 	glm::vec3 player_tf_front = player_tf.getFront();
 

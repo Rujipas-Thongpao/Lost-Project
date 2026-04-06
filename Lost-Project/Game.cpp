@@ -187,10 +187,11 @@ void Game::Update(float dt)
 	transformSystem.Update();	
 	cameraSystem.Update(dt);
 	colliderSystem.Update();
-	statSystem.Update(dt);
 	gunSystem.Update(dt);
 	enemySystem.Update(dt);
 	waveSystem.Update(dt);
+	statSystem.Update(dt);
+
 	healthSystem.Update(dt);
 	animationSystem.Update(dt);
 	particleSystem.Update(dt);
