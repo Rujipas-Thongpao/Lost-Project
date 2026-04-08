@@ -45,8 +45,8 @@ void RenderUI(float dt) {
     ImGui::PushStyleColor(ImGuiCol_PlotHistogram, ImVec4(0.2f, 0.8f, 0.2f, 1.0f));
     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.1f, 0.2f, 0.1f, 1.0f));
     ImGui::ProgressBar(healthPct, ImVec2(-1, 16),
-        (std::to_string((int)stat.finalHealth) + " / " +
-            std::to_string((int)stat.baseHealth)).c_str());
+        (std::to_string((int)health.currentHealth) + " / " +
+            std::to_string((int)stat.finalHealth)).c_str());
     ImGui::PopStyleColor(2);
 
     // stamina bar — blue, thin
