@@ -193,6 +193,7 @@
     <ClInclude Include="EnemyComponent.h" />
     <ClInclude Include="EnemySystem.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="FrameBuffer.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GUI.h" />
     <ClInclude Include="GunSystem.h" />
@@ -215,9 +216,11 @@
     <ClInclude Include="MeshData.h" />
     <ClInclude Include="ModelData.h" />
     <ClInclude Include="ModelLoader.h" />
+    <ClInclude Include="PostProcessSystem.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="ResourceManagement.h" />
+    <ClInclude Include="ScreenQuad.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteComponent.h" />
     <ClInclude Include="StatComponent.h" />
@@ -236,9 +239,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="fragment.vs" />
-    <None Include="fragment_post.vs" />
+    <None Include="fragment_depthOnly.vs" />
+    <None Include="outline.vs" />
     <None Include="fragment_sprite.vs" />
-    <None Include="lightFragment.fs" />
+    <None Include="lightFragment.vs" />
     <None Include="lightVertex.vs" />
     <None Include="Model\Maxwell.fbx" />
     <None Include="Model\Maxwell_Idle.fbx" />
@@ -246,11 +250,13 @@
     <None Include="Model\Maxwell_walking.fbx" />
     <None Include="Model\Quad.fbx" />
     <None Include="Model\Vanguard.fbx" />
+    <None Include="passthrough.vs" />
     <None Include="skyboxFragment.fs" />
     <None Include="skyboxVertex.vs" />
     <None Include="vertex.vs" />
-    <None Include="vertex_post.vs" />
+    <None Include="vertex_screen_quad.vs" />
     <None Include="vertex_sprite.vs" />
+    <None Include="vertex_depthOnly.vs" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\BlenderFile\Manta\Body Base Color.png" />

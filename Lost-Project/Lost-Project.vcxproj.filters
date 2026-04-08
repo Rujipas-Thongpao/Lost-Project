@@ -329,6 +329,15 @@
     <ClInclude Include="WaveSystem.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
+    <ClInclude Include="FrameBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScreenQuad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PostProcessSystem.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="fragment.vs">
@@ -337,7 +346,7 @@
     <None Include="vertex.vs">
       <Filter>Source Files\Shader</Filter>
     </None>
-    <None Include="lightFragment.fs">
+    <None Include="lightFragment.vs">
       <Filter>Source Files\Shader</Filter>
     </None>
     <None Include="lightVertex.vs">
@@ -352,10 +361,10 @@
     <None Include="Model\Maxwell_Idle.fbx" />
     <None Include="Model\Maxwell_mesh.fbx" />
     <None Include="Model\Maxwell_walking.fbx" />
-    <None Include="fragment_post.vs">
+    <None Include="outline.vs">
       <Filter>Source Files\Shader</Filter>
     </None>
-    <None Include="vertex_post.vs">
+    <None Include="vertex_screen_quad.vs">
       <Filter>Source Files\Shader</Filter>
     </None>
     <None Include="fragment_sprite.vs">
@@ -365,6 +374,15 @@
       <Filter>Source Files\Shader</Filter>
     </None>
     <None Include="Model\Quad.fbx" />
+    <None Include="passthrough.vs">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="fragment_depthOnly.vs">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="vertex_depthOnly.vs">
+      <Filter>Source Files\Shader</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Texture\wall.jpg">

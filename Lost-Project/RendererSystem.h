@@ -3,29 +3,19 @@
 #define RENDERER_SYSTEM_H
 
 #include "Shader.h"
+#include "PostProcessSystem.h"
 
 class RendererSystem {
 	Shader shader;
-    Shader postShader;
     Shader spriteShader;
-	unsigned int framebuffer;
-    unsigned int quadVAO, quadVBO;
-    unsigned int textureColorBuffer;
-    float quadVertices[6*4] = { // vertex attributes for a quad that fills the entire screen in Normalized Device Coordinates.
-        // positions   // texCoords
-        -1.0f,  1.0f,  0.0f, 1.0f,
-        -1.0f, -1.0f,  0.0f, 0.0f,
-         1.0f, -1.0f,  1.0f, 0.0f,
-
-        -1.0f,  1.0f,  0.0f, 1.0f,
-         1.0f, -1.0f,  1.0f, 0.0f,
-         1.0f,  1.0f,  1.0f, 1.0f
-    };
+	Shader depthOnlyShader;
+	Framebuffer shadowBuffer;
+	PostProcessSystem postProcessSystem;
 public:
 	void Init();
 	void Render();
 	void RenderParticles();
-
+	void RenderScene(Shader& shader, Shader& spriteShader);
 };
 
 #endif
