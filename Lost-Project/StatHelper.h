@@ -7,11 +7,11 @@ public:
         if (!mods.isDirty) return;  // skip if nothing changed
 
         // start from base values
-        float health = stat.baseHealth;
-        float damage = stat.damage;
-        float speed = stat.speed;
-        float runSpeed = stat.runSpeed;
-        float attackSpeed = stat.attackSpeed;
+        float health = stat.finalHealth;
+        float damage = stat.finalDamage;
+        float speed = stat.finalSpeed;
+        float runSpeed = stat.finalRunSpeed;
+        float attackSpeed = stat.finalAttackSpeed;
 
         // apply flat additions first
         for (auto& m : mods.modifiers) {

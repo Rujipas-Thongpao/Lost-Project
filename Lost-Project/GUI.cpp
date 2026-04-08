@@ -107,6 +107,8 @@ void RenderUI(float dt) {
     if (mods.modifiers.empty())
         ImGui::TextDisabled("no modifiers");
     ImGui::EndChild();
+    ImGui::TextColored(ImVec4(0.8f, 0.8f, 0.8f, 1.0f), "final dmg (%d)",
+        (int)stat.finalDamage);
 
     ImGui::End();
 
