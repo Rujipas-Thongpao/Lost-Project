@@ -44,7 +44,7 @@ void Game::Init()
 	//assetManager = Assets::getInstance();
 	ResourceManager::LoadTexture("Texture/Circle.png",1.0, "Circle");
 
-	assetManager.registerMesh("player_mesh", modelLoader.load("Model/Maxwell_mesh.fbx"));
+	assetManager.registerMesh("player_mesh", modelLoader.load("Model/Maxwell_2.fbx"));
 	assetManager.registerMesh("cat_mesh", modelLoader.load("Model/cat-box.fbx"));
 	assetManager.registerMesh("floor_mesh", modelLoader.load("Model/Floor/floor.obj"));
 	assetManager.registerMesh("bullet_mesh", modelLoader.load("Model/Bullet/Bullet.obj"));
@@ -52,12 +52,12 @@ void Game::Init()
 
 
 	assetManager.registerAnimation("player_idle",
-		new Animation("Model/Maxwell_Idle.fbx",
+		new Animation("Model/Maxwell_2_idle.fbx",
 			modelLoader.modelDatas[assetManager.GetModelData("player_mesh")])
 	);
 
 	assetManager.registerAnimation("player_walk",
-		new Animation("Model/Maxwell.fbx",
+		new Animation("Model/Maxwell_2.fbx",
 			modelLoader.modelDatas[assetManager.GetModelData("player_mesh")])
 	);
 
