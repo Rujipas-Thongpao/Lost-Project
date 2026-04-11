@@ -54,28 +54,28 @@ void WaveSystem::SpawnEnemies(int wave) {
 	maxEnemyCountInThisWave = enemyCount;
 
 	for (int i = 0; i < enemyCount; i++) {
-		uint16_t block = game.entityManager.CreateEntity().id;
-		game.tagStore.add(block, Tag::Enemy);
+		uint16_t enemy = game.entityManager.CreateEntity().id;
+		game.tagStore.add(enemy, Tag::Enemy);
 
-		game.enemyStore.add(block);
-		game.statStore.add(block);
-		game.healthStore.add(block);
+		game.enemyStore.add(enemy);
+		game.statStore.add(enemy);
+		game.healthStore.add(enemy);
 
-		MeshComponent& block_mesh = game.meshStore.add(block);
-		block_mesh.mesh_id = block_meshId;
+		MeshComponent& enemy_mesh = game.meshStore.add(enemy);
+		enemy_mesh.mesh_id = block_meshId;
 
-		TransformComponent& block_tf = game.transformStore.add(block);
-		block_tf.position = glm::vec3(5.0f, 0.0f, 3.0f*i);
+		TransformComponent& enemy_tf = game.transformStore.add(enemy);
+		enemy_tf.position = glm::vec3(5.0f, 0.0f, 3.0f*i);
 
-		ColliderComponent& block_col = game.colliderStore.add(block);
-		block_col.size = glm::vec3(1, 1, 1);
-		block_col.isStatic = true;
+		ColliderComponent& enemy_col = game.colliderStore.add(enemy);
+		enemy_col.size = glm::vec3(1, 1, 1);
+		enemy_col.isStatic = false;
 
-		MaterialComponent& block_mat = game.materialStore.add(block);
+		MaterialComponent& block_mat = game.materialStore.add(enemy);
 		float rx = (float)rand() / RAND_MAX;
 		float rz = (float)rand() / RAND_MAX;
 		float ra = (float)rand() / RAND_MAX;
-		block_tf.position = glm::vec3(20.0f * rx, 0.0f, 20.0f * rz);
-		block_tf.rotation = glm::vec3(0, 360.f * ra, 0);
+		enemy_tf.position = glm::vec3(20.0f * rx, 0.0f, 20.0f * rz);
+		enemy_tf.rotation = glm::vec3(0, 360.f * ra, 0);
 	}
 }

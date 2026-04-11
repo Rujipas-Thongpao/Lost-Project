@@ -365,6 +365,9 @@
       <Filter>Source Files\Shader</Filter>
     </None>
     <None Include="Model\Quad.fbx" />
+    <None Include="Model\Block.fbx" />
+    <None Include="Model\Maxwell_2.fbx" />
+    <None Include="Model\Maxwell_2_walk.fbx" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Texture\wall.jpg">

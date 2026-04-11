@@ -8,7 +8,8 @@ enum class Tag {
     Enemy,
     Static,
     UI,
-    Bullet
+    Bullet,
+    Blockage
 };
 
 #endif // !TAGS_H

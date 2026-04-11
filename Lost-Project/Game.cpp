@@ -49,7 +49,7 @@ void Game::Init()
 	assetManager.registerMesh("floor_mesh", modelLoader.load("Model/Floor/floor.obj"));
 	assetManager.registerMesh("bullet_mesh", modelLoader.load("Model/Bullet/Bullet.obj"));
 	assetManager.registerMesh("Quad", modelLoader.load("Model/Quad.fbx"));
-
+	assetManager.registerMesh("Block", modelLoader.load("Model/Block.fbx"));
 
 	assetManager.registerAnimation("player_idle",
 		new Animation("Model/Maxwell_2_idle.fbx",
@@ -70,9 +70,10 @@ void Game::Init()
 	StatModifierComponent& player_statMod = statModifierStore.add(player);
 
 	TransformComponent& player_tf = transformStore.add(player);
+	player_tf.scale = glm::vec3(0.7f, 0.7f, 0.7f);
 
 	ColliderComponent& player_col = colliderStore.add(player);
-	player_col.size = glm::vec3(1.f, 1.5f, 1.f);
+	player_col.size = glm::vec3(1.5f, 1.5f, 1.5f);
 	player_col.isStatic = false;
 
 	uint8_t player_modelId = assetManager.GetModelData("player_mesh");
@@ -112,33 +113,32 @@ void Game::Init()
 	directLight_light.Color = glm::vec3(1.0f, 1.0f, 1.0f);
 	directLight_light.Intensity = 1.0f;
 
-	uint8_t block_meshId = assetManager.GetModelData("cat_mesh");
+	uint8_t block_meshId = assetManager.GetModelData("Block");
 
-	//for (int i = 0; i < 10; i++) {
-	//	uint16_t block = entityManager.CreateEntity().id;
-	//	tagStore.add(block, Tag::Enemy);
+	for (int i = 0; i < 10; i++) {
+		uint16_t block = entityManager.CreateEntity().id;
+		tagStore.add(block, Tag::Blockage);
 
-	//	enemyStore.add(block);
-	//	healthStore.add(block);
-	//	statStore.add(block);
+		//enemyStore.add(block);
+		//healthStore.add(block);
+		//statStore.add(block);
 
-	//	MeshComponent& block_mesh = meshStore.add(block);
-	//	block_mesh.mesh_id = block_meshId;
+		MeshComponent& block_mesh = meshStore.add(block);
+		block_mesh.mesh_id = block_meshId;
 
-	//	TransformComponent& block_tf = transformStore.add(block);
-	//	block_tf.position = glm::vec3(5.0f, 0.0f, 3.0f*i);
+		TransformComponent& block_tf = transformStore.add(block);
+		float rx = (float)rand() / RAND_MAX;
+		float rz = (float)rand() / RAND_MAX;
+		float ra = (float)rand() / RAND_MAX;
+		block_tf.position = glm::vec3(20.0f * rx, 1.0f, 20.0f * rz);
+		block_tf.rotation = glm::vec3(0, 360.f * ra, 0);
 
-	//	ColliderComponent& block_col = colliderStore.add(block);
-	//	block_col.size = glm::vec3(1, 1, 1);
-	//	block_col.isStatic = true;
+		ColliderComponent& block_col = colliderStore.add(block);
+		block_col.size = glm::vec3(2, 2, 2);
+		block_col.isStatic = true;
 
-	//	MaterialComponent& block_mat = materialStore.add(block);
-	//	float rx = (float)rand() / RAND_MAX;
-	//	float rz = (float)rand() / RAND_MAX;
-	//	float ra = (float)rand() / RAND_MAX;
-	//	block_tf.position = glm::vec3(20.0f * rx, 0.0f, 20.0f * rz);
-	//	block_tf.rotation = glm::vec3(0, 360.f * ra, 0);
-	//}
+		MaterialComponent& block_mat = materialStore.add(block);
+	}
 
 	uint8_t floor_meshId = assetManager.GetModelData("floor_mesh");
 

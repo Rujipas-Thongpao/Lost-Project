@@ -240,7 +240,10 @@
     <None Include="fragment_sprite.vs" />
     <None Include="lightFragment.fs" />
     <None Include="lightVertex.vs" />
+    <None Include="Model\Block.fbx" />
     <None Include="Model\Maxwell.fbx" />
+    <None Include="Model\Maxwell_2.fbx" />
+    <None Include="Model\Maxwell_2_walk.fbx" />
     <None Include="Model\Maxwell_Idle.fbx" />
     <None Include="Model\Maxwell_mesh.fbx" />
     <None Include="Model\Maxwell_walking.fbx" />
