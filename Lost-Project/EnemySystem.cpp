@@ -13,6 +13,8 @@ void EnemySystem::Update(float dt) {
 		EnemyComponent& enemy_c = game.enemyStore.get(enemy);
 		TransformComponent& enemy_tf = game.transformStore.get(enemy);
 		uint16_t player = game.tagStore.getEntity(Tag::Player);
+		if (game.entityManager.entities[player].isDestroy) return;
+
 		TransformComponent& player_tf = game.transformStore.get(player);
 		glm::vec3 direction = player_tf.position - enemy_tf.position;
 		float distance = glm::length(direction);

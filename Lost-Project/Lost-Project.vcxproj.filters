@@ -368,6 +368,7 @@
     <None Include="Model\Block.fbx" />
     <None Include="Model\Maxwell_2.fbx" />
     <None Include="Model\Maxwell_2_walk.fbx" />
+    <None Include="Model\Tree.fbx" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Texture\wall.jpg">

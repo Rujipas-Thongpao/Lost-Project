@@ -248,6 +248,7 @@
     <None Include="Model\Maxwell_mesh.fbx" />
     <None Include="Model\Maxwell_walking.fbx" />
     <None Include="Model\Quad.fbx" />
+    <None Include="Model\Tree.fbx" />
     <None Include="Model\Vanguard.fbx" />
     <None Include="skyboxFragment.fs" />
     <None Include="skyboxVertex.vs" />

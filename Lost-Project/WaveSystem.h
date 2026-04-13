@@ -9,10 +9,10 @@ class WaveSystem {
 public:
 	std::vector<Wave> waves = {
 		{ 1},   
-		//{ 8},   
-		//{ 10},   
-		//{ 15},  
-		//{ 20}, 
+		{ 8},   
+		{ 10},   
+		{ 15},  
+		{ 20}, 
 	};
 	int currentWave;
 	int maxEnemyCountInThisWave;

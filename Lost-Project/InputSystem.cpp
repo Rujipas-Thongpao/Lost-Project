@@ -34,6 +34,8 @@ void InputSystem::Update(float dt) {
 	bool isWalking = false;
 	bool isRunning = false;
 
+	if (game.entityManager.entities[player].isDestroy) return;
+
     if (this->Keys[GLFW_KEY_LEFT_SHIFT] && player_stat.currentStamina > 0.1f) {
 		velocity = player_stat.finalRunSpeed  * dt;
 		isRunning = true;
@@ -90,78 +92,4 @@ void InputSystem::Update(float dt) {
             StatType::Health, ModifyType::Add, 2.0f, "sword"
             });
 	}
-
-    //if (!isWalking && game.animationStore.get(player).currentNode != "player_idle"){
-    //    game.animationSystem.PlayAnimation(player, game.assetManager.getAnimation("player_idle"));
-    //}
-
-    //if (isWalking && game.animationStore.get(player).currentAnimation != game.assetManager.getAnimation("player_walk")) {
-    //    game.animationSystem.PlayAnimation(player, game.assetManager.getAnimation("player_walk"));
-    //}
-    //GLMUtils::printVec3(player_tf.rotation);
-
-    //for (Entity e : game.entityManager.entities) {
-    //    uint8_t id = e.id;
-    //    if (game.cameraStore.has(id) && game.transformStore.has(id)) {
-    //        //std::cout << (unsigned)(id) << " has camera and transform" << std::endl;
-    //        CameraComponent& cam = game.cameraStore.get(id);
-    //        TransformComponent& tf = game.transformStore.get(id);
-
-    //        // camera movement
-    //        //std::cout << dt << std::endl;
-    //        float velocity = cam.movementSpeed * dt;
-    //        if (this->Keys[GLFW_KEY_W]) {
-    //            tf.position += cam.front * velocity;
-    //        }
-    //        if (this->Keys[GLFW_KEY_S]) {
-    //            tf.position -= cam.front * velocity;
-    //        }
-    //        if (this->Keys[GLFW_KEY_A]) {
-    //            tf.position -= cam.right * velocity;
-    //        }
-    //        if (this->Keys[GLFW_KEY_D]) {
-    //            tf.position += cam.right * velocity;
-    //        }
-
-    //        //std::cout << game.transformStore.get(id).position.x << std::endl;
-
-    //        // camera Rotation
-
-    //        //if (firstMouse)
-    //        //{
-    //        //    lastXpos = xpos;
-    //        //    lastYpos = ypos;
-    //        //    firstMouse = false;
-    //        //}
-
-    //        //float xoffset = xpos - lastXpos;
-    //        //float yoffset = lastYpos - ypos;
-    //        //std::cout << "offset : " << xoffset << " " << yoffset << endl;
-    //        //lastXpos = xpos;
-    //        //lastYpos = ypos;
-
-    //        //xoffset *= 0.01f;
-    //        //yoffset *= 0.01f;
-
-    //        //cam.yaw += xoffset;
-    //        //cam.pitch += yoffset;
-
-    //        //if (cam.pitch > 89.0f)
-    //        //    cam.pitch = 89.0f;
-    //        //if (cam.pitch< -89.0f)
-    //        //    cam.pitch = -89.0f;
-
-    //        //xpos = lastXpos;  
-    //        //ypos = lastYpos; 
-    //        ////std::cout << cam.pitch << std::endl;
-    //        //cam.UpdateVector();
-
-    //        ////GLMUtils::printVec3(cam.front, "cam front : ");
-    //        ////glm::vec3 direction;
-    //        ////direction.x = cos(glm::radians(cam.yaw)) * cos(glm::radians(cam.pitch));
-    //        ////direction.y = sin(glm::radians(cam.pitch));
-    //        ////direction.z = sin(glm::radians(cam.yaw)) * cos(glm::radians(cam.pitch));
-    //        ////cam.cameraFront = glm::normalize(direction);
-    //    }
-    //}
 }

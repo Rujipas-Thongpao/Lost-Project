@@ -221,6 +221,49 @@ void RenderBuffUI() {
     ImGui::End();
 }
 
+void RenderEndGame() {
+    Game& game = Game::getInstance();
+	uint16_t player = game.tagStore.getEntity(Tag::Player);
+    if (!game.entityManager.entities[player].isDestroy) return;
+
+	ImGuiIO& io = ImGui::GetIO();
+
+	ImGui::SetNextWindowPos(ImVec2(0, 0));
+	ImGui::SetNextWindowSize(io.DisplaySize);
+	ImGui::SetNextWindowBgAlpha(0.6f);
+	ImGui::Begin("##overlay", nullptr,
+		ImGuiWindowFlags_NoDecoration |
+		ImGuiWindowFlags_NoInputs |
+		ImGuiWindowFlags_NoNav
+	);
+	ImGui::End();
+
+	ImVec2 size = ImVec2(500, 200);
+	ImGui::SetNextWindowPos(
+		ImVec2((io.DisplaySize.x - size.x) * 0.5f,
+			(io.DisplaySize.y - size.y) * 0.5f),
+		ImGuiCond_Always
+	);
+	ImGui::SetNextWindowSize(size, ImGuiCond_Always);
+	ImGui::SetNextWindowBgAlpha(0.95f);
+	ImGui::Begin("end game", nullptr,
+		ImGuiWindowFlags_NoResize |
+		ImGuiWindowFlags_NoMove |
+		ImGuiWindowFlags_NoCollapse
+	);
+
+	ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f),
+		"U R DEAD");
+	ImGui::Spacing();
+	ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f),
+		"Thanks for playing!");
+	ImGui::Separator();
+	ImGui::Spacing();
+
+	ImGui::End();
+   
+}
+
 void GUI::Update(float dt) {
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
@@ -228,6 +271,7 @@ void GUI::Update(float dt) {
 
 	RenderUI(dt);
     RenderBuffUI();
+    RenderEndGame();
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

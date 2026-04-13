@@ -95,6 +95,7 @@ void ColliderSystem::Update() {
                 enemyId = aIsEnemy ? i : j;
                 playerId = aIsPlayer ? i : j;
                 // do damage to player here
+                game.healthSystem.Hit(playerId, 1);
             }
         }
     }

@@ -19,6 +19,7 @@ void StatSystem::Update(float dt) {
 			stat.finalAttackSpeed = stat.attackSpeed;
 			stat.finalDamage = stat.damage;
 			stat.finalRunSpeed = stat.runSpeed;
+			stat.finalBulletCount = stat.bulletCount;
 
 			stat.isInit = true;
 			continue;
@@ -49,6 +50,8 @@ void StatSystem::GiveRandomBuff(uint16_t entityId) {
         {           StatType::DamageReduction, ModifyType::Add,      0.1f,"",  "+10% Damage Resist"  },
         {         StatType::RegenRate,       ModifyType::Add,      0.5f,"",  "+0.5 HP Regen/sec"   },
         {       StatType::Stamina,         ModifyType::Add,      25.0f,"", "+25 Max Stamina"     },
+
+		{       StatType::BulletCount,     ModifyType::Add,      1.0f,"",  "+1 Bullet"           },
     };
 
     // pick 3 random unique options for player to choose

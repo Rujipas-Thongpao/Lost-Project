@@ -39,7 +39,9 @@ void WaveSystem::NextWave() {
 
 void WaveSystem::SpawnEnemies(int wave) {
 	Game& game = Game::getInstance();
-	uint8_t block_meshId = game.assetManager.GetModelData("cat_mesh");
+	uint8_t enemy_meshId = game.assetManager.GetModelData("cat_mesh");
+	uint8_t player = game.tagStore.getEntity(Tag::Player);
+	TransformComponent& player_tf = game.transformStore.get(player);
 
 	int maxWave = waves.size();
 	int enemyCount = 0;
@@ -62,20 +64,27 @@ void WaveSystem::SpawnEnemies(int wave) {
 		game.healthStore.add(enemy);
 
 		MeshComponent& enemy_mesh = game.meshStore.add(enemy);
-		enemy_mesh.mesh_id = block_meshId;
+		enemy_mesh.mesh_id = enemy_meshId;
 
 		TransformComponent& enemy_tf = game.transformStore.add(enemy);
-		enemy_tf.position = glm::vec3(5.0f, 0.0f, 3.0f*i);
+
+		enemy_tf.position = player_tf.position; 
+
+		float rx = (float)rand() / RAND_MAX;
+		rx -= 0.5f;
+		rx *= 2.0f; 
+		float rz = (float)rand() / RAND_MAX;
+		rz -= 0.5f;
+		rz *= 2.0f; 
+		float ra = (float)rand() / RAND_MAX;
+		enemy_tf.position += glm::vec3(20.0f * rx, 0.0f, 20.0f * rz);
+		enemy_tf.rotation = glm::vec3(0, 360.f * ra, 0);
+
 
 		ColliderComponent& enemy_col = game.colliderStore.add(enemy);
 		enemy_col.size = glm::vec3(1, 1, 1);
 		enemy_col.isStatic = false;
 
 		MaterialComponent& block_mat = game.materialStore.add(enemy);
-		float rx = (float)rand() / RAND_MAX;
-		float rz = (float)rand() / RAND_MAX;
-		float ra = (float)rand() / RAND_MAX;
-		enemy_tf.position = glm::vec3(20.0f * rx, 0.0f, 20.0f * rz);
-		enemy_tf.rotation = glm::vec3(0, 360.f * ra, 0);
 	}
 }

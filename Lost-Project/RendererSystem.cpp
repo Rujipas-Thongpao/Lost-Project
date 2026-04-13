@@ -124,6 +124,10 @@ void RendererSystem::Render()
 		renderShader.SetVector3f("material.specular", mat.specular);
 		renderShader.SetFloat("material.shininess", mat.shininess);
 
+		renderShader.SetVector3f("u_camPos", cam_tf.position);
+		renderShader.SetFloat("u_ditherFadeStart", 5.0f);
+		renderShader.SetFloat("u_ditherFadeEnd", 1.0f);
+
 		// light
 		std::pair<uint16_t, LightComponent> light_id_l = game.lightStore.getFirst();
 		uint16_t light_id = light_id_l.first;

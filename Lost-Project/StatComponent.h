@@ -4,7 +4,7 @@
 enum class StatType {
     Health, Damage, Speed,
     RunSpeed, AttackSpeed,
-    DamageReduction, RegenRate, Stamina
+    DamageReduction, RegenRate, Stamina, BulletCount
 };
 
 enum class ModifyType {
@@ -33,6 +33,7 @@ struct StatComponent {
     float stamina = 10.0f;
 	float currentStamina = 10.0f;
     float runSpeed = 15.0f;
+    int bulletCount = 1;
 
 	// resolved stats after applying modifiers
     float finalHealth;
@@ -40,6 +41,7 @@ struct StatComponent {
     float finalSpeed;
 	float finalRunSpeed;
 	float finalAttackSpeed; // round/seconds
+	int finalBulletCount;
 };
 
 // This component holds all the modifiers that can affect the stats of an entity.

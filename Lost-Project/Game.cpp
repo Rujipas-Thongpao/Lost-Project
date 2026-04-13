@@ -50,6 +50,7 @@ void Game::Init()
 	assetManager.registerMesh("bullet_mesh", modelLoader.load("Model/Bullet/Bullet.obj"));
 	assetManager.registerMesh("Quad", modelLoader.load("Model/Quad.fbx"));
 	assetManager.registerMesh("Block", modelLoader.load("Model/Block.fbx"));
+	assetManager.registerMesh("Tree", modelLoader.load("Model/Tree.fbx"));
 
 	assetManager.registerAnimation("player_idle",
 		new Animation("Model/Maxwell_2_idle.fbx",
@@ -113,9 +114,9 @@ void Game::Init()
 	directLight_light.Color = glm::vec3(1.0f, 1.0f, 1.0f);
 	directLight_light.Intensity = 1.0f;
 
-	uint8_t block_meshId = assetManager.GetModelData("Block");
+	uint8_t block_meshId = assetManager.GetModelData("Tree");
 
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < 50; i++) {
 		uint16_t block = entityManager.CreateEntity().id;
 		tagStore.add(block, Tag::Blockage);
 
@@ -130,7 +131,7 @@ void Game::Init()
 		float rx = (float)rand() / RAND_MAX;
 		float rz = (float)rand() / RAND_MAX;
 		float ra = (float)rand() / RAND_MAX;
-		block_tf.position = glm::vec3(20.0f * rx, 1.0f, 20.0f * rz);
+		block_tf.position = glm::vec3(100.0f * rx, 1.0f, 100.0f * rz);
 		block_tf.rotation = glm::vec3(0, 360.f * ra, 0);
 
 		ColliderComponent& block_col = colliderStore.add(block);

@@ -12,6 +12,7 @@ public:
         float speed = stat.finalSpeed;
         float runSpeed = stat.finalRunSpeed;
         float attackSpeed = stat.finalAttackSpeed;
+		int bulletCount = stat.finalBulletCount;
 
         // apply flat additions first
         for (auto& m : mods.modifiers) {
@@ -22,6 +23,7 @@ public:
             case StatType::Speed:       stat.finalSpeed = speed + m.value; break;
             case StatType::RunSpeed:    stat.finalRunSpeed = runSpeed + m.value; break;
             case StatType::AttackSpeed: stat.attackSpeed = attackSpeed + m.value; break;
+			case StatType::BulletCount: stat.finalBulletCount = bulletCount + (int)m.value; break;
             }
         }
 
@@ -34,6 +36,7 @@ public:
             case StatType::Speed:       stat.finalSpeed = speed * m.value; break;
             case StatType::RunSpeed:    stat.finalRunSpeed = runSpeed * m.value; break;
             case StatType::AttackSpeed: stat.attackSpeed = attackSpeed * m.value; break;
+			case StatType::BulletCount: stat.finalBulletCount = bulletCount * (int)m.value; break;
             }
         }
 

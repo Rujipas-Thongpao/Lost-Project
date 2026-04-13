@@ -5,6 +5,8 @@
 #include "Entity.h";
 #include "GLMUtils.h"
 #include "ModelLoader.h"
+#include "Random.h"
+using namespace Engine;
 
 #include "game.h"
 #include "Asset.h"
@@ -31,28 +33,31 @@ void GunSystem::Shoot() {
 	currentCooldown = 0.0f;
 
 	TransformComponent& player_tf = game.transformStore.get(player);
+	StatComponent& player_stat = game.statStore.get(player);
 	glm::vec3 player_tf_front = player_tf.getFront();
 
 	glm::vec3 spawnPos = player_tf.position;
 	glm::vec3 spawnFront = player_tf.getFront();
 
-	Entity bullet = game.entityManager.CreateEntity();
-	uint16_t bullet_id = bullet.id;
-	game.tagStore.add(bullet_id, Tag::Bullet);
+	for (int i = 0; i < player_stat.finalBulletCount; i++) {
+		Entity bullet = game.entityManager.CreateEntity();
+		uint16_t bullet_id = bullet.id;
+		game.tagStore.add(bullet_id, Tag::Bullet);
 
-	TransformComponent& bullet_tf = game.transformStore.add(bullet_id);
-	bullet_tf.position = spawnPos + glm::vec3(0, 0.5f, 0);
-	bullet_tf.scale = glm::vec3(.4f, .4f, .4f);
+		TransformComponent& bullet_tf = game.transformStore.add(bullet_id);
+		bullet_tf.position = spawnPos + glm::vec3(0, 0.5f, 0);
+		bullet_tf.scale = glm::vec3(.4f, .4f, .4f);
 
-	BulletComponent& b = game.bulletStore.add(bullet_id);
-	b.direction = spawnFront;
-	b.ownerId = player;
+		BulletComponent& b = game.bulletStore.add(bullet_id);
+		b.direction = spawnFront + glm::vec3(Random::range(-0.3f, 0.3f), 0, Random::range(-0.3f, 0.3f));
+		b.ownerId = player;
 
-	ColliderComponent& bullet_col = game.colliderStore.add(bullet_id);
-	bullet_col.size = glm::vec3(2.f, 2.f, 2.f);
+		ColliderComponent& bullet_col = game.colliderStore.add(bullet_id);
+		bullet_col.size = glm::vec3(2.f, 2.f, 2.f);
 
-	MeshComponent& bullet_mesh = game.meshStore.add(bullet_id);
-	bullet_mesh.mesh_id = assetManager.GetModelData("bullet_mesh");
+		MeshComponent& bullet_mesh = game.meshStore.add(bullet_id);
+		bullet_mesh.mesh_id = assetManager.GetModelData("bullet_mesh");
+	}
 
 	Entity& particle = game.entityManager.CreateEntity();
 	ParticleComponent& muzzle = game.particleStore.add(particle.id);
