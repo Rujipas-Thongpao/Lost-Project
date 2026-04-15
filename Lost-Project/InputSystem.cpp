@@ -42,12 +42,19 @@ void InputSystem::Update(float dt) {
     }
 
 	if (this->Keys[GLFW_KEY_W]) {
-		player_tf.position += velocity * player_tf.getFront();
-        isWalking = true;
+		glm::vec3 tempPosition = player_tf.position + velocity * player_tf.getFront();
+        if (game.world.worldBound.isInBound(tempPosition)) {
+			player_tf.position = tempPosition;
+			isWalking = true;
+        }
+
 	}
 	if (this->Keys[GLFW_KEY_S]) {
-		player_tf.position -= velocity * player_tf.getFront();
-        isWalking = true;
+		glm::vec3 tempPosition = player_tf.position - (velocity * player_tf.getFront() / 2.0f);
+        if (game.world.worldBound.isInBound(tempPosition)) {
+			player_tf.position = tempPosition;
+			isWalking = true;
+        }
 	}
 	if (this->Keys[GLFW_KEY_A]) {
         player_tf.rotation.y -= angular;

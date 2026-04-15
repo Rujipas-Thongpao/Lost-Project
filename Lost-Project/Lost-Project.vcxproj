@@ -172,6 +172,7 @@
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="TransformSystem.cpp" />
     <ClCompile Include="WaveSystem.cpp" />
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="animation.h" />
@@ -233,6 +234,7 @@
     <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="TransformSystem.h" />
     <ClInclude Include="WaveSystem.h" />
+    <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="fragment.vs" />

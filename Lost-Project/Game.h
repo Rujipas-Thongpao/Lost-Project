@@ -38,20 +38,16 @@
 #include "StatSystem.h"
 #include "GUI.h"
 #include "WaveSystem.h"
+#include "world.h"
 
 
-// Represents the current state of the game
-enum GameState {
-    GAME_ACTIVE,
-    GAME_MENU,
-    GAME_WIN
-};
 class Game
 {
 public:
     // game state
-    GameState    State;
     unsigned int Width, Height;
+
+	World world;
 
 	EntityManager entityManager;
     Assets assetManager;
