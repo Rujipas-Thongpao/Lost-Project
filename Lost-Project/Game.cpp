@@ -41,7 +41,7 @@ void Game::Init()
 
 	assetManager.registerMesh("player_mesh", modelLoader.load("Model/Maxwell_2.fbx"));
 	assetManager.registerMesh("cat_mesh", modelLoader.load("Model/cat-box.fbx"));
-	assetManager.registerMesh("floor_mesh", modelLoader.load("Model/Floor/floor.obj"));
+	assetManager.registerMesh("floor_mesh", modelLoader.load("Model/terrain.fbx"));
 	assetManager.registerMesh("bullet_mesh", modelLoader.load("Model/Bullet/Bullet.obj"));
 	assetManager.registerMesh("Quad", modelLoader.load("Model/Quad.fbx"));
 	assetManager.registerMesh("Block", modelLoader.load("Model/Block.fbx"));
@@ -71,7 +71,9 @@ void Game::Update(float dt)
 	transformSystem.Update();	
 	cameraSystem.Update(dt);
 	colliderSystem.Update();
+
 	gunSystem.Update(dt);
+
 	enemySystem.Update(dt);
 	waveSystem.Update(dt);
 	statSystem.Update(dt);

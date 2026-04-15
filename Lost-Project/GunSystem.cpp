@@ -20,8 +20,6 @@ void GunSystem::Init() {
 }
 
 void GunSystem::Shoot() {
-
-
 	Game& game = Game::getInstance();
 	Assets& assetManager = game.assetManager;
 

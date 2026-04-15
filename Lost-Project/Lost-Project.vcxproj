@@ -147,6 +147,7 @@
     <ClCompile Include="EntityManager.h" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GLMUtils.h" />
+    <ClCompile Include="GrassSystem.cpp" />
     <ClCompile Include="GUI.cpp" />
     <ClCompile Include="GunSystem.cpp" />
     <ClCompile Include="HealthSystem.cpp" />
@@ -195,6 +196,7 @@
     <ClInclude Include="EnemySystem.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GrassSystem.h" />
     <ClInclude Include="GUI.h" />
     <ClInclude Include="GunSystem.h" />
     <ClInclude Include="HealthComponent.h" />

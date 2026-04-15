@@ -170,6 +170,12 @@ void RendererSystem::Render()
 		}
 	}
 
+	game.world.grassSystem.Render(
+		cam_cam.GetViewMatrix(cam_tf),
+		cam_cam.GetProjectionMatrix(),
+		(float)glfwGetTime()
+	);
+
 	// now bind back to default framebuffer and draw a quad plane with the attached framebuffer color texture
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glDisable(GL_DEPTH_TEST); // disable depth test so screen-space quad isn't discarded due to depth test.
@@ -195,6 +201,13 @@ void RendererSystem::RenderParticles() {
 		game.assetManager.GetModelData("Quad")
 	].mc;
 
+	uint16_t cam = game.tagStore.getEntity(Tag::Camera);
+	CameraComponent& cam_cam = game.cameraStore.get(cam);
+	TransformComponent& cam_tf = game.transformStore.get(cam);
+
+	glm::mat4 view = cam_cam.GetViewMatrix(cam_tf);
+	glm::mat4 proj = cam_cam.GetProjectionMatrix();
+
 	// loop entities that have ParticleComponent
 	for (Entity& e : game.entityManager.entities) {
 		if (e.isDestroy) continue;
@@ -202,12 +215,6 @@ void RendererSystem::RenderParticles() {
 
 		ParticleComponent& pc = game.particleStore.get(e.id);
 
-		uint16_t cam = game.tagStore.getEntity(Tag::Camera);
-		CameraComponent& cam_cam = game.cameraStore.get(cam);
-		TransformComponent& cam_tf = game.transformStore.get(cam);
-
-		glm::mat4 view = cam_cam.GetViewMatrix(cam_tf);
-		glm::mat4 proj = cam_cam.GetProjectionMatrix();
 
 		// loop each active particle inside the component
 		for (auto& p : pc.particles) {

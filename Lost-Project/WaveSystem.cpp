@@ -55,7 +55,26 @@ void WaveSystem::SpawnEnemies(int wave) {
 
 	maxEnemyCountInThisWave = enemyCount;
 
-	for (int i = 0; i < enemyCount; i++) {
+	int enemyToSpawn = enemyCount;
+
+	World& world = game.world;
+
+
+	while(enemyToSpawn > 0) {
+		glm::vec3 spawnPos = player_tf.position;
+		float rx = (float)rand() / RAND_MAX;
+		rx -= 0.5f;
+		rx *= 2.0f; 
+		float rz = (float)rand() / RAND_MAX;
+		rz -= 0.5f;
+		rz *= 2.0f; 
+		spawnPos.x += rx * 20.0f;
+		spawnPos.z += rz * 20.0f;
+
+		if (!world.worldBound.isInBound(spawnPos)) continue;
+
+		float ra = (float)rand() / RAND_MAX;
+
 		uint16_t enemy = game.entityManager.CreateEntity().id;
 		game.tagStore.add(enemy, Tag::Enemy);
 
@@ -68,23 +87,14 @@ void WaveSystem::SpawnEnemies(int wave) {
 
 		TransformComponent& enemy_tf = game.transformStore.add(enemy);
 
-		enemy_tf.position = player_tf.position; 
-
-		float rx = (float)rand() / RAND_MAX;
-		rx -= 0.5f;
-		rx *= 2.0f; 
-		float rz = (float)rand() / RAND_MAX;
-		rz -= 0.5f;
-		rz *= 2.0f; 
-		float ra = (float)rand() / RAND_MAX;
-		enemy_tf.position += glm::vec3(20.0f * rx, 0.0f, 20.0f * rz);
+		enemy_tf.position = spawnPos;
 		enemy_tf.rotation = glm::vec3(0, 360.f * ra, 0);
-
 
 		ColliderComponent& enemy_col = game.colliderStore.add(enemy);
 		enemy_col.size = glm::vec3(1, 1, 1);
 		enemy_col.isStatic = false;
 
 		MaterialComponent& block_mat = game.materialStore.add(enemy);
+		enemyToSpawn--;
 	}
 }

@@ -1,5 +1,7 @@
-#include "World.h"
+﻿#include "World.h"
 #include "Game.h"
+#include "GrassSystem.h"
+#include <GLFW/glfw3.h>
 
 
 void World::Init() {
@@ -10,7 +12,6 @@ void World::Init() {
 	worldBound.width = 100.0f;
 	worldBound.height = 20.0f;
 	worldBound.depth = 100.0f;
-
 
 	uint16_t player = game.entityManager.CreateEntity().id;
 	game.tagStore.add(player, Tag::Player);
@@ -76,7 +77,9 @@ void World::Init() {
 
 		TransformComponent& block_tf = game.transformStore.add(block);
 		float rx = (float)rand() / RAND_MAX;
+		rx -= 0.5f;
 		float rz = (float)rand() / RAND_MAX;
+		rz -= 0.5f;
 		float ra = (float)rand() / RAND_MAX;
 		block_tf.position = glm::vec3(100.0f * rx, 1.0f, 100.0f * rz);
 		block_tf.rotation = glm::vec3(0, 360.f * ra, 0);
@@ -95,6 +98,7 @@ void World::Init() {
 	floor_mesh.mesh_id = floor_meshId;
 
 	TransformComponent& floor_tf = game.transformStore.add(floor.id);
+	floor_tf.scale = glm::vec3(100.0f, 1.0f, 100.0f);
 
 	ParticleComponent& trail_par = game.particleStore.add(player);
 	trail_par.type = EmitType::Loop;
@@ -104,5 +108,27 @@ void World::Init() {
 	trail_par.initialSize = 0.1f;
 	trail_par.sizeMultiply = 0.5f;
 	trail_par.isPlaying = true;
+
+	GrassConfig grassCfg;
+	grassCfg.countX = 300;       // 150×150 = 22,500 blades
+	grassCfg.countZ = 300;
+	grassCfg.spacingX = 0.3f;
+	grassCfg.originX = player_tf.position.x;
+	grassCfg.originZ = player_tf.position.z;
+	grassCfg.noiseScale = .5f;
+	grassSystem.Init(grassCfg);     // or grassSystem.Init() for defaults
+}
+
+
+void World::Update(float dt) {
+	Game& game = Game::getInstance();
+	uint16_t cam = game.tagStore.getEntity(Tag::Camera);
+	CameraComponent cam_cam = game.cameraStore.get(cam);
+	TransformComponent cam_tf = game.transformStore.get(cam);
+	grassSystem.Render(
+		cam_cam.GetViewMatrix(cam_tf),
+		cam_cam.GetProjectionMatrix(),
+		(float)glfwGetTime()
+	);
 }
 
