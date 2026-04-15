@@ -50,7 +50,7 @@ void InputSystem::Update(float dt) {
 
 	}
 	if (this->Keys[GLFW_KEY_S]) {
-		glm::vec3 tempPosition = player_tf.position - (velocity * player_tf.getFront() / 2.0f);
+		glm::vec3 tempPosition = player_tf.position - (velocity * player_tf.getFront() / 2.5f);
         if (game.world.worldBound.isInBound(tempPosition)) {
 			player_tf.position = tempPosition;
 			isWalking = true;

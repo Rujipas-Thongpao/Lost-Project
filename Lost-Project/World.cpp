@@ -57,9 +57,9 @@ void World::Init() {
 	Entity directLight = game.entityManager.CreateEntity();
 	TransformComponent& directLight_tf = game.transformStore.add(directLight.id);
 	LightComponent& directLight_light = game.lightStore.add(directLight.id);
-	directLight_tf.position = glm::vec3(10.f, 10.f, 10.f);
+	directLight_tf.position = glm::vec3(10.f, 100.f, 10.f);
 	directLight_tf.rotation = glm::vec3(45.0f, 45.f, 0.f);
-	directLight_light.Color = glm::vec3(1.0f, 1.0f, 1.0f);
+	directLight_light.Color = glm::vec3(255.0f, 236.0f, 200.0f) / 255.0f;
 	directLight_light.Intensity = 1.0f;
 
 	uint8_t block_meshId = game.assetManager.GetModelData("Tree");
