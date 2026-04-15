@@ -1,6 +1,8 @@
 ﻿#include "World.h"
 #include "Game.h"
 #include "GrassSystem.h"
+#include "Random.h"
+using namespace Engine;
 #include <GLFW/glfw3.h>
 
 
@@ -62,9 +64,16 @@ void World::Init() {
 	directLight_light.Color = glm::vec3(255.0f, 236.0f, 200.0f) / 255.0f;
 	directLight_light.Intensity = 1.0f;
 
-	uint8_t block_meshId = game.assetManager.GetModelData("Tree");
+
 
 	for (int i = 0; i < 50; i++) {
+
+		float ran_mesh = Random::range(0.0f, 1.0f);
+		uint8_t block_meshId = game.assetManager.GetModelData("Tree_1");
+		if (ran_mesh >= 0.5f) {
+			block_meshId = game.assetManager.GetModelData("Tree_2");
+		}
+
 		uint16_t block = game.entityManager.CreateEntity().id;
 		game.tagStore.add(block, Tag::Blockage);
 

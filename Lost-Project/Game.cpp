@@ -45,7 +45,8 @@ void Game::Init()
 	assetManager.registerMesh("bullet_mesh", modelLoader.load("Model/Bullet/Bullet.obj"));
 	assetManager.registerMesh("Quad", modelLoader.load("Model/Quad.fbx"));
 	assetManager.registerMesh("Block", modelLoader.load("Model/Block.fbx"));
-	assetManager.registerMesh("Tree", modelLoader.load("Model/Tree.fbx"));
+	assetManager.registerMesh("Tree_1", modelLoader.load("Model/Tree.fbx"));
+	assetManager.registerMesh("Tree_2", modelLoader.load("Model/Tree_2.fbx"));
 
 	assetManager.registerAnimation("player_idle",
 		new Animation("Model/Maxwell_2_idle.fbx",
