@@ -57,6 +57,7 @@ void GunSystem::Shoot() {
 		bullet_mesh.mesh_id = assetManager.GetModelData("bullet_mesh");
 	}
 
+	
 	Entity& particle = game.entityManager.CreateEntity();
 	ParticleComponent& muzzle = game.particleStore.add(particle.id);
 	muzzle.type = EmitType::Burst;
@@ -68,6 +69,10 @@ void GunSystem::Shoot() {
 	muzzle.isPlaying = true;
 	muzzle.velocity = (player_tf_front * 5.f + glm::vec3(0, 1.f, 0)) * 1.0f;
 	game.particleSystem.PlayBurst(muzzle, player_tf.position + player_tf.getFront() * 0.5f + glm::vec3(0, 0.5f, 0));
+
+
+	game.audioSystem.Play("shoot");
+
 	//ParticleComponent& muzzle = game.particleStore.get(player);
 	//game.particleSystem.PlayBurst(muzzle, spawnPos + spawnFront * 0.5f + glm::vec3(0, 0.5f, 0));
 }

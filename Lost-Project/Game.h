@@ -39,6 +39,7 @@
 #include "GUI.h"
 #include "WaveSystem.h"
 #include "world.h"
+#include "AudioSystem.h"
 
 
 class Game
@@ -81,6 +82,7 @@ public:
 	EnemySystem enemySystem;
 	StatSystem statSystem;
     WaveSystem waveSystem;
+    AudioSystem audioSystem;
     GUI gui;
 
     

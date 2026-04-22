@@ -48,6 +48,7 @@ void HealthSystem::Update(float dt) {
 
 		if(hc.currentHealth <= 0) {
 			e.isDestroy = true;
+			game.audioSystem.Play("died");
 			continue;
 		}
 
@@ -56,6 +57,7 @@ void HealthSystem::Update(float dt) {
 		// regenerate health based on stat component
 		hc.currentHealth += sc.regenHealthRate * dt; 
 		hc.currentHealth = std::min(hc.currentHealth, hc.maxHealth);
+
 	}
 }
 
@@ -73,6 +75,7 @@ void HealthSystem::Hit(uint16_t receiver, int dmg) {
 	if (hc.currentCooldownHit > 0) return; 
 	hc.currentHealth -= dmg * (1.0f-sc.damageReduction);
 	hc.currentCooldownHit = hc.coolDownHit;
-	std::cout << "Entity " << receiver << " got hit! Current health: " << hc.currentHealth << std::endl;
+	game.audioSystem.Play("hurt");
+	//std::cout << "Entity " << receiver << " got hit! Current health: " << hc.currentHealth << std::endl;
 }
 

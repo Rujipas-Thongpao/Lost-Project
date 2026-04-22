@@ -5,6 +5,9 @@
 using namespace Engine;
 #include <GLFW/glfw3.h>
 
+#include <irrKlang.h>
+using namespace irrklang;
+
 
 void World::Init() {
 

@@ -24,7 +24,7 @@ Game::Game()
 
 Game::~Game()
 {
-
+	audioSystem.Shutdown();
 }
 
 void Game::Init()
@@ -57,6 +57,17 @@ void Game::Init()
 		new Animation("Model/Maxwell_2.fbx",
 			modelLoader.modelDatas[assetManager.GetModelData("player_mesh")])
 	);
+
+	audioSystem.Init();
+	audioSystem.Load("bgm",         "Sound/bgm.ogg");
+	audioSystem.Load("shoot",       "Sound/Shoot.wav");
+	audioSystem.Load("died",  "Sound/enemyDied.wav");
+	audioSystem.Load("hurt", "Sound/playerhurt.wav");
+	audioSystem.SetMasterVolume(0.5f);
+	SoundConfig bgmCfg;
+	bgmCfg.isLoop = true;
+	bgmCfg.volume = 0.5f;
+	audioSystem.Play("bgm", bgmCfg);
 
 	world.Init();
 	enemySystem.Init();
