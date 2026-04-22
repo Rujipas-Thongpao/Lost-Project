@@ -381,6 +381,11 @@
     <None Include="Model\Maxwell_2.fbx" />
     <None Include="Model\Maxwell_2_walk.fbx" />
     <None Include="Model\Tree.fbx" />
+    <None Include="Model\cat-box.fbx" />
+    <None Include="Model\cat-box-meme.zip" />
+    <None Include="Model\Maxwell_2_idle.fbx" />
+    <None Include="Model\terrain.fbx" />
+    <None Include="Model\Tree_2.fbx" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Texture\wall.jpg">
