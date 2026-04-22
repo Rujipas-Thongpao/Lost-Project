@@ -9,9 +9,9 @@
 
 class TransformComponent {
 public:
-	glm::vec3 position;
-	glm::vec3 rotation;
-	glm::vec3 scale;
+	glm::vec3 position = glm::vec3(0.0f);
+	glm::vec3 rotation = glm::vec3(0.0f);
+	glm::vec3 scale = glm::vec3(1.0f);
 
 	TransformComponent() : position(0.0f), rotation(0.0f), scale(1.0f) {}
 	glm::vec3 getFront() {

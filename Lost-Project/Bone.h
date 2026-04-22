@@ -92,7 +92,7 @@ public:
 			if (animationTime < m_Positions[index + 1].timeStamp)
 				return index;
 		}
-		assert(0);
+		return m_NumPositions - 1;
 	}
 
 	int GetRotationIndex(float animationTime)
@@ -102,7 +102,7 @@ public:
 			if (animationTime < m_Rotations[index + 1].timeStamp)
 				return index;
 		}
-		assert(0);
+		return m_NumRotations - 1;
 	}
 
 	int GetScaleIndex(float animationTime)
@@ -112,7 +112,7 @@ public:
 			if (animationTime < m_Scales[index + 1].timeStamp)
 				return index;
 		}
-		assert(0);
+		return m_NumScalings - 1;
 	}
 
 

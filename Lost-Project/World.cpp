@@ -49,10 +49,10 @@ void World::Init() {
 	player_anim.SetTrigger("player_idle", "player_walk", "isWalking", true);
 	player_anim.SetTrigger("player_walk", "player_idle", "isWalking", false);
 
-	Entity& camera = game.entityManager.CreateEntity();
-	CameraComponent& camera_cam = game.cameraStore.add(camera.id);
-	game.tagStore.add(camera.id, Tag::Camera);
-	TransformComponent& cam_tf = game.transformStore.add(camera.id);
+	uint16_t camera = game.entityManager.CreateEntity().id;
+	CameraComponent& camera_cam = game.cameraStore.add(camera);
+	game.tagStore.add(camera, Tag::Camera);
+	TransformComponent& cam_tf = game.transformStore.add(camera);
 	cam_tf.position = glm::vec3(0.0f, 7.0f, 10.0f);
 	cam_tf.rotation = glm::vec3(-35.0f, 270.0f, 0.0f);
 
@@ -102,11 +102,11 @@ void World::Init() {
 
 	uint8_t floor_meshId = game.assetManager.GetModelData("floor_mesh");
 
-	Entity& floor = game.entityManager.CreateEntity();
-	MeshComponent& floor_mesh = game.meshStore.add(floor.id);
+	uint16_t floor = game.entityManager.CreateEntity().id;
+	MeshComponent& floor_mesh = game.meshStore.add(floor);
 	floor_mesh.mesh_id = floor_meshId;
 
-	TransformComponent& floor_tf = game.transformStore.add(floor.id);
+	TransformComponent& floor_tf = game.transformStore.add(floor);
 	floor_tf.scale = glm::vec3(100.0f, 1.0f, 100.0f);
 
 	ParticleComponent& trail_par = game.particleStore.add(player);
