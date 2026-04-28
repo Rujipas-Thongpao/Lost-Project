@@ -40,8 +40,8 @@ struct GrassConfig
     float windFrequency = 0.8f;    // spatial frequency of wind wave
 
     // Colors
-    glm::vec3 colorBase = glm::vec3(135.0f, 201.0f, 99.0f)/ 255.0f;
-    glm::vec3 colorTip = glm::vec3(184.0f, 242.0f, 77.0f) / 255.0f;
+    glm::vec3 colorBase = glm::vec3(117.0f, 100.0f, 140.0f)/ 255.0f;
+    glm::vec3 colorTip = glm::vec3(117.0f, 100.0f, 140.0f) / 255.0f;
 };
 
 class GrassSystem

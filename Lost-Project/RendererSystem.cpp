@@ -69,7 +69,7 @@ void RendererSystem::Render()
 
 	glEnable(GL_DEPTH_TEST);
 
-	glClearColor(153.f/255.f, 213.f/255.f, 226.f/255.f, 1.0f);
+	glClearColor(40.f/255.f, 37.f/255.f, 61.f/255.f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
