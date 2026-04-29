@@ -1,8 +1,8 @@
 # Lost-engine 🌙
 ## Introduction
-**Lost Engine** is 3D game engine written in C++ and OpenGL. Built around a component-based ECS architecture, it features a modular system design — renderer, collision, animation, audio, and more — all communicating through a decoupled EventBus. Libraries are kept minimal and drop-in: GLAD, Assimp, ImGui, miniaudio, and stb_image.
+**Lost Engine** is 3D game engine written in C++ and OpenGL. Built around a component-based ECS architecture, it features a modular system design such as renderer, collision, animation, audio,etc. Libraries are kept minimal and drop-in: GLAD, Assimp, ImGui, miniaudio, and stb_image.
 
-Medianoche is a third-person arena shooter built on **Lost Engine**. Fight off waves of enemies across a randomised field, gun in hand and a cat on your conscience. Last one standing wins a "Yippe :3".
+Medianoche is a third-person Rogue-lite built on **Lost Engine**. Fight off waves of enemies across a randomised field, gun in hand and a cat on your conscience. Last one standing wins a "Yippe :3".
 
 ## Preview of the game
 
